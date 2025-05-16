@@ -3,10 +3,17 @@
 # Script to initialize SSL certificates using Let's Encrypt
 # Based on the process outlined in https://medium.com/@pentacent/nginx-and-lets-encrypt-with-docker-in-less-than-5-minutes-b4b8a60d3a71
 
-if ! [ -x "$(command -v docker-compose)" ]; then
-  echo 'Error: docker-compose is not installed.' >&2
+# Check for Docker Compose (both V1 and V2)
+if command -v docker-compose &> /dev/null; then
+  DOCKER_COMPOSE_CMD="docker-compose"
+elif command -v docker &> /dev/null && docker compose version &> /dev/null; then
+  DOCKER_COMPOSE_CMD="docker compose"
+else
+  echo 'Error: Neither docker-compose V1 nor docker compose V2 is installed.' >&2
   exit 1
 fi
+
+echo "Using Docker Compose command: $DOCKER_COMPOSE_CMD"
 
 # Set the domains and email for Let's Encrypt
 domains=(yourdomain.com www.yourdomain.com)
@@ -44,7 +51,7 @@ fi
 echo "Creating dummy certificates for ${domains[*]}..."
 path="/etc/letsencrypt/live/${domains[0]}"
 mkdir -p "$data_path/conf/live/${domains[0]}"
-docker-compose run --rm --entrypoint "\
+$DOCKER_COMPOSE_CMD run --rm --entrypoint "\
   openssl req -x509 -nodes -newkey rsa:$rsa_key_size -days 1\
     -keyout '$path/privkey.pem' \
     -out '$path/fullchain.pem' \
@@ -56,11 +63,11 @@ echo "Updating ssl.conf with your domain..."
 sed -i "s/yourdomain.com/${domains[0]}/g" nginx/ssl.conf
 
 echo "Starting nginx..."
-docker-compose up --force-recreate -d nginx-proxy
+$DOCKER_COMPOSE_CMD up --force-recreate -d nginx-proxy
 echo
 
 echo "Removing dummy certificates..."
-docker-compose run --rm --entrypoint "\
+$DOCKER_COMPOSE_CMD run --rm --entrypoint "\
   rm -Rf /etc/letsencrypt/live/${domains[0]} && \
   rm -Rf /etc/letsencrypt/archive/${domains[0]} && \
   rm -Rf /etc/letsencrypt/renewal/${domains[0]}.conf" certbot
@@ -72,7 +79,7 @@ for domain in "${domains[@]}"; do
   domain_args="$domain_args -d $domain"
 done
 
-docker-compose run --rm --entrypoint "\
+$DOCKER_COMPOSE_CMD run --rm --entrypoint "\
   certbot certonly --webroot -w /var/www/certbot \
     $domain_args \
     --email $email \
@@ -82,6 +89,6 @@ docker-compose run --rm --entrypoint "\
 echo
 
 echo "Restarting nginx..."
-docker-compose exec nginx-proxy nginx -s reload
+$DOCKER_COMPOSE_CMD exec nginx-proxy nginx -s reload
 
 echo "Done! The certificates have been obtained and nginx has been configured." 

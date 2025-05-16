@@ -55,6 +55,14 @@ if grep -q "yourdomain.com" domain.conf; then
     echo -e "${GREEN}Nginx configuration updated.${NC}"
 fi
 
+# Step 4.5: Fix init-letsencrypt.sh script for Docker Compose V2
+echo -e "\n${YELLOW}Fixing init-letsencrypt.sh for Docker Compose V2...${NC}"
+if grep -q "docker-compose " init-letsencrypt.sh; then
+    # Replace docker-compose commands with docker compose
+    sed -i 's/docker-compose /docker compose /g' init-letsencrypt.sh
+    echo -e "${GREEN}init-letsencrypt.sh updated for Docker Compose V2.${NC}"
+fi
+
 # Step 5: Deploy with Docker
 echo -e "\n${YELLOW}Starting deployment...${NC}"
 source domain.conf
@@ -62,7 +70,27 @@ source domain.conf
 
 if [ $? -ne 0 ]; then
     echo -e "${RED}Deployment failed. Please check the errors above.${NC}"
-    exit 1
+    echo -e "\n${YELLOW}Trying direct Docker commands as fallback...${NC}"
+    
+    echo -e "\n${YELLOW}Building Docker image directly...${NC}"
+    docker build -t voltaris-website:latest .
+    
+    if [ $? -ne 0 ]; then
+        echo -e "${RED}Direct Docker build failed as well. Exiting.${NC}"
+        exit 1
+    fi
+    
+    echo -e "\n${YELLOW}Running Docker container directly...${NC}"
+    docker run -d --name voltaris-website -p 80:80 voltaris-website:latest
+    
+    if [ $? -eq 0 ]; then
+        echo -e "${GREEN}Deployment successful using direct Docker commands!${NC}"
+        echo -e "Your website should now be accessible at http://localhost"
+        echo -e "Note: SSL is not configured with this fallback method."
+    else
+        echo -e "${RED}All deployment methods failed. Please check Docker installation.${NC}"
+        exit 1
+    fi
 else
     echo -e "${GREEN}Deployment successful!${NC}"
     echo -e "Your website should now be accessible at http://$DOMAIN"

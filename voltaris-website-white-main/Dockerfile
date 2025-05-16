@@ -7,6 +7,12 @@ WORKDIR /app
 # Copy package files 
 COPY package.json ./
 
+# Create empty package-lock.json to prevent postinstall script failure
+RUN echo "{}" > package-lock.json
+
+# Temporarily disable postinstall script to avoid errors
+RUN sed -i 's/"postinstall": "npx npm-force-resolutions"/"postinstall": "echo Skipping resolutions in Docker build"/g' package.json
+
 # Install dependencies without using package-lock.json
 # This avoids the version resolution issues
 RUN npm install --no-package-lock
