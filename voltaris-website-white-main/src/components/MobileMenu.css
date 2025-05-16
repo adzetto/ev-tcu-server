@@ -1,0 +1,216 @@
+.mobile-menu-panel.hide {
+  transform: translateX(100%) !important;
+  /* Don't use display: none to allow for smooth transitions */
+}/* Mobile Menu Styles */
+
+/* Fix for the mobile menu panel */
+.mobile-menu-panel {
+  width: 85vw !important;
+  max-width: 300px !important;
+  height: 100vh !important;
+  z-index: 9999 !important;
+  overflow-y: auto !important;
+  -webkit-overflow-scrolling: touch !important;
+  overscroll-behavior: contain !important;
+  background-color: rgba(249, 250, 251, 0.95) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  transition: transform 0.3s ease-in-out !important;
+  box-shadow: -5px 0 20px rgba(100, 116, 139, 0.1) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  /* Added visibility properties */
+  visibility: visible !important;
+}
+
+/* Force visibility for all menu components */
+.mobile-menu-panel .menu-item span,
+.mobile-menu-panel .space-y-2,
+.mobile-menu-panel a,
+.mobile-menu-panel button,
+.mobile-menu-panel svg,
+.mobile-menu-panel div {
+  visibility: visible !important;
+  opacity: 1 !important;
+  display: initial !important;
+  pointer-events: auto !important;
+  z-index: 10002 !important;
+  position: relative !important;
+}
+
+/* Special handling for menu item spans */
+.mobile-menu-panel .menu-item span {
+  display: inline !important;
+  color: #334155 !important;
+}
+
+/* Fix mobile menu when open */
+.mobile-menu-panel.show {
+  transform: translateX(0) !important;
+  display: flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+/* Fix for mobile menu content */
+.mobile-menu-panel .menu-content {
+  padding-top: 5rem !important;
+  padding-bottom: 1.5rem !important;
+  padding-left: 1rem !important;
+  padding-right: 1rem !important;
+  display: flex !important;
+  flex-direction: column !important;
+  height: 100% !important;
+  width: 100% !important;
+  /* Force content visibility */
+  visibility: visible !important;
+  opacity: 1 !important;
+  z-index: 10000 !important;
+  position: relative !important;
+}
+
+/* Additional menu item styling */
+.mobile-menu-panel .menu-item {
+  margin-bottom: 0.75rem !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  width: 100% !important;
+  border-radius: 0.375rem !important;
+  transition: background-color 0.2s ease-in-out !important;
+  /* Force menu items to be visible */
+  z-index: 10001 !important;
+  position: relative !important;
+  pointer-events: auto !important;
+  -webkit-transform: translateZ(0) !important;
+  transform: translateZ(0) !important;
+}
+
+/* Add some spacing in submenus */
+.mobile-submenu button {
+  padding: 0.625rem 0.75rem !important;
+  border-radius: 0.375rem !important;
+  width: 100% !important;
+  text-align: left !important;
+  margin-bottom: 0.25rem !important;
+  opacity: 1 !important;
+  display: block !important;
+}
+
+/* Ensure mobile menu has the right z-index */
+.mobile-menu-panel {
+  z-index: 9999 !important;
+}
+
+/* Fix for iOS Safari */
+@supports (-webkit-touch-callout: none) {
+  .mobile-menu-panel {
+    height: -webkit-fill-available !important;
+  }
+}
+
+/* Fix for any webview layout issues */
+.mobile-menu-panel, .mobile-menu-backdrop {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  overflow: hidden !important;
+}
+
+.mobile-menu-panel {
+  left: auto !important; /* Reset left to auto */
+}
+
+/* Fix for mobile menu backdrop */
+.mobile-menu-backdrop {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  background-color: rgba(100, 116, 139, 0.2) !important;
+  backdrop-filter: blur(4px) !important;
+  z-index: 9998 !important;
+  transition: opacity 0.3s ease-in-out !important;
+}
+
+/* Mobile menu toggle button */
+.mobile-menu-button {
+  position: fixed !important;
+  top: 1rem !important;
+  right: 1rem !important;
+  z-index: 9999 !important;
+  background-color: rgba(249, 250, 251, 0.9) !important;
+  border: 1px solid rgba(212, 83, 102, 0.3) !important;
+  transition: all 0.3s ease-in-out !important;
+}
+
+/* Fix for technical submenu */
+.mobile-submenu {
+  padding-left: 1rem !important;
+  margin-top: 0.5rem !important;
+  margin-bottom: 0.5rem !important;
+  overflow: visible !important;
+  max-height: none !important;
+  border-left: 1px solid rgba(239, 68, 68, 0.3) !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  z-index: 10003 !important;
+}
+
+.mobile-submenu.visible {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+.mobile-submenu.hidden {
+  display: none !important;
+}
+
+/* Ensure technical submenu buttons are readable */
+.mobile-submenu button,
+.mobile-submenu a {
+  color: #334155 !important;
+  background-color: rgba(255, 255, 255, 0.9) !important;
+  margin-bottom: 0.5rem !important;
+  border-radius: 0.375rem !important;
+  transition: background-color 0.2s ease !important;
+  position: relative !important;
+  z-index: 10004 !important;
+}
+
+.mobile-submenu button:hover,
+.mobile-submenu a:hover {
+  background-color: rgba(255, 66, 84, 0.1) !important;
+  color: #FF4254 !important;
+}
+
+.mobile-submenu button span,
+.mobile-submenu a span {
+  color: inherit !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+/* Force mobile menu to be visible */
+@media screen and (max-width: 768px) {
+  .mobile-menu-panel.show {
+    visibility: visible !important;
+    opacity: 1 !important;
+    display: block !important;
+  }
+}
+
+/* Print cleanup */
+@media print {
+  .mobile-menu-panel,
+  .mobile-menu-backdrop,
+  .mobile-menu-button {
+    display: none !important;
+  }
+}

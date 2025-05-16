@@ -1,0 +1,156 @@
+/* Minimal ve Akademik Duyurular Sayfası Stilleri */
+
+/* Kaydırma çubuğu gizleme */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Akademik kart efektleri */
+.academic-card {
+  position: relative;
+  transition: all 0.3s ease;
+  border-top: 3px solid transparent;
+}
+
+.academic-card:hover {
+  border-top: 3px solid var(--voltaris-red);
+}
+
+/* Akademik link efekti */
+.academic-link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.academic-link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background-color: var(--voltaris-red);
+  transition: width 0.3s ease;
+}
+
+.academic-link:hover::after {
+  width: 100%;
+}
+
+/* Voltaris renkleri */
+:root {
+  --voltaris-red: #FF4254;
+  --voltaris-light-red: #FF7A87;
+  --voltaris-dark-red: #D0343F;
+  --voltaris-green: #2D6A4F;
+  --voltaris-light-green: #40916C;
+}
+
+/* Featured kart için akademik kenarlık */
+.featured-card {
+  position: relative;
+  border-left: 4px solid var(--voltaris-red);
+}
+
+/* Profesyonel ve Minimal Hover Efektleri */
+.featured-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 0;
+  background-color: rgba(255, 66, 84, 0.03);
+  transition: height 0.3s ease;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.featured-card:hover::before {
+  height: 100%;
+}
+
+/* Minimal ve akademik arama kutusu */
+input[type="text"]:focus {
+  box-shadow: 0 0 0 3px rgba(255, 66, 84, 0.1);
+}
+
+/* Kategori rozeti içerik hizalama */
+.akademik-badge {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 9999px;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+/* Düğme geçiş efektleri */
+button {
+  transition: all 0.2s ease;
+}
+
+button:active {
+  transform: translateY(1px);
+}
+
+/* Kart hover efekti - gölgelendirme */
+.academic-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* Footer için stil */
+footer img {
+  transition: opacity 0.3s ease;
+}
+
+footer img:hover {
+  opacity: 0.9;
+}
+
+/* Kategori rozetleri için daha zarif stiller */
+.inline-flex.items-center.rounded-full {
+  transition: all 0.2s ease;
+}
+
+.inline-flex.items-center.rounded-full:hover {
+  transform: translateY(-1px);
+}
+
+/* Responsive grid ayarlamaları */
+@media (max-width: 768px) {
+  .featured-card {
+    border-left: none;
+    border-top: 4px solid var(--voltaris-red);
+  }
+}
+
+/* Print-friendly düzen */
+@media print {
+  header, footer, button, .filters {
+    display: none !important;
+  }
+  
+  body {
+    background: white !important;
+  }
+  
+  .container {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  
+  .featured-card, .academic-card {
+    break-inside: avoid;
+    box-shadow: none !important;
+    border: 1px solid #ddd !important;
+  }
+}

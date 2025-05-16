@@ -1,0 +1,186 @@
+/* KaTeX styling for Ackermann formulas */
+.katex-container {
+  position: relative;
+  transition: all 0.3s ease;
+  background-color: #F9FBFD;
+}
+
+.katex-container:hover {
+  box-shadow: 0 0 12px rgba(74, 144, 191, 0.12);
+}
+
+.katex-html {
+  /* Hide scrollbar for Firefox */
+  scrollbar-width: none;
+  /* Hide scrollbar for IE and Edge */
+  -ms-overflow-style: none;
+  overflow-x: auto;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.katex-html::-webkit-scrollbar {
+  display: none;
+}
+
+.katex-display {
+  overflow: hidden !important;
+  white-space: nowrap;
+  overflow-x: hidden !important;
+  max-width: 100%;
+}
+
+.formula-container {
+  position: relative;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  animation: formula-appear 0.5s ease-out forwards;
+  overflow: hidden;
+}
+
+.formula-container:hover {
+  background-color: rgba(225, 77, 90, 0.05);
+}
+
+@keyframes formula-appear {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Add some specific styling for inline math */
+.katex-inline {
+  padding: 0 0.2em;
+  color: var(--text-red, rgba(225, 77, 90, 0.95));
+  font-weight: 500;
+}
+
+/* Animation for formulas when they appear */
+@keyframes formula-appear {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Apply animation to formulas */
+.katex-container {
+  animation: formula-appear 0.5s ease-out forwards;
+}
+
+/* Ackermann Diagram Animations */
+@keyframes wheel-rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes direction-pulse {
+  0%, 100% {
+    opacity: 0.4;
+    stroke-width: 2;
+  }
+  50% {
+    opacity: 0.7;
+    stroke-width: 2.5;
+  }
+}
+
+@keyframes dimension-highlight {
+  0%, 100% {
+    stroke-opacity: 0.5;
+  }
+  50% {
+    stroke-opacity: 0.7;
+  }
+}
+
+.wheel-arrows path,
+.wheel-arrows polygon {
+  animation: wheel-rotate 15s linear infinite;
+  transform-origin: center;
+  transform-box: fill-box;
+}
+
+.direction-arrows path {
+  animation: direction-pulse 4s ease-in-out infinite;
+}
+
+.dimensions line {
+  animation: dimension-highlight 6s ease-in-out infinite;
+}
+
+/* Hole indicator pulse */
+@keyframes hole-pulse {
+  0%, 100% {
+    r: 4;
+    fill-opacity: 0.5;
+  }
+  50% {
+    r: 5;
+    fill-opacity: 0.7;
+  }
+}
+
+.hole-indicator circle {
+  animation: hole-pulse 3s ease-in-out infinite;
+}
+
+.ackermann-svg {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.ackermann-svg:hover {
+  transform: scale(1.005);
+  box-shadow: 0 3px 10px rgba(58, 110, 143, 0.08);
+}
+
+/* Addition - soften KaTeX rendering for light theme */
+.katex {
+  color: var(--text-primary, #475569) !important; 
+}
+
+.katex-display > .katex > .katex-html {
+  opacity: 0.85;
+}
+
+/* Contact section improvements */
+.contact-section input,
+.contact-section textarea,
+.contact-section select {
+  background-color: white;
+  border-color: #e2e8f0;
+  color: var(--text-primary, #475569);
+}
+
+.contact-section label {
+  color: var(--text-secondary, #64748b);
+}
+
+.contact-section .required {
+  color: var(--text-red, rgba(212, 83, 102, 0.8));
+}
+
+/* Formula display refinements */
+.katex-display .mord.text {
+  color: var(--text-primary, #475569);
+}
+
+.katex-display .mbin, .katex-display .mrel {
+  color: var(--text-blue, rgba(58, 110, 143, 0.9));
+}
+
+.katex-display .mtable {
+  color: var(--text-primary, #475569);
+} 

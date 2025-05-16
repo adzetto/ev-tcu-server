@@ -1,0 +1,1935 @@
+import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { 
+  ChevronDown, Menu, X, 
+  ChevronRight, Cpu, Terminal, Camera, 
+  GitMerge, Linkedin, Mail, Phone, Instagram, AlertTriangle, Navigation, Eye, Sun, CircuitBoard, 
+  ArrowRight, BarChart, Activity, Zap, ChevronUp, PlusCircle, MinusCircle
+} from "lucide-react";
+import * as THREE from 'three';
+import ExpandableSection from './components/ExpandableSection';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js';
+import { useFrame, useThree } from '@react-three/fiber';
+import { OrbitControls, Text } from '@react-three/drei';
+import TechnicalDataViz from './TechnicalDataViz';
+import SponsorshipModal from './SponsorshipModal';
+import teamData from './teamData';
+import { TeamStats, SponsorShowcase } from './TeamComponents';
+import { FlowingCircuitEntryAnimation, CircuitLoadingAnimation, ProfessionalOrgChart } from './components/new';
+import AdasSystemArchitecture, { LaneDetectionDiagram, TrafficSignDetectionDiagram, CruiseControlSystemDiagram, BlindSpotDetectionDiagram } from './AdasSvgComponents';
+import TechnicalModelViewer from './components/TechnicalModelViewer';
+import EnhancedSponsorsBar from './components/EnhancedSponsorsBar';
+import MobileMenuFallback from './components/MobileMenuFallback';
+import './components/PlatinumStyles.css';
+import './components/MobileMenu.css';
+import './styles.css';
+import './latex-styles.css';
+import './advanced-latex.css';
+import { useParallax, useScrollAnimation, useTechnicalSpecsAnimation } from './hooks/useInteractive';
+import { setupOptimizers } from './utils/ModelOptimizer';
+import { initMenuVisibilityController, updateMenuButtonVisibility } from './utils/MenuVisibilityController';
+import { fixMobileMenuOnOpen, fixMobileMenuOnClose, fixTechnicalSubmenu, initMobileMenuFix } from './utils/MobileMenuFix';
+import AckermannPrinciple from './components/AckermannPrinciple';
+import ContactForm from './components/ContactForm';
+
+// Initialize optimizers
+setupOptimizers();
+
+// Limit texture sizes for better performance
+THREE.TextureLoader.prototype.crossOrigin = 'anonymous';
+THREE.Cache.enabled = true;
+
+// Set default pixel ratio for better performance
+if (window.devicePixelRatio > 2) {
+  // Create a temporary renderer to set pixel ratio
+  const tempRenderer = new THREE.WebGLRenderer();
+  tempRenderer.setPixelRatio(2); // Cap at 2x for better performance
+  tempRenderer.dispose();
+}
+
+// ADAS Components Implementation
+export const AdasFeatureCard = ({ title, description, icon, color = "red", imageUrl }) => {
+  const colorClasses = {
+    red: "from-voltaris-accent-red-light to-white hover:from-voltaris-accent-red-medium text-voltaris-red",
+    blue: "from-voltaris-accent-blue-light to-white hover:from-voltaris-accent-blue-medium text-voltaris-blue"
+  };
+  
+  return (
+    <div className="bg-white/95 backdrop-blur-md rounded-lg overflow-hidden border border-voltaris-light-border h-full relative group shadow-sm hover:shadow-md transition-all duration-300">
+      {/* Technical background pattern */}
+      <div className="absolute inset-0 opacity-10 pointer-events-none flex items-center justify-center">
+        <div className="circuit-pattern w-full h-full"></div>
+      </div>
+      
+      {/* Feature image */}
+      <div className="relative overflow-hidden h-48">
+        <img 
+          src={imageUrl} 
+          alt={title} 
+          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-70"></div>
+        <div className={`absolute top-4 right-4 p-2 rounded-full bg-black/50 ${color === 'red' ? 'text-red-500' : 'text-blue-500'}`}>
+          {icon}
+        </div>
+      </div>
+      
+      <div className="p-6 relative z-10">
+        <h4 className={`font-bold text-lg mb-3 ${color === 'red' ? 'text-red-500' : 'text-blue-500'}`}>{title}</h4>
+        <p className="text-gray-400 text-sm leading-relaxed">{description}</p>
+        
+        <div className={`w-0 group-hover:w-full h-0.5 bg-gradient-to-r ${colorClasses[color]} mt-4 transition-all duration-300 ease-in-out`}></div>
+      </div>
+    </div>
+  );
+};
+
+export const AdasTechnicalDiagram = () => {
+  return (
+    <div className="bg-white/90 backdrop-blur-sm p-6 rounded-lg border border-voltaris-light-border relative overflow-hidden shadow-sm">
+      {/* Circuit pattern */}
+      <div className="absolute inset-0 opacity-10 pointer-events-none">
+        <div className="circuit-pattern w-full h-full"></div>
+      </div>
+      
+      <div className="relative z-10">
+        <h4 className="text-xl font-bold mb-6 text-red-500">ADAS Sistem Mimarisi (Planlanan)</h4>
+        
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="bg-[#1f2023]/70 backdrop-blur-sm p-4 rounded-lg border border-blue-900/30">
+            <h5 className="text-blue-500 font-medium mb-2 flex items-center">
+              <Terminal size={18} className="mr-2" />
+              İşlem Birimi
+            </h5>
+            <ul className="text-sm text-gray-400 space-y-1">
+              <li className="flex items-start">
+                <div className="text-blue-500 mr-2">•</div>
+                <div>Raspberry Pi 5 - 8GB RAM</div>
+              </li>
+              <li className="flex items-start">
+                <div className="text-blue-500 mr-2">•</div>
+                <div>Gerçek zamanlı görüntü işleme</div>
+              </li>
+              <li className="flex items-start">
+                <div className="text-blue-500 mr-2">•</div>
+                <div>STM32F407 ile CAN haberleşmesi</div>
+              </li>
+            </ul>
+          </div>
+          
+          <div className="bg-[#1f2023]/70 backdrop-blur-sm p-4 rounded-lg border border-red-900/30">
+            <h5 className="text-red-500 font-medium mb-2 flex items-center">
+              <Camera size={18} className="mr-2" />
+              Sensör Birimi
+            </h5>
+            <ul className="text-sm text-gray-400 space-y-1">
+              <li className="flex items-start">
+                <div className="text-red-500 mr-2">•</div>
+                <div>1280x960 USB Kamera</div>
+              </li>
+              <li className="flex items-start">
+                <div className="text-red-500 mr-2">•</div>
+                <div>RD-03D Çoklu Nesne Algılama Radarı</div>
+              </li>
+              <li className="flex items-start">
+                <div className="text-red-500 mr-2">•</div>
+                <div>BH1750 Ortam Işığı Sensörü</div>
+              </li>
+            </ul>
+          </div>
+          
+          <div className="bg-gradient-to-br from-purple-900/30 via-black to-purple-900/20 p-6 rounded-lg border border-purple-900/30 hover:border-purple-500/40 transition-all duration-300 shadow-lg hover:shadow-purple-500/20 mt-6">
+              <div className="flex items-center mb-4">
+                <div className="text-purple-500 mr-3">
+                  <Sun size={24} />
+                </div>
+                <h3 className="text-xl font-bold text-purple-400">Otomatik Far Sistemi</h3>
+              </div>
+              <div className="latex-style-box bg-black/40 p-4 rounded-lg border border-purple-900/30">
+                <div className="text-white math-formula purple-formula academic-formula">
+                  <div className="formula-heading">Ortam Işığı Algılama</div>
+                  <div className="formula-content">
+                    <p>Sensör: BH1750 Ortam Işığı Modülü</p>
+                    <p>Protokol: I<sup>2</sup>C Haberleşme</p>
+                    <p>Eşik: I<sub>threshold</sub> = 10 lux</p>
+                    <p>Kontrol İşlemi: L(I) = I &lt; I<sub>threshold</sub> ? "AÇIK" : "KAPALI"</p>
+                  </div>
+                  <div className="formula-parameters">Hassasiyet: 1-65535 lux | Çözünürlük: 1 lux</div>
+                </div>
+                <p className="text-gray-300 mt-3">
+                  BH1750 ortam ışığı sensörü ile ortam karanlığı algılandığında otomatik olarak araç farları aktif edilir.
+                </p>
+              </div>
+            </div>
+        </div>
+        
+        {/* Connection diagram */}
+        <div className="mt-8 relative">
+          <svg className="w-full h-64" viewBox="0 0 800 200">
+            {/* Central processing unit */}
+            <rect x="350" y="80" width="100" height="50" rx="5" fill="none" stroke="#FF4254" strokeWidth="2" />
+            <text x="400" y="110" className="text-sm" textAnchor="middle" fill="#FF4254">Raspberry Pi 5</text>
+            
+            {/* Left side inputs */}
+            <rect x="100" y="30" width="120" height="30" rx="5" fill="none" stroke="#0044FF" strokeWidth="2" />
+            <text x="160" y="50" className="text-sm" textAnchor="middle" fill="#0044FF">Kamera</text>
+            <path d="M220 45 L350 90" stroke="#0044FF" strokeWidth="2" fill="none" strokeDasharray="5,5" />
+            
+            <rect x="100" y="80" width="120" height="30" rx="5" fill="none" stroke="#0044FF" strokeWidth="2" />
+            <text x="160" y="100" className="text-sm" textAnchor="middle" fill="#0044FF">Radar</text>
+            <path d="M220 95 L350 105" stroke="#0044FF" strokeWidth="2" fill="none" strokeDasharray="5,5" />
+            
+            <rect x="100" y="130" width="120" height="30" rx="5" fill="none" stroke="#0044FF" strokeWidth="2" />
+            <text x="160" y="150" className="text-sm" textAnchor="middle" fill="#0044FF">Işık Sensörü</text>
+            <path d="M220 145 L350 120" stroke="#0044FF" strokeWidth="2" fill="none" strokeDasharray="5,5" />
+            
+            {/* Right side outputs */}
+            <rect x="580" y="30" width="120" height="30" rx="5" fill="none" stroke="#FF4254" strokeWidth="2" />
+            <text x="640" y="50" className="text-sm" textAnchor="middle" fill="#FF4254">Ekran</text>
+            <path d="M450 90 L580 45" stroke="#FF4254" strokeWidth="2" fill="none" strokeDasharray="5,5" />
+            
+            <rect x="580" y="80" width="120" height="30" rx="5" fill="none" stroke="#FF4254" strokeWidth="2" />
+            <text x="640" y="100" className="text-sm" textAnchor="middle" fill="#FF4254">AKS</text>
+            <path d="M450 105 L580 95" stroke="#FF4254" strokeWidth="2" fill="none" strokeDasharray="5,5" />
+            
+            <rect x="580" y="130" width="120" height="30" rx="5" fill="none" stroke="#FF4254" strokeWidth="2" />
+            <text x="640" y="150" className="text-sm" textAnchor="middle" fill="#FF4254">Uyarı Sistemi</text>
+            <path d="M450 120 L580 145" stroke="#FF4254" strokeWidth="2" fill="none" strokeDasharray="5,5" />
+          </svg>
+          
+          {/* Technical decorative elements */}
+          <div className="absolute top-0 left-0 w-full h-full pointer-events-none opacity-10">
+            <div className="circuit-dots w-full h-full"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// Helper function for placeholder images (used by imported components)
+// eslint-disable-next-line no-unused-vars
+const getPlaceholderImage = (width, height, color = "0A0A14") => {
+  return `https://via.placeholder.com/${width}x${height}/${color}/FF4254?text=VOLTARIS`;
+};
+
+// Enhanced 3D Car Model Component with advanced interactivity
+const CarModel = () => {
+  const group = useRef();
+  const bodyRef = useRef();
+  const wheelsRef = useRef([]);
+  const lightsRef = useRef([]);
+  const [hovered, setHovered] = useState(false);
+  const [clicked, setClicked] = useState(false);
+  const [activePart, setActivePart] = useState(null);
+  const [specs, setSpecs] = useState({});
+  const [modelLoaded, setModelLoaded] = useState(false);
+  const [loadError, setLoadError] = useState(false);
+  const [loadProgress, setLoadProgress] = useState(0);
+  
+  useEffect(() => {
+    // Store the ref in a variable to avoid React warnings
+    const currentGroup = group.current;
+    wheelsRef.current = [];
+    lightsRef.current = [];
+    
+    if (!currentGroup) return;
+    
+    // Create a path to our 3D model, using the correct public URL path
+    const modelPath = `${process.env.PUBLIC_URL}/3D/model_3d/model_3d.draco.gltf`;
+    
+    // Set up DRACO decoder - use the generic CDN for broader compatibility
+    const dracoLoader = new DRACOLoader();
+    dracoLoader.setDecoderPath('https://www.gstatic.com/draco/v1/decoders/');
+    dracoLoader.setDecoderConfig({ type: 'js' }); // Use JS decoder for compatibility
+    
+    // Configure the GLTF loader with DRACO support
+    const gltfLoader = new GLTFLoader();
+    gltfLoader.setDRACOLoader(dracoLoader);
+    
+    try {
+      // First attempt to fetch to detect any network issues
+      fetch(modelPath)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(`Failed to fetch model: ${response.status} ${response.statusText}`);
+          }
+          return response;
+        })
+        .catch(error => {
+          console.error('Model fetch error:', error);
+          // Create fallback model if fetch fails
+          if (currentGroup) {
+            const fallbackModel = createFallbackModel();
+            currentGroup.add(fallbackModel);
+            setModelLoaded(true);
+          }
+        });
+      
+      // Use GLTFLoader with progress tracking
+      gltfLoader.load(
+        modelPath,
+        (gltf) => {
+          if (currentGroup) {
+            // Performance optimization: disable matrixAutoUpdate for static parts
+            gltf.scene.traverse((child) => {
+              if (child.isMesh) {
+                // Identify car parts for interactive features
+                if (child.name.includes('body') || child.name.includes('chassis')) {
+                  bodyRef.current = child;
+                } else if (child.name.includes('wheel')) {
+                  wheelsRef.current.push(child);
+                } else if (child.name.includes('light') || child.name.includes('lamp')) {
+                  lightsRef.current.push(child);
+                }
+                
+                // Performance optimizations
+                child.matrixAutoUpdate = false;
+                child.frustumCulled = true;
+                
+                // Only allow large objects to cast shadows for better performance
+                const boundingBox = new THREE.Box3().setFromObject(child);
+                const size = boundingBox.getSize(new THREE.Vector3());
+                const maxDimension = Math.max(size.x, size.y, size.z);
+                child.castShadow = maxDimension > 0.5;
+                child.receiveShadow = true;
+                
+                // Apply optimized materials
+                if (child.material) {
+                  // Optimize textures
+                  if (child.material.map) {
+                    child.material.map.anisotropy = 4; // Good balance of quality/performance
+                    child.material.map.minFilter = THREE.LinearFilter;
+                  }
+                  
+                  // Set material properties for better performance
+                  if (child.name.includes('body')) {
+                    child.material = new THREE.MeshPhysicalMaterial({
+                      color: new THREE.Color(0x2a2a2a),
+                      metalness: 0.9,
+                      roughness: 0.1,
+                      clearcoat: 0.5,
+                      clearcoatRoughness: 0.1
+                    });
+                  } else if (child.name.includes('window') || child.name.includes('glass')) {
+                    child.material = new THREE.MeshPhysicalMaterial({
+                      color: new THREE.Color(0xffffff),
+                      transmission: 0.9,
+                      transparent: true,
+                      metalness: 0.1,
+                      roughness: 0.05
+                    });
+                  } else if (child.name.includes('light') || child.name.includes('lamp')) {
+                    child.material = new THREE.MeshBasicMaterial({
+                      color: new THREE.Color(0xffffff),
+                      emissive: new THREE.Color(0xffffaa),
+                      emissiveIntensity: 1.0
+                    });
+                  }
+                }
+                
+                // Update matrix once
+                child.updateMatrix();
+              }
+            });
+            
+            // Add the model to our scene
+            currentGroup.add(gltf.scene);
+            setModelLoaded(true);
+            
+            // Extract specs from the model for information display
+            setSpecs({
+              polygons: getPolygonCount(gltf.scene),
+              materials: getMaterialCount(gltf.scene),
+              textures: getTextureCount(gltf.scene)
+            });
+          }
+          
+          // Clean up DRACO loader
+          dracoLoader.dispose();
+        },
+        // Progress callback
+        (xhr) => {
+          if (xhr.lengthComputable) {
+            const percentComplete = Math.round((xhr.loaded / xhr.total) * 100);
+            setLoadProgress(percentComplete);
+          }
+        },
+        // Error callback
+        (error) => {
+          console.error('Error loading 3D model:', error);
+          setLoadError(true);
+          
+          // Create fallback model if loading fails
+          if (currentGroup) {
+            const fallbackModel = createFallbackModel();
+            currentGroup.add(fallbackModel);
+            setModelLoaded(true);
+          }
+        }
+      );
+    } catch (error) {
+      console.error('Error setting up 3D model loader:', error);
+      setLoadError(true);
+      
+      // Create fallback model on error
+      if (currentGroup) {
+        const fallbackModel = createFallbackModel();
+        currentGroup.add(fallbackModel);
+        setModelLoaded(true);
+      }
+    }
+    
+    // Clean up function to remove the model when component unmounts
+    return () => {
+      if (currentGroup) {
+        // Dispose of geometries and textures to prevent memory leaks
+        currentGroup.traverse((child) => {
+          if (child.isMesh) {
+            child.geometry.dispose();
+            if (child.material.map) child.material.map.dispose();
+            child.material.dispose();
+          }
+        });
+        
+        // Remove all children
+        while (currentGroup.children.length > 0) {
+          currentGroup.remove(currentGroup.children[0]);
+        }
+      }
+    };
+  }, []);
+  
+  // Helper functions to get model statistics
+  const getPolygonCount = (model) => {
+    let polygons = 0;
+    model.traverse((child) => {
+      if (child.isMesh && child.geometry) {
+        polygons += child.geometry.attributes.position.count / 3;
+      }
+    });
+    return Math.round(polygons);
+  };
+  
+  const getMaterialCount = (model) => {
+    const materials = new Set();
+    model.traverse((child) => {
+      if (child.isMesh && child.material) {
+        materials.add(child.material);
+      }
+    });
+    return materials.size;
+  };
+  
+  const getTextureCount = (model) => {
+    const textures = new Set();
+    model.traverse((child) => {
+      if (child.isMesh && child.material) {
+        if (child.material.map) textures.add(child.material.map);
+        if (child.material.normalMap) textures.add(child.material.normalMap);
+        if (child.material.roughnessMap) textures.add(child.material.roughnessMap);
+        if (child.material.metalnessMap) textures.add(child.material.metalnessMap);
+      }
+    });
+    return textures.size;
+  };
+  
+  // Creates a simple fallback model if the main model fails to load
+  const createFallbackModel = () => {
+    const fallbackGroup = new THREE.Group();
+    
+    // Create a simple car body
+    const bodyGeometry = new THREE.BoxGeometry(2, 0.6, 4);
+    const bodyMaterial = new THREE.MeshPhysicalMaterial({
+      color: 0x2a2a2a,
+      metalness: 0.9,
+      roughness: 0.2,
+    });
+    const body = new THREE.Mesh(bodyGeometry, bodyMaterial);
+    body.position.y = 0.6;
+    fallbackGroup.add(body);
+    
+    // Create wheels
+    const wheelGeometry = new THREE.CylinderGeometry(0.4, 0.4, 0.2, 16);
+    const wheelMaterial = new THREE.MeshPhongMaterial({ color: 0x111111 });
+    
+    // Front-left wheel
+    const wheelFL = new THREE.Mesh(wheelGeometry, wheelMaterial);
+    wheelFL.rotation.z = Math.PI / 2;
+    wheelFL.position.set(-1, 0.4, -1.2);
+    fallbackGroup.add(wheelFL);
+    wheelsRef.current.push(wheelFL);
+    
+    // Front-right wheel
+    const wheelFR = new THREE.Mesh(wheelGeometry, wheelMaterial);
+    wheelFR.rotation.z = Math.PI / 2;
+    wheelFR.position.set(1, 0.4, -1.2);
+    fallbackGroup.add(wheelFR);
+    wheelsRef.current.push(wheelFR);
+    
+    // Rear-left wheel
+    const wheelRL = new THREE.Mesh(wheelGeometry, wheelMaterial);
+    wheelRL.rotation.z = Math.PI / 2;
+    wheelRL.position.set(-1, 0.4, 1.2);
+    fallbackGroup.add(wheelRL);
+    wheelsRef.current.push(wheelRL);
+    
+    // Rear-right wheel
+    const wheelRR = new THREE.Mesh(wheelGeometry, wheelMaterial);
+    wheelRR.rotation.z = Math.PI / 2;
+    wheelRR.position.set(1, 0.4, 1.2);
+    fallbackGroup.add(wheelRR);
+    wheelsRef.current.push(wheelRR);
+    
+    // Create windows/cabin
+    const cabinGeometry = new THREE.BoxGeometry(1.8, 0.5, 2);
+    const cabinMaterial = new THREE.MeshPhysicalMaterial({
+      color: 0xffffff,
+      metalness: 0,
+      roughness: 0,
+      transmission: 0.9,
+      transparent: true
+    });
+    const cabin = new THREE.Mesh(cabinGeometry, cabinMaterial);
+    cabin.position.set(0, 1.1, 0);
+    fallbackGroup.add(cabin);
+    
+    // Create lights
+    const lightGeometry = new THREE.BoxGeometry(0.3, 0.1, 0.1);
+    const lightMaterial = new THREE.MeshBasicMaterial({
+      color: 0xffffaa,
+      emissive: 0xffffaa
+    });
+    
+    // Front lights
+    const lightFL = new THREE.Mesh(lightGeometry, lightMaterial);
+    lightFL.position.set(-0.7, 0.7, -2);
+    fallbackGroup.add(lightFL);
+    lightsRef.current.push(lightFL);
+    
+    const lightFR = new THREE.Mesh(lightGeometry, lightMaterial);
+    lightFR.position.set(0.7, 0.7, -2);
+    fallbackGroup.add(lightFR);
+    lightsRef.current.push(lightFR);
+    
+    return fallbackGroup;
+  };
+  
+  const handlePointerOver = (e, part) => {
+    if (!modelLoaded) return;
+    e.stopPropagation();
+    setHovered(true);
+    setActivePart(part);
+  };
+  
+  const handlePointerOut = (e) => {
+    if (!modelLoaded) return;
+    e.stopPropagation();
+    setHovered(false);
+    setActivePart(null);
+  };
+  
+  const handleClick = (e, part) => {
+    if (!modelLoaded) return;
+    e.stopPropagation();
+    setClicked(!clicked);
+    setActivePart(part);
+  };
+  
+  useFrame((state) => {
+    if (group.current) {
+      // More dynamic rotation based on clicked state
+      if (clicked) {
+        // Faster rotation when clicked
+        group.current.rotation.y += 0.01;
+      } else {
+        // Standard smooth rotation when not clicked
+        group.current.rotation.y = Math.sin(state.clock.getElapsedTime() * 0.3) * 0.2 + Math.PI / 4;
+      }
+      
+      // Enhanced floating motion
+      group.current.position.y = Math.sin(state.clock.getElapsedTime() * 0.5) * 0.05 - 0.7;
+      
+      // Animate wheels if available
+      wheelsRef.current.forEach(wheel => {
+        if (wheel) {
+          wheel.rotation.z += 0.01; // Spinning wheels effect
+        }
+      });
+      
+      // Pulse lights if available
+      lightsRef.current.forEach(light => {
+        if (light && light.material) {
+          light.material.emissiveIntensity = 0.5 + Math.sin(state.clock.getElapsedTime() * 3) * 0.5;
+        }
+      });
+      
+      // Scale effect when part is hovered
+      if (bodyRef.current) {
+        if (activePart === 'body' && hovered) {
+          bodyRef.current.scale.set(1.05, 1.05, 1.05);
+        } else {
+          bodyRef.current.scale.set(1, 1, 1);
+        }
+      }
+    }
+  });
+  
+  // Render loading indicator if model is not yet loaded
+  if (!modelLoaded && !loadError) {
+    return (
+      <group>
+        {/* Yükleme göstergesi */}
+        <mesh position={[0, 0, 0]}>
+        <boxGeometry args={[0.5, 0.5, 0.5]} />
+        <meshStandardMaterial color="#444444" />
+        </mesh>
+        <Text 
+        position={[0, -1, 0]} 
+        color="white"
+        fontSize={0.2}
+        anchorX="center"
+        anchorY="middle"
+        >
+        {`Model yükleniyor... ${loadProgress}%`}
+        </Text>
+      </group>
+    );
+  }
+  
+  // Warning for loading errors
+  if (loadError) {
+    return (
+      <group>
+        <mesh position={[0, 0, 0]}>
+          <boxGeometry args={[0.5, 0.5, 0.5]} />
+          <meshStandardMaterial color="#FF4254" />
+        </mesh>
+        <Text 
+          position={[0, -1, 0]} 
+          color="#FF4254"
+          fontSize={0.2}
+          anchorX="center"
+          anchorY="middle"
+        >
+          Model yüklenemedi
+        </Text>
+      </group>
+    );
+  }
+  
+  return (
+    <group 
+      ref={group} 
+      position={[0, 0, 0]}
+      onPointerOver={(e) => handlePointerOver(e, 'model')}
+      onPointerOut={handlePointerOut}
+      onClick={(e) => handleClick(e, 'model')}
+    >
+      {/* Model will be added to this group via useEffect */}
+      
+      {/* Display technical specs if model is loaded */}
+      {modelLoaded && specs.polygons && (
+        <group position={[2, 0, 0]}>
+          <Text
+            position={[0, 0.5, 0]} 
+            color="#FF4254"
+            fontSize={0.15}
+            anchorX="left"
+            anchorY="middle"
+          >
+            {`Poligonlar: ${specs.polygons.toLocaleString()}`}
+          </Text>
+          <Text
+            position={[0, 0.2, 0]} 
+            color="#FF4254"
+            fontSize={0.15}
+            anchorX="left"
+            anchorY="middle"
+          >
+            {`Materyaller: ${specs.materials}`}
+          </Text>
+          <Text
+            position={[0, -0.1, 0]} 
+            color="#FF4254"
+            fontSize={0.15}
+            anchorX="left"
+            anchorY="middle"
+          >
+            {`Dokular: ${specs.textures}`}
+          </Text>
+        </group>
+      )}
+    </group>
+  );
+};
+
+// Scene setup with lighting - not used directly, but needed for definition
+// eslint-disable-next-line no-unused-vars
+const Scene = () => {
+  const floorRef = useRef();
+  const gridRef = useRef();
+  const mousePos = useRef({ x: 0, y: 0 });
+  // eslint-disable-next-line no-unused-vars
+  const { viewport, camera } = useThree();
+  
+  // Track mouse position for interactive lighting
+  const updateMousePos = useCallback(({ clientX, clientY }) => {
+    mousePos.current = {
+      x: (clientX / window.innerWidth) * 2 - 1,
+      y: -(clientY / window.innerHeight) * 2 + 1
+    };
+  }, []);
+  
+  useEffect(() => {
+    window.addEventListener('mousemove', updateMousePos);
+    return () => window.removeEventListener('mousemove', updateMousePos);
+  }, [updateMousePos]);
+  
+  useFrame((state) => {
+    if (floorRef.current) {
+      // Create a ripple effect on the floor
+      floorRef.current.material.displacementScale = 0.1 + Math.sin(state.clock.getElapsedTime() * 0.5) * 0.05;
+    }
+    
+    if (gridRef.current) {
+      // Pulse the grid with mouse movement
+      const targetX = mousePos.current.x * 0.5;
+      const targetY = mousePos.current.y * 0.5;
+      gridRef.current.rotation.x = THREE.MathUtils.lerp(gridRef.current.rotation.x, targetY * 0.2, 0.05);
+      gridRef.current.rotation.y = THREE.MathUtils.lerp(gridRef.current.rotation.y, targetX * 0.2, 0.05);
+    }
+  });
+
+  return (
+    <>
+      <ambientLight intensity={0.2} />
+      <directionalLight 
+        position={[10, 10, 5]} 
+        intensity={0.8} 
+        castShadow 
+        shadow-mapSize-width={2048} 
+        shadow-mapSize-height={2048} 
+      />
+      <spotLight position={[-10, 10, 5]} intensity={0.5} castShadow angle={0.3} />
+      
+      {/* Dynamic accent lights that follow mouse position */}
+      <pointLight 
+        position={[5 + mousePos.current.x * 3, 5 + mousePos.current.y * 2, -5]} 
+        intensity={0.5} 
+        color="#FF2233" 
+      />
+      <pointLight 
+        position={[-5 - mousePos.current.x * 3, 5 + mousePos.current.y * 2, 5]} 
+        intensity={0.5} 
+        color="#0044FF" 
+      />
+      
+      <CarModel />
+      
+      {/* Reflective floor with grid */}
+      <mesh 
+        ref={floorRef}
+        rotation={[-Math.PI / 2, 0, 0]} 
+        position={[0, -1, 0]} 
+        receiveShadow
+      >
+        <planeGeometry args={[30, 30, 50, 50]} />
+        <meshStandardMaterial 
+          color="#050505" 
+          metalness={0.8} 
+          roughness={0.2}
+          wireframe={true} 
+          emissive="#0033FF"
+          emissiveIntensity={0.1}
+          displacementScale={0.1}
+        />
+      </mesh>
+      
+      {/* Background grid - interactive */}
+      <group ref={gridRef} position={[0, 0, -5]}>
+        <mesh receiveShadow>
+          <planeGeometry args={[50, 30, 20, 20]} />
+          <meshStandardMaterial 
+            color="#000000"
+            wireframe={true}
+            emissive="#FF4254"
+            emissiveIntensity={0.2}
+            side={THREE.DoubleSide}
+          />
+        </mesh>
+      </group>
+      
+      <OrbitControls enableZoom={false} enablePan={false} minPolarAngle={Math.PI/3} maxPolarAngle={Math.PI/2} />
+    </>
+  );
+};
+
+const mobileSlideStyles = {
+  position: 'fixed',
+  top: 0,
+  bottom: 0,
+  right: 0,
+  width: '250px',
+  maxWidth: '100%',
+  zIndex: 9999,
+  overflowY: 'auto'
+};
+
+// Main App Component
+function App() {
+  const [activeSection, setActiveSection] = useState('home');
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [mobileSubmenuOpen, setMobileSubmenuOpen] = useState(true); // Default to open
+  const [scrolled, setScrolled] = useState(false);
+  const [loading, setLoading] = useState(true);
+  // State declarations (but unused, could be removed later)
+  const [sponsorshipModalOpen, setSponsorshipModalOpen] = useState(false);
+  const [currentSponsorTier, setCurrentSponsorTier] = useState('platinum');
+  const [isMenuTransitioning, setIsMenuTransitioning] = useState(false); // Add this to prevent multiple clicks
+  
+  // Initialize interactive effects
+  // useMouseTrail(); // Disabled to improve performance
+  useParallax();
+  useScrollAnimation();
+  useTechnicalSpecsAnimation();
+  
+  // Update body data attribute and menu visibility when active section changes
+  useEffect(() => {
+    document.body.setAttribute('data-section', activeSection);
+    updateMenuButtonVisibility(activeSection, scrolled, true);
+  }, [activeSection, scrolled]);
+  
+  const [showSignature, setShowSignature] = useState(true);
+
+  useEffect(() => {
+    // Simulate loading delay for animation effect
+    const loadingTimer = setTimeout(() => {
+      setLoading(false);
+    }, 2800);
+
+    // Timer to hide signature after 4 seconds
+    const signatureTimer = setTimeout(() => {
+      setShowSignature(false);
+    }, 4000);
+    
+    // Initialize the menu visibility controller
+    const cleanup1 = initMenuVisibilityController(
+      () => activeSection,
+      () => scrolled
+    );
+    
+    // Initialize mobile menu fixes
+    const cleanup2 = initMobileMenuFix();
+    
+    const handleScroll = () => {
+      if (window.scrollY > 50) {
+        setScrolled(true);
+      } else {
+        setScrolled(false);
+      }
+      
+      // Check if we're in a light section
+      const sponsorsSection = document.getElementById('sponsors');
+      if (sponsorsSection) {
+        const sponsorsRect = sponsorsSection.getBoundingClientRect();
+        // If sponsors section is in view
+        if (sponsorsRect.top < window.innerHeight && sponsorsRect.bottom > 0) {
+          // We can use this information if needed later
+        }
+      }
+
+      // Update active section based on scroll position
+      const sections = document.querySelectorAll('section');
+      const scrollPosition = window.scrollY + 300;
+
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        const sectionHeight = section.offsetHeight;
+        const sectionId = section.getAttribute('id');
+
+        if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+          setActiveSection(sectionId);
+          
+          // Update menu button visibility when section changes
+          updateMenuButtonVisibility(sectionId, window.scrollY > 50);
+        }
+      });
+    };
+
+    // Add event listener for scroll
+    window.addEventListener('scroll', handleScroll);
+    
+    // Initial update for visibility
+    updateMenuButtonVisibility(activeSection, scrolled, true);
+    
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      if (cleanup1) cleanup1();
+      if (cleanup2) cleanup2();
+      clearTimeout(loadingTimer);
+      clearTimeout(signatureTimer);
+    };
+  }, []);
+
+  // Function for handling mobile menu toggle regardless of section
+  const toggleMobileMenu = (e) => {
+    if (e) e.preventDefault();
+    
+    // Prevent multiple rapid clicks during animation
+    if (isMenuTransitioning) return;
+    
+    // Set transitioning state to block additional clicks
+    setIsMenuTransitioning(true);
+    
+    console.log('Toggling mobile menu - current state:', mobileMenuOpen);
+    const newMenuState = !mobileMenuOpen;
+    setMobileMenuOpen(newMenuState);
+    
+    if (newMenuState) {
+      fixMobileMenuOnOpen();
+    } else {
+      fixMobileMenuOnClose();
+    }
+    
+    // Direct DOM manipulation as a fallback to ensure menu display works
+    const mobilePanel = document.querySelector('.mobile-menu-panel');
+    if (mobilePanel) {
+      console.log('Applying class to panel:', newMenuState ? 'show' : 'hide');
+      if (newMenuState) {
+        mobilePanel.classList.remove('hide');
+        mobilePanel.classList.add('show');
+        mobilePanel.style.transform = 'translateX(0)';
+      } else {
+        mobilePanel.classList.remove('show');
+        mobilePanel.classList.add('hide');
+        mobilePanel.style.transform = 'translateX(100%)';
+      }
+    } else {
+      console.log('Mobile panel not found!');
+    }
+    
+    // Release the block after animation completes
+    setTimeout(() => {
+      setIsMenuTransitioning(false);
+    }, 350); // Slightly longer than animation duration (300ms)
+  };
+
+  // Function to toggle the technical submenu in mobile view
+  const toggleTechnicalSubmenu = (e) => {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+    console.log('Toggling technical submenu, current state:', mobileSubmenuOpen);
+    const newSubmenuState = !mobileSubmenuOpen;
+    setMobileSubmenuOpen(newSubmenuState);
+    
+    // Apply fix
+    fixTechnicalSubmenu(newSubmenuState);
+    
+    // Direct manipulation of DOM as fallback
+    setTimeout(() => {
+      const submenu = document.querySelector('.mobile-submenu');
+      if (submenu) {
+        if (!mobileSubmenuOpen) {
+          submenu.classList.add('visible');
+          submenu.classList.remove('hidden');
+          console.log('Technical submenu visible');
+        } else {
+          submenu.classList.add('hidden');
+          submenu.classList.remove('visible');
+          console.log('Technical submenu hidden');
+        }
+      } else {
+        console.log('Technical submenu element not found');
+      }
+    }, 10);
+  };
+
+  const scrollToSection = (sectionId) => {
+    const section = document.getElementById(sectionId);
+    if (section) {
+      // Ensure menu is closed before scroll animation starts
+      if (mobileMenuOpen) {
+        // First close menu with short timeout to allow state update
+        setMobileMenuOpen(false);
+        
+        // Then scroll after a short delay to ensure menu animation completes
+        setTimeout(() => {
+          window.scrollTo({
+            top: section.offsetTop - 80,
+            behavior: 'smooth'
+          });
+          setActiveSection(sectionId);
+        }, 350); // Match the menu animation duration
+      } else {
+        // If menu is already closed, scroll immediately
+        window.scrollTo({
+          top: section.offsetTop - 80,
+          behavior: 'smooth'
+        });
+        setActiveSection(sectionId);
+      }
+    }
+  };
+
+  // Function to open sponsorship modal with the specified tier
+  // eslint-disable-next-line no-unused-vars
+  const handleOpenSponsorshipModal = (tier) => {
+    setCurrentSponsorTier(tier);
+    setSponsorshipModalOpen(true);
+  };
+
+  // Loading screen
+  if (loading) {
+    return (
+      <div className="fixed inset-0 bg-black flex items-center justify-center overflow-hidden">
+        {/* Circuit animation in background */}
+        <CircuitLoadingAnimation />
+        
+        {/* Colored glow effects */}
+        <div className="fixed inset-0 pointer-events-none">
+          <div className="absolute top-0 left-0 w-1/3 h-full bg-gradient-to-r from-red-500/10 to-transparent"></div>
+          <div className="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-blue-500/10 to-transparent"></div>
+        </div>
+        
+        {/* Center logo box */}
+        <div className="relative z-10 flex flex-col items-center">
+          <div className="w-48 h-48 bg-black border border-gray-800 rounded-lg overflow-hidden flex items-center justify-center mb-8
+                       shadow-lg shadow-blue-500/20 relative">
+            {/* Inner shadow effect */}
+            <div className="absolute inset-0 shadow-inner"></div>
+            
+            {/* Logo - now with 180deg rotation to match the final position */}
+            <img 
+              src={`${process.env.PUBLIC_URL}/logo_sadece.png`}
+              alt="Voltaris Logo" 
+              width="128" 
+              height="128" 
+              loading="eager" 
+              className="w-32 h-32 animate-spin-loading transition-all duration-1000" 
+            />
+            
+            {/* Corner glow effects */}
+            <div className="absolute -top-2 -left-2 w-4 h-4 bg-red-500/30 blur-md rounded-full"></div>
+            <div className="absolute -bottom-2 -right-2 w-4 h-4 bg-blue-500/30 blur-md rounded-full"></div>
+          </div>
+          
+          <div className="text-3xl font-bold text-white tracking-wider">VOLTARIS</div>
+        </div>
+
+        {/* Colored signature at bottom right - fades away after 2 seconds */}
+        {showSignature && (
+          <div className="fixed bottom-4 right-4 text-xs sm:text-sm font-mono z-50 transition-opacity duration-500">
+            <span className="text-red-500">{'// '}</span>
+            <span className="text-green-500">{'DESIGNED'}</span>
+            <span className="text-yellow-500">{'_WITH_'}</span>
+            <span className="text-blue-500">{'PASSION_'}</span>
+            <span className="text-red-500">{'BY_'}</span>
+            <span className="text-green-500">{'VOLTARIS_'}</span>
+            <span className="text-yellow-500">{'TEAM'}</span>
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  return (
+    <div className="bg-voltaris-light-bg text-voltaris-light-text-primary min-h-screen relative">
+      {/* Add MobileMenuFallback for emergency fixes */}
+      <MobileMenuFallback />
+      
+      {/* Standalone Mobile Menu Button */}
+      <button 
+        className="md:hidden text-voltaris-light-text-primary focus:outline-none fixed top-5 right-4 z-[9999] mobile-menu-button" 
+        onClick={toggleMobileMenu}
+        aria-label="Menu Toggle"
+        style={{ 
+          background: 'rgba(245, 247, 250, 0.9)',
+          backdropFilter: 'blur(8px)',
+          padding: '0.6rem',
+          borderRadius: '0.375rem',
+          display: activeSection === 'home' || window.innerWidth < 768 ? 'flex' : 'none',
+          alignItems: 'center',
+          justifyContent: 'center',
+          boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+          border: '1px solid rgba(255,66,84,0.2)',
+          width: '42px',
+          height: '42px'
+        }}
+      >
+        {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+      </button>
+      
+      {/* Global technical background pattern with hole effect */}
+      <div className="fixed inset-0 bg-circuit-pattern opacity-20 pointer-events-none z-0"></div>
+      
+      {/* Main Navigation */}
+      <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'py-2 bg-white/80 backdrop-blur shadow-sm' : 'py-4 bg-transparent'}`}>
+        <div className="container mx-auto px-4">
+          <div className="flex justify-between items-center">
+            {/* Logo */}
+            <div className="flex items-center">
+              <img 
+                src="logo_sadece.svg" 
+                alt="Voltaris Logo" 
+                className="h-10 w-auto mr-3"
+              />
+              <span className={`font-bold text-xl ${scrolled ? 'text-voltaris-dark' : 'text-voltaris-dark'}`}>
+                Voltaris
+              </span>
+            </div>
+            
+            {/* Desktop Navigation */}
+            <nav className="hidden md:flex space-x-6">
+              <a 
+                href="#home" 
+                className={`hover:text-voltaris-red transition-all duration-300 ${activeSection === 'home' ? 'text-voltaris-red' : 'text-voltaris-light-text-primary'}`}
+                onClick={(e) => { e.preventDefault(); scrollToSection('home'); }}
+              >
+                Ana Sayfa
+              </a>
+              <a 
+                href="#about" 
+                className={`hover:text-voltaris-red transition-all duration-300 ${activeSection === 'about' ? 'text-voltaris-red' : 'text-voltaris-light-text-primary'}`}
+                onClick={(e) => { e.preventDefault(); scrollToSection('about'); }}
+              >
+                Hakkımızda
+              </a>
+              <a 
+                href="#technical" 
+                className={`hover:text-voltaris-red transition-all duration-300 ${activeSection === 'technical' ? 'text-voltaris-red' : 'text-voltaris-light-text-primary'}`}
+                onClick={(e) => { e.preventDefault(); scrollToSection('technical'); }}
+              >
+                Teknik
+              </a>
+              <a 
+                href="#team" 
+                className={`hover:text-voltaris-red transition-all duration-300 ${activeSection === 'team' ? 'text-voltaris-red' : 'text-voltaris-light-text-primary'}`}
+                onClick={(e) => { e.preventDefault(); scrollToSection('team'); }}
+              >
+                Takım
+              </a>
+              <a 
+                href="#sponsors" 
+                className={`hover:text-voltaris-red transition-all duration-300 ${activeSection === 'sponsors' ? 'text-voltaris-red' : 'text-voltaris-light-text-primary'}`}
+                onClick={(e) => { e.preventDefault(); scrollToSection('sponsors'); }}
+              >
+                Sponsorlar
+              </a>
+              <a 
+                href="#contact" 
+                className={`hover:text-voltaris-red transition-all duration-300 ${activeSection === 'contact' ? 'text-voltaris-red' : 'text-voltaris-light-text-primary'}`}
+                onClick={(e) => { e.preventDefault(); scrollToSection('contact'); }}
+              >
+                İletişim
+              </a>
+            </nav>
+          </div>
+        </div>
+      </header>
+      
+      {/* Responsive Mobile Menu - Side drawer */}
+      <div 
+        className={`fixed top-0 right-0 h-full z-[9998] transform ${mobileMenuOpen ? 'translate-x-0' : 'translate-x-full'} transition-transform duration-300 ease-in-out md:hidden`}
+        style={mobileSlideStyles}
+      >
+        <div className="bg-white h-full flex flex-col shadow-xl">
+          <div className="p-4 border-b border-voltaris-light-border flex justify-between items-center">
+            <span className="font-semibold text-voltaris-dark">Menü</span>
+            <button 
+              className="text-voltaris-light-text-primary hover:text-voltaris-red focus:outline-none"
+              onClick={toggleMobileMenu}
+            >
+              <X size={24} />
+            </button>
+          </div>
+          
+          <nav className="flex-1 overflow-y-auto p-4">
+            <ul className="space-y-2">
+              <li>
+                <a 
+                  href="#home" 
+                  className={`block py-2 px-3 rounded-md ${activeSection === 'home' ? 'bg-voltaris-accent-red-light text-voltaris-red' : 'hover:bg-gray-100'}`}
+                  onClick={(e) => { e.preventDefault(); scrollToSection('home'); toggleMobileMenu(); }}
+                >
+                  Ana Sayfa
+                </a>
+              </li>
+              <li>
+                <a 
+                  href="#about" 
+                  className={`block py-2 px-3 rounded-md ${activeSection === 'about' ? 'bg-voltaris-accent-red-light text-voltaris-red' : 'hover:bg-gray-100'}`}
+                  onClick={(e) => { e.preventDefault(); scrollToSection('about'); toggleMobileMenu(); }}
+                >
+                  Hakkımızda
+                </a>
+              </li>
+              <li>
+                <a 
+                  href="#technical" 
+                  className={`block py-2 px-3 rounded-md ${activeSection === 'technical' ? 'bg-voltaris-accent-red-light text-voltaris-red' : 'hover:bg-gray-100'}`}
+                  onClick={(e) => { 
+                    e.preventDefault(); 
+                    if (mobileSubmenuOpen) {
+                      scrollToSection('technical'); 
+                      toggleMobileMenu();
+                    } else {
+                      setMobileSubmenuOpen(true);
+                    }
+                  }}
+                >
+                  <div className="flex justify-between items-center">
+                    <span>Teknik</span>
+                    <ChevronDown size={16} className={`transform transition-transform ${mobileSubmenuOpen ? 'rotate-180' : ''}`} />
+                  </div>
+                </a>
+                
+                {mobileSubmenuOpen && (
+                  <div className="ml-4 mt-2 space-y-1">
+                    <a 
+                      href="#car" 
+                      className="block py-1.5 px-3 rounded-md text-sm hover:bg-gray-100"
+                      onClick={(e) => { e.preventDefault(); scrollToSection('car'); toggleMobileMenu(); }}
+                    >
+                      Araç Teknik
+                    </a>
+                    <a 
+                      href="#adas" 
+                      className="block py-1.5 px-3 rounded-md text-sm hover:bg-gray-100"
+                      onClick={(e) => { e.preventDefault(); scrollToSection('adas'); toggleMobileMenu(); }}
+                    >
+                      ADAS Sistemi
+                    </a>
+                    <a 
+                      href="#battery" 
+                      className="block py-1.5 px-3 rounded-md text-sm hover:bg-gray-100"
+                      onClick={(e) => { e.preventDefault(); scrollToSection('battery'); toggleMobileMenu(); }}
+                    >
+                      Batarya Yönetimi
+                    </a>
+                    <a 
+                      href="#steering" 
+                      className="block py-1.5 px-3 rounded-md text-sm hover:bg-gray-100"
+                      onClick={(e) => { e.preventDefault(); scrollToSection('steering'); toggleMobileMenu(); }}
+                    >
+                      Direksiyon Sistemi
+                    </a>
+                  </div>
+                )}
+              </li>
+              <li>
+                <a 
+                  href="#team" 
+                  className={`block py-2 px-3 rounded-md ${activeSection === 'team' ? 'bg-voltaris-accent-red-light text-voltaris-red' : 'hover:bg-gray-100'}`}
+                  onClick={(e) => { e.preventDefault(); scrollToSection('team'); toggleMobileMenu(); }}
+                >
+                  Takım
+                </a>
+              </li>
+              <li>
+                <a 
+                  href="#sponsors" 
+                  className={`block py-2 px-3 rounded-md ${activeSection === 'sponsors' ? 'bg-voltaris-accent-red-light text-voltaris-red' : 'hover:bg-gray-100'}`}
+                  onClick={(e) => { e.preventDefault(); scrollToSection('sponsors'); toggleMobileMenu(); }}
+                >
+                  Sponsorlar
+                </a>
+              </li>
+              <li>
+                <a 
+                  href="#contact" 
+                  className={`block py-2 px-3 rounded-md ${activeSection === 'contact' ? 'bg-voltaris-accent-red-light text-voltaris-red' : 'hover:bg-gray-100'}`}
+                  onClick={(e) => { e.preventDefault(); scrollToSection('contact'); toggleMobileMenu(); }}
+                >
+                  İletişim
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+
+      {/* Technical Section - lighter background */}
+      <section id="technical" className="py-16 relative bg-voltaris-light-accent">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-10">
+            <h2 className="text-3xl md:text-4xl font-bold text-voltaris-light-text-primary mb-4">Teknik Özellikler</h2>
+            <p className="text-voltaris-light-text-secondary max-w-2xl mx-auto">
+              Voltaris takımı olarak geliştirdiğimiz elektrikli aracımızın teknik detayları ve
+              yenilikçi sistemleri hakkında bilgi alın.
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+            <div className="bg-white backdrop-blur-md p-6 rounded-lg border border-voltaris-light-border hover:border-voltaris-red/40 transition-colors shadow-sm hover:shadow-md group h-full">
+              <div className="text-voltaris-red mb-4 flex justify-center">
+                <Zap size={32} className="sm:w-10 sm:h-10" />
+              </div>
+              <h3 className="text-lg sm:text-xl font-bold mb-2 text-center text-voltaris-light-text-primary">Elektrikli Sürüş</h3>
+              <ul className="space-y-1.5 sm:space-y-2 text-voltaris-light-text-secondary text-sm">
+                <li className="flex items-start">
+                  <span className="text-voltaris-red mr-2">•</span>
+                  <span>Dahili BLDC Motorlar (2x 2.5kW)</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-voltaris-red mr-2">•</span>
+                  <span>Geliştirilen Yerli Motor Sürücü</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-voltaris-red mr-2">•</span>
+                  <span>Li-ion 68.97V 50Ah Batarya Planlaması</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-voltaris-red mr-2">•</span>
+                  <span>Yerli BYS Sistemi Çalışmaları</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-voltaris-red mr-2">•</span>
+                  <span>STM32F407 AKS Tasarımı</span>
+                </li>
+              </ul>
+            </div>
+            
+            <div className="bg-white backdrop-blur-md p-6 rounded-lg border border-voltaris-light-border hover:border-voltaris-blue/40 transition-colors shadow-sm hover:shadow-md group h-full">
+              <div className="text-voltaris-blue mb-4 flex justify-center">
+                <Terminal size={32} className="sm:w-10 sm:h-10" />
+              </div>
+              <h3 className="text-lg sm:text-xl font-bold mb-2 text-center text-voltaris-light-text-primary">Şasi & Yapı</h3>
+              <ul className="space-y-1.5 sm:space-y-2 text-voltaris-light-text-secondary text-sm">
+                <li className="flex items-start">
+                  <span className="text-voltaris-blue mr-2">•</span>
+                  <span>Alüminyum 6063 T6 Şasi Tasarımı</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-voltaris-blue mr-2">•</span>
+                  <span>Cam Elyaf (Fiberglass) Kabuk Planlaması</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-voltaris-blue mr-2">•</span>
+                  <span>Bağımsız Süspansiyon Çalışmaları</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-voltaris-blue mr-2">•</span>
+                  <span>Hidrolik Disk Fren Sistemi Tasarımı</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-voltaris-blue mr-2">•</span>
+                  <span>17" Jant Özellikleri</span>
+                </li>
+              </ul>
+            </div>
+            
+            <div className="bg-white backdrop-blur-md p-6 rounded-lg border border-voltaris-light-border hover:border-voltaris-red/40 transition-colors shadow-sm hover:shadow-md group h-full">
+              <div className="text-voltaris-red mb-4 flex justify-center">
+                <Camera size={32} className="sm:w-10 sm:h-10" />
+              </div>
+              <h3 className="text-lg sm:text-xl font-bold mb-2 text-center text-voltaris-light-text-primary">ADAS Sistemleri</h3>
+              <ul className="space-y-1.5 sm:space-y-2 text-voltaris-light-text-secondary text-sm">
+                <li className="flex items-start">
+                  <span className="text-voltaris-red mr-2">•</span>
+                  <span>Şerit Takip Sistemi Tasarımı</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-voltaris-red mr-2">•</span>
+                  <span>Trafik İşareti Tanıma Çalışmaları</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-voltaris-red mr-2">•</span>
+                  <span>Akıllı Hız Sabitleme Geliştirmesi</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-voltaris-red mr-2">•</span>
+                  <span>Kör Nokta Algılama Prototipi</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-voltaris-red mr-2">•</span>
+                  <span>Sürücü Asistan Arayüz Konsepti</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+          
+          <div className="bg-white shadow-sm p-6 rounded-lg border border-voltaris-light-border mt-12">
+            <h3 className="text-xl font-bold mb-6 text-center text-gradient-red-blue">Teknik Özellikler</h3>
+            
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+              <div className="bg-voltaris-light-accent p-4 rounded-lg border border-voltaris-light-border">
+                <div className="text-center">
+                  <div className="text-3xl font-bold text-voltaris-red mb-1">50+</div>
+                  <div className="text-xs uppercase tracking-wider text-voltaris-light-text-muted">km/sa</div>
+                  <div className="text-sm mt-1 text-voltaris-light-text-secondary">Hedef Hız</div>
+                </div>
+              </div>
+              
+              <div className="bg-voltaris-light-accent p-4 rounded-lg border border-voltaris-light-border">
+                <div className="text-center">
+                  <div className="text-3xl font-bold text-voltaris-blue mb-1">2.5</div>
+                  <div className="text-xs uppercase tracking-wider text-voltaris-light-text-muted">kW</div>
+                  <div className="text-sm mt-1 text-voltaris-light-text-secondary">Motor Gücü (x2)</div>
+                </div>
+              </div>
+              
+              <div className="bg-voltaris-light-accent p-4 rounded-lg border border-voltaris-light-border">
+                <div className="text-center">
+                  <div className="text-3xl font-bold text-voltaris-red mb-1">230</div>
+                  <div className="text-xs uppercase tracking-wider text-voltaris-light-text-muted">kg</div>
+                  <div className="text-sm mt-1 text-voltaris-light-text-secondary">Hedef Ağırlık</div>
+                </div>
+              </div>
+              
+              <div className="bg-voltaris-light-accent p-4 rounded-lg border border-voltaris-light-border">
+                <div className="text-center">
+                  <div className="text-3xl font-bold text-voltaris-blue mb-1">2024</div>
+                  <div className="text-xs uppercase tracking-wider text-voltaris-light-text-muted">mayıs</div>
+                  <div className="text-sm mt-1 text-voltaris-light-text-secondary">Kuruluş</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ADAS Systems Section - lighter background */}
+      <section id="adas" className="py-16 md:py-20 relative bg-[#27282c]/80">
+        <div className="container mx-auto px-4 z-10">
+          <div className="text-center mb-8 md:mb-12">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 md:mb-4">ADAS Sistemi Planlaması</h2>
+            <div className="h-1 w-16 sm:w-20 bg-red-500 mx-auto"></div>
+            <p className="text-gray-400 mt-4 max-w-2xl mx-auto text-sm sm:text-base px-2">
+              Advanced Driver Assistance Systems (ADAS) ile aracımız için planladığımız gelişmiş sürüş destek sistemleri.
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mb-8 sm:mb-12">
+            <div className="bg-gradient-to-br from-red-900/30 via-black to-red-900/20 p-6 rounded-lg border border-red-900/30 hover:border-red-500/40 transition-all duration-300 shadow-lg hover:shadow-red-500/20">
+              <div className="flex items-center mb-4">
+                <div className="text-red-500 mr-3">
+                  <GitMerge size={24} />
+                </div>
+                <h3 className="text-xl font-bold text-red-400">Şerit Takip Sistemi</h3>
+              </div>
+              <div className="latex-style-box bg-black/40 p-4 rounded-lg border border-red-900/30">
+                <div className="text-white math-formula red-formula academic-formula">
+                  <div className="formula-heading">Şerit Tespit Algoritması</div>
+                  <div className="formula-content">
+                    <p>Perspektif Dönüşümü: M = <span className="matrix-notation">T<sub>src→dst</sub></span></p>
+                    <p>Polinom Modeli: f(x) = ax<sup>2</sup> + bx + c</p>
+                    <p>Ağırlıklı Filtre: W<sub>i</sub> = [0.4, 0.2, 0.15, 0.1, 0.075, 0.05, 0.025]</p>
+                    <p>Kalibrasyon Faktörü: 0.0293 m/piksel</p>
+                  </div>
+                  <div className="formula-parameters">Performans: 23 FPS | Doğruluk: %95.7</div>
+                </div>
+                <p className="text-gray-300 mt-3">
+                  Kamera görüntüsünden Canny edge detection ve Hough transform kullanarak şeritleri tespit eder. Sonuç olarak sürücüye sesli ve görsel uyarılar verilir.
+                </p>
+              </div>
+            </div>
+            
+            <div className="bg-gradient-to-br from-blue-900/30 via-black to-blue-900/20 p-6 rounded-lg border border-blue-900/30 hover:border-blue-500/40 transition-all duration-300 shadow-lg hover:shadow-blue-500/20">
+              <div className="flex items-center mb-4">
+                <div className="text-blue-500 mr-3">
+                  <AlertTriangle size={24} />
+                </div>
+                <h3 className="text-xl font-bold text-blue-400">Trafik İşareti Tanıma</h3>
+              </div>
+              <div className="latex-style-box bg-black/40 p-4 rounded-lg border border-blue-900/30">
+                <div className="text-white math-formula blue-formula academic-formula">
+                  <div className="formula-heading">YOLOv5s CNN Mimarisi</div>
+                  <div className="formula-content">
+                    <p>Omurga: CSPDarknet53 | Özellik Çıkarıcı: PANet</p>
+                    <p>Giriş Formatı: 640×640 px | Format: float16/32</p>
+                    <p>Güven Eşiği: τ = 0.5</p>
+                    <p>NMS Algoritması: IoU<sub>threshold</sub> = 0.45</p>
+                  </div>
+                  <div className="formula-parameters">Doğruluk: %91.75 | Çıkarım: 15-20ms | Sınıflar: 61</div>
+                </div>
+                <p className="text-gray-300 mt-3">
+                  YOLOv5s tabanlı derin öğrenme modeli ile trafik işaretlerini gerçek zamanlı olarak tanır ve sürücüye bilgilendirici uyarılar verir.
+                </p>
+              </div>
+            </div>
+            
+            <div className="bg-gradient-to-br from-red-900/30 via-black to-red-900/20 p-6 rounded-lg border border-red-900/30 hover:border-red-500/40 transition-all duration-300 shadow-lg hover:shadow-red-500/20">
+              <div className="flex items-center mb-4">
+                <div className="text-red-500 mr-3">
+                  <Cpu size={24} />
+                </div>
+                <h3 className="text-xl font-bold text-red-400">Akıllı Hız Sabitleyici</h3>
+              </div>
+              <div className="latex-style-box bg-black/40 p-4 rounded-lg border border-red-900/30">
+                <div className="text-white math-formula red-formula text-center pid-formula academic-formula">
+                  <div className="formula-heading">PID Kontrolcü Denklemi</div>
+                  <div className="formula-content formula-pid">
+                    u(t) = K<sub>p</sub>e(t) + K<sub>i</sub> ∫<sub>0</sub><sup>t</sup> e(τ) dτ + K<sub>d</sub> ∂e(t)/∂t
+                    <div className="pid-params">K<sub>p</sub> = 3.5, K<sub>i</sub> = 0.2, K<sub>d</sub> = 0.8</div>
+                  </div>
+                  <div className="formula-parameters">Frekans: 1kHz | PWM Aralığı: 0-1023 | I<sub>limit</sub>: ±25</div>
+                </div>
+                <p className="text-gray-300 mt-3">
+                  Optimize edilmiş PID kontrol algoritması ile hız sabitlenir, enerji verimliliği maksimize edilir ve sürüş konforu artırılır.
+                </p>
+              </div>
+            </div>
+            
+            <div className="bg-gradient-to-br from-blue-900/30 via-black to-blue-900/20 p-6 rounded-lg border border-blue-900/30 hover:border-blue-500/40 transition-all duration-300 shadow-lg hover:shadow-blue-500/20">
+              <div className="flex items-center mb-4">
+                <div className="text-blue-500 mr-3">
+                  <Camera size={24} />
+                </div>
+                <h3 className="text-xl font-bold text-blue-400">Kör Nokta Algılama</h3>
+              </div>
+              <div className="latex-style-box bg-black/40 p-4 rounded-lg border border-blue-900/30">
+                <div className="text-white math-formula blue-formula academic-formula">
+                  <div className="formula-heading">Radar Tabanlı Tespit Sistemi</div>
+                  <div className="formula-content">
+                    <p>Model: RD-03D Çoklu Nesne Algılama Radarı</p>
+                    <p>Algılama Mesafesi: 0.5 - 3m</p>
+                    <p>Açısal Alan: θ = ±30°</p>
+                    <p>Parametreler: Konum (x,y), Hız (v), Mesafe (d)</p>
+                  </div>
+                  <div className="formula-parameters">Yenileme Hızı: 50Hz | Montaj Konumu: Arka</div>
+                </div>
+                <p className="text-gray-300 mt-3">
+                  Ultrasonik ve kızılötesi sensörler ile kör noktalardaki engeller tespit edilir ve sürücüye uyarı verilir.
+                </p>
+              </div>
+            </div>
+          </div>
+          
+          <div className="mt-8 mb-10">
+            {/* Using React state for more reliable and reactive toggling */}
+            <ExpandableSection 
+              title="ADAS Sistem Mimarisi" 
+              color="purple"
+              id="adasArchitecture"
+            >
+              <div className="animate-fadeIn">
+                <AdasSystemArchitecture />
+              </div>
+            </ExpandableSection>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
+            {/* Lane Detection System */}
+            <div className="bg-gradient-to-r from-red-900/30 via-black to-red-900/30 p-4 rounded-lg border border-red-500/30 hover:border-red-500/50 transition-all duration-300 shadow-lg collapsible-diagram-container relative overflow-hidden group">
+              <div 
+                className="flex items-center justify-between cursor-pointer" 
+                onClick={() => {
+                  const element = document.getElementById('laneDetectionContent');
+                  if (element) {
+                    element.classList.toggle('hidden');
+                    document.getElementById('laneDetectionIcon')?.classList.toggle('rotate-180');
+                  }
+                }}
+              >
+                <h3 className="text-xl font-bold text-red-400">Şerit Takip Sistemi</h3>
+                <ChevronDown id="laneDetectionIcon" className="text-red-400 transition-transform duration-300" />
+              </div>
+              <div id="laneDetectionContent" className="hidden mt-4 overflow-x-auto">
+                <div className="animate-slideInUp">
+                  <LaneDetectionDiagram />
+                </div>
+              </div>
+              <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-red-500/5 rounded-full filter blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+            </div>
+            
+            {/* Traffic Sign Detection */}
+            <div className="bg-gradient-to-r from-blue-900/30 via-black to-blue-900/30 p-4 rounded-lg border border-blue-500/30 hover:border-blue-500/50 transition-all duration-300 shadow-lg collapsible-diagram-container relative overflow-hidden group">
+              <div 
+                className="flex items-center justify-between cursor-pointer" 
+                onClick={() => {
+                  const element = document.getElementById('trafficSignContent');
+                  if (element) {
+                    element.classList.toggle('hidden');
+                    document.getElementById('trafficSignIcon')?.classList.toggle('rotate-180');
+                  }
+                }}
+              >
+                <h3 className="text-xl font-bold text-blue-400">Trafik İşareti Tanıma</h3>
+                <ChevronDown id="trafficSignIcon" className="text-blue-400 transition-transform duration-300" />
+              </div>
+              <div id="trafficSignContent" className="hidden mt-4 overflow-x-auto">
+                <div className="animate-slideInUp">
+                  <TrafficSignDetectionDiagram />
+                </div>
+              </div>
+              <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-blue-500/5 rounded-full filter blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+            </div>
+            
+            {/* Blind Spot Detection */}
+            <div className="bg-gradient-to-r from-green-900/30 via-black to-green-900/30 p-4 rounded-lg border border-green-500/30 hover:border-green-500/50 transition-all duration-300 shadow-lg collapsible-diagram-container relative overflow-hidden group">
+              <div 
+                className="flex items-center justify-between cursor-pointer" 
+                onClick={() => {
+                  const element = document.getElementById('blindSpotContent');
+                  if (element) {
+                    element.classList.toggle('hidden');
+                    document.getElementById('blindSpotIcon')?.classList.toggle('rotate-180');
+                  }
+                }}
+              >
+                <h3 className="text-xl font-bold text-green-400">Kör Nokta Tespit Sistemi</h3>
+                <ChevronDown id="blindSpotIcon" className="text-green-400 transition-transform duration-300" />
+              </div>
+              <div id="blindSpotContent" className="hidden mt-4 overflow-x-auto">
+                <div className="animate-slideInUp">
+                  <BlindSpotDetectionDiagram />
+                </div>
+              </div>
+              <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-green-500/5 rounded-full filter blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+            </div>
+            
+            {/* Cruise Control System */}
+            <div className="bg-gradient-to-r from-yellow-900/30 via-black to-yellow-900/30 p-4 rounded-lg border border-yellow-500/30 hover:border-yellow-500/50 transition-all duration-300 shadow-lg collapsible-diagram-container relative overflow-hidden group">
+              <div 
+                className="flex items-center justify-between cursor-pointer" 
+                onClick={() => {
+                  const element = document.getElementById('cruiseControlContent');
+                  if (element) {
+                    element.classList.toggle('hidden');
+                    document.getElementById('cruiseControlIcon')?.classList.toggle('rotate-180');
+                  }
+                }}
+              >
+                <h3 className="text-xl font-bold text-yellow-400">Akıllı Hız Sabitleyici</h3>
+                <ChevronDown id="cruiseControlIcon" className="text-yellow-400 transition-transform duration-300" />
+              </div>
+              <div id="cruiseControlContent" className="hidden mt-4 overflow-x-auto">
+                <div className="animate-slideInUp">
+                  <CruiseControlSystemDiagram />
+                </div>
+              </div>
+              <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-yellow-500/5 rounded-full filter blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Sponsorship Section - lighter background */}
+      <section id="sponsors" className="py-16 md:py-20 relative bg-[#27282c]/90">
+        <div className="container mx-auto px-4 z-10">
+          <div className="text-center mb-8 md:mb-12">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 md:mb-4">Sponsorluk</h2>
+            <div className="h-1 w-16 sm:w-20 bg-red-500 mx-auto"></div>
+            <p className="text-gray-400 mt-4 max-w-2xl mx-auto text-sm sm:text-base px-2">
+              Voltaris Elektromobil Takımı olarak sponsorlarımızla birlikte geleceğin ulaşım teknolojilerini geliştirmeyi hedefliyoruz.
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-8 md:mb-12">
+            <div className="bg-[#1c1d20]/70 backdrop-blur-sm p-4 sm:p-6 rounded-lg transition-all duration-300 text-center group h-full platinum-sponsor-card relative overflow-hidden">
+              {/* Animated corner elements */}
+              <div className="platinum-corner-effect platinum-corner-tl"></div>
+              <div className="platinum-corner-effect platinum-corner-tr"></div>
+              <div className="platinum-corner-effect platinum-corner-bl"></div>
+              <div className="platinum-corner-effect platinum-corner-br"></div>
+              
+              <div className="absolute inset-0 bg-gradient-radial from-[#e5e4e2]/10 to-transparent opacity-30 group-hover:opacity-50 transition-all duration-500"></div>
+              <div className="platinum-shimmer absolute inset-0 opacity-20 group-hover:opacity-40 transition-all duration-500"></div>
+              <div className="relative z-10">
+                <div className="text-[#e5e4e2] font-bold mb-2 platinum-text">Platin</div>
+                <div className="text-white text-lg sm:text-xl mb-3 sm:mb-4">₺50,000+</div>
+                <ul className="text-left space-y-1.5 mb-4 sm:mb-6">
+                  <li className="flex items-start text-xs sm:text-sm">
+                    <span className="text-[#e5e4e2] mr-2 mt-0.5">•</span>
+                    <span className="text-gray-300">Aracın ön ve yan yüzeylerinde büyük logo</span>
+                  </li>
+                  <li className="flex items-start text-xs sm:text-sm">
+                    <span className="text-[#e5e4e2] mr-2 mt-0.5">•</span>
+                    <span className="text-gray-300">Tüm medya materyallerinde öncelikli tanıtım</span>
+                  </li>
+                  <li className="flex items-start text-xs sm:text-sm">
+                    <span className="text-[#e5e4e2] mr-2 mt-0.5">•</span>
+                    <span className="text-gray-300">Özel VIP etkinlik davetleri</span>
+                  </li>
+                </ul>
+                <button 
+                  className="w-full bg-gradient-to-r from-[#babac0] via-[#e5e4e2] to-[#babac0] text-gray-900 px-3 sm:px-4 py-2 rounded-lg text-sm font-medium shadow-lg shadow-[#e5e4e2]/20 hover:shadow-[#e5e4e2]/40 transition-all duration-300"
+                  onClick={() => handleOpenSponsorshipModal('platinum')}
+                >İletişime Geç</button>
+              </div>
+            </div>
+            
+            <div className="bg-[#1c1d20]/70 backdrop-blur-sm p-4 sm:p-6 rounded-lg border border-gray-500/30 hover:border-gray-400/50 transition-all duration-300 transform hover:-translate-y-1 text-center group h-full">
+              <div className="text-gray-400 font-bold text-xl sm:text-2xl mb-2">Gümüş</div>
+              <div className="text-white text-lg sm:text-xl mb-3 sm:mb-4">₺25,000+</div>
+              <ul className="text-left space-y-1.5 mb-4 sm:mb-6">
+                <li className="flex items-start text-xs sm:text-sm">
+                  <span className="text-gray-400 mr-2 mt-0.5">•</span>
+                  <span className="text-gray-300">Aracın yan yüzeyinde orta boy logo</span>
+                </li>
+                <li className="flex items-start text-xs sm:text-sm">
+                  <span className="text-gray-400 mr-2 mt-0.5">•</span>
+                  <span className="text-gray-300">Sosyal medya tanıtımları</span>
+                </li>
+                <li className="flex items-start text-xs sm:text-sm">
+                  <span className="text-gray-400 mr-2 mt-0.5">•</span>
+                  <span className="text-gray-300">Etkinlik davetleri</span>
+                </li>
+              </ul>
+              <button 
+                className="w-full bg-gradient-to-r from-gray-600 to-gray-800 text-white px-3 sm:px-4 py-2 rounded-lg text-sm"
+                onClick={() => handleOpenSponsorshipModal('silver')}
+              >İletişime Geç</button>
+            </div>
+            
+            <div className="bg-[#1c1d20]/70 backdrop-blur-sm p-4 sm:p-6 rounded-lg border border-amber-700/30 hover:border-amber-600/50 transition-all duration-300 transform hover:-translate-y-1 text-center group h-full">
+              <div className="text-amber-700 font-bold text-xl sm:text-2xl mb-2">Bronz</div>
+              <div className="text-white text-lg sm:text-xl mb-3 sm:mb-4">₺10,000+</div>
+              <ul className="text-left space-y-1.5 mb-4 sm:mb-6">
+                <li className="flex items-start text-xs sm:text-sm">
+                  <span className="text-amber-700 mr-2 mt-0.5">•</span>
+                  <span className="text-gray-300">Aracın arka kısmında küçük logo</span>
+                </li>
+                <li className="flex items-start text-xs sm:text-sm">
+                  <span className="text-amber-700 mr-2 mt-0.5">•</span>
+                  <span className="text-gray-300">Web sitesinde tanıtım</span>
+                </li>
+                <li className="flex items-start text-xs sm:text-sm">
+                  <span className="text-amber-700 mr-2 mt-0.5">•</span>
+                  <span className="text-gray-300">Teşekkür sertifikası</span>
+                </li>
+              </ul>
+              <button 
+                className="w-full bg-gradient-to-r from-amber-700 to-amber-900 text-white px-3 sm:px-4 py-2 rounded-lg text-sm"
+                onClick={() => handleOpenSponsorshipModal('bronze')}
+              >İletişime Geç</button>
+            </div>
+            
+            <div className="bg-[#1c1d20]/70 backdrop-blur-sm p-4 sm:p-6 rounded-lg border border-blue-600/30 hover:border-blue-500/50 transition-all duration-300 transform hover:-translate-y-1 text-center group h-full">
+              <div className="text-blue-500 font-bold text-xl sm:text-2xl mb-2">Destekçi</div>
+              <div className="text-white text-lg sm:text-xl mb-3 sm:mb-4">₺5,000+</div>
+              <ul className="text-left space-y-1.5 mb-4 sm:mb-6">
+                <li className="flex items-start text-xs sm:text-sm">
+                  <span className="text-blue-500 mr-2 mt-0.5">•</span>
+                  <span className="text-gray-300">Web sitesi ve broşürlerde logo</span>
+                </li>
+                <li className="flex items-start text-xs sm:text-sm">
+                  <span className="text-blue-500 mr-2 mt-0.5">•</span>
+                  <span className="text-gray-300">Sosyal medya teşekkür paylaşımı</span>
+                </li>
+                <li className="flex items-start text-xs sm:text-sm">
+                  <span className="text-blue-500 mr-2 mt-0.5">•</span>
+                  <span className="text-gray-300">Teşekkür sertifikası</span>
+                </li>
+              </ul>
+              <button 
+                className="w-full bg-gradient-to-r from-blue-600 to-blue-800 text-white px-3 sm:px-4 py-2 rounded-lg text-sm"
+                onClick={() => handleOpenSponsorshipModal('supporter')}
+              >İletişime Geç</button>
+            </div>
+          </div>
+          
+          <div className="bg-[#1c1d20]/70 backdrop-blur-sm rounded-lg border border-gray-700 overflow-hidden">
+            <div className="grid grid-cols-1 md:grid-cols-2">
+              <div className="p-4 sm:p-6">
+                <h3 className="text-lg sm:text-xl font-bold mb-3 sm:mb-4 text-red-500">Sponsorluk Fırsatları</h3>
+                <p className="text-gray-300 mb-4 text-sm sm:text-base">
+                  Voltaris Elektromobil Takımı olarak, elektrikli araç teknolojilerinin gelişimine katkıda bulunmak isteyen kuruluşlara çeşitli sponsorluk paketleri sunmayı planlıyoruz.
+                </p>
+                
+                <div className="space-y-3 sm:space-y-4 mt-5 sm:mt-6">
+                  <div className="flex items-start">
+                    <div className="text-red-500 mr-3 mt-1">
+                      <Terminal size={18} className="sm:w-5 sm:h-5" />
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-white text-sm sm:text-base">Teknoloji Transferi</h4>
+                      <p className="text-xs sm:text-sm text-gray-400">Üniversite-sanayi işbirliği ile AR-GE projeleri ve teknoloji transferi imkanı.</p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-start">
+                    <div className="text-blue-500 mr-3 mt-1">
+                      <Camera size={18} className="sm:w-5 sm:h-5" />
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-white text-sm sm:text-base">Marka Görünürlüğü</h4>
+                      <p className="text-xs sm:text-sm text-gray-400">Yarışma, etkinlik ve medya kanallarında markanızı gösterme fırsatı.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="bg-gray-900 p-4 sm:p-6">
+                <h3 className="text-lg sm:text-xl font-bold mb-3 sm:mb-4 text-blue-500">İletişime Geçin</h3>
+                <ContactForm />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Contact Section - lighter background */}
+      <section id="contact" className="py-16 md:py-20 relative bg-[#27282c]/80">
+        <div className="container mx-auto px-4 z-10">
+          <div className="text-center mb-8 md:mb-12">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 md:mb-4">İletişim</h2>
+            <div className="h-1 w-16 sm:w-20 bg-red-500 mx-auto"></div>
+          </div>
+          
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
+            <div className="bg-[#1c1d20]/70 backdrop-blur-sm p-4 sm:p-6 rounded-lg border border-gray-700 text-center h-full">
+              <div className="inline-block p-3 bg-red-900/20 rounded-full mb-3 sm:mb-4 text-red-500">
+                <Cpu size={24} className="sm:w-7 sm:h-7" />
+              </div>
+              <h3 className="text-base sm:text-lg font-bold mb-2">Adres</h3>
+              <p className="text-gray-400 text-xs sm:text-sm">
+                İzmir Yüksek Teknoloji Enstitüsü<br />
+                Mühendislik Fakültesi<br />
+                Urla, İzmir
+              </p>
+            </div>
+            
+            <div className="bg-black/50 backdrop-blur-sm p-4 sm:p-6 rounded-lg border border-gray-800 text-center h-full">
+              <div className="inline-block p-3 bg-blue-900/20 rounded-full mb-3 sm:mb-4 text-blue-500">
+                <Terminal size={24} className="sm:w-7 sm:h-7" />
+              </div>
+              <h3 className="text-base sm:text-lg font-bold mb-2">İletişim</h3>
+              <p className="text-gray-400 text-xs sm:text-sm">
+                voltaris.official@gmail.com<br />
+                +90 532 496 2216 (Gamze)<br />
+                +90 532 777 5679 (Büşra)
+              </p>
+            </div>
+            
+            <div className="bg-black/50 backdrop-blur-sm p-4 sm:p-6 rounded-lg border border-gray-800 text-center h-full">
+              <div className="inline-block p-3 bg-red-900/20 rounded-full mb-3 sm:mb-4 text-red-500">
+                <Camera size={24} className="sm:w-7 sm:h-7" />
+              </div>
+              <h3 className="text-base sm:text-lg font-bold mb-2">Sosyal Medya</h3>
+              <div className="flex justify-center space-x-3 sm:space-x-4 mt-3">
+      
+              <a href="https://instagram.com/Voltaris.official" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white transition-colors">
+                <span class="sr-only">Instagram</span>
+                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path fill-rule="evenodd" d="M12 2.163c3.204 0 3.584.012 4.85.07 1.172.053 1.803.248 2.228.415.562.217.96.477 1.382.896.419.42.679.819.896 1.381.168.425.361 1.055.413 2.228.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.052 1.172-.246 1.803-.413 2.228-.217.562-.477.96-.896 1.381-.42.419-.819.679-1.381.896-.425.168-1.056.361-2.228.413-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.172-.053-1.803-.248-2.228-.413-.562-.217-.96-.477-1.382-.896-.419-.42-.679-.819-.896-1.381-.168-.425-.361-1.055-.413-2.228-.058-1.266-.07-1.646-.07-4.85s.012-3.584.07-4.85c.053-1.172.248-1.803.413-2.228.217-.562.477-.96.896-1.382.42-.419.819-.679 1.381-.896.425-.168 1.056-.361 2.228-.413A31.89 31.89 0 0112 2.163zm0 1.646c-3.142 0-3.496.011-4.716.067-.976.044-1.502.232-1.82.36-.347.135-.587.319-.833.566-.247.247-.431.486-.566.833-.128.318-.316.844-.36 1.82-.056 1.22-.067 1.574-.067 4.716s.011 3.496.067 4.716c.044.976.232 1.502.36 1.82.135.347.319.587.566.833.247.247.486.431.833.566.318.128.844.316 1.82.36 1.22.056 1.574.067 4.716.067s3.496-.011 4.716-.067c.976-.044 1.502-.232 1.82-.36.347-.135.587-.319.833-.566.247-.247.431-.486.566-.833.128-.318.316-.844.36-1.82.056-1.22.067-1.574.067-4.716s-.011-3.496-.067-4.716c-.044-.976-.232-1.502-.36-1.82-.135-.347-.319-.587-.566-.833-.247-.247-.486-.431-.833-.566-.318-.128-.844-.316-1.82-.36-1.22-.056-1.574-.067-4.716-.067zM12 7.168a4.832 4.832 0 100 9.664 4.832 4.832 0 000-9.664zm0 8a3.168 3.168 0 110-6.336 3.168 3.168 0 010 6.336zm4.808-8.076a1.152 1.152 0 100 2.304 1.152 1.152 0 000-2.304z" clip-rule="evenodd" />
+                </svg>
+              </a>
+
+
+
+
+                <a href="https://github.com/voltaris-official" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">
+                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path fillRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026a9.564 9.564 0 012.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clipRule="evenodd" />
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
+          
+          <div className="mt-8 sm:mt-12 bg-[#1c1d20]/70 backdrop-blur-sm p-4 sm:p-6 rounded-lg border border-gray-700">
+            <div className="text-center mb-4 sm:mb-6">
+              <h3 className="text-lg sm:text-xl font-bold text-gradient-red-blue">Mesaj Gönderin</h3>
+            </div>
+            
+            <form className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
+              <div className="space-y-3 sm:space-y-4">
+                <div>
+                  <input 
+                    type="text" 
+                    placeholder="Adınız Soyadınız" 
+                    className="w-full bg-[#1a1b1e]/70 border border-gray-700 rounded-lg p-2.5 text-sm text-white focus:outline-none focus:border-red-500"
+                  />
+                </div>
+                <div>
+                  <input 
+                    type="email" 
+                    placeholder="E-posta Adresiniz" 
+                    className="w-full bg-[#1a1b1e]/70 border border-gray-700 rounded-lg p-2.5 text-sm text-white focus:outline-none focus:border-red-500"
+                  />
+                </div>
+                <div>
+                  <input 
+                    type="text" 
+                    placeholder="Konu" 
+                    className="w-full bg-[#1a1b1e]/70 border border-gray-700 rounded-lg p-2.5 text-sm text-white focus:outline-none focus:border-red-500"
+                  />
+                </div>
+              </div>
+              
+              <div className="space-y-3 sm:space-y-4">
+                <div>
+                  <textarea 
+                    placeholder="Mesajınız" 
+                    rows="5"
+                    className="w-full bg-[#1a1b1e]/70 border border-gray-700 rounded-lg p-2.5 text-sm text-white focus:outline-none focus:border-red-500"
+                  ></textarea>
+                </div>
+                <div className="text-right">
+                  <button 
+                    type="submit" 
+                    className="bg-gradient-to-r from-red-600 to-red-800 hover:from-red-500 hover:to-red-700 text-white px-5 py-2.5 rounded-lg inline-flex items-center transition-colors shadow-lg shadow-red-900/20 text-sm"
+                  >
+                    Gönder <ChevronRight className="ml-2" size={16} />
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+          
+          <div className="mt-8 sm:mt-12 text-center text-xs sm:text-sm text-gray-500">
+            <p>© 2025 Voltaris Elektromobil Takımı. Tüm hakları saklıdır.</p>
+          </div>
+          
+
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="bg-[#1a1b1e] py-8 sm:py-12 border-t border-red-900/20">
+        <div className="container mx-auto px-4">
+          <div className="flex flex-col items-center mb-8 sm:mb-8">
+            <div className="flex items-center mb-5">
+              <img 
+                src={`${process.env.PUBLIC_URL}/logo_sadece.png`} 
+                alt="Voltaris Logo" 
+                className="h-10 w-10 sm:h-14 sm:w-14 mb-4 animate-pulse-slow hover:scale-125 transition-transform duration-500" 
+              />
+            </div>
+            <div className="text-center">
+              <div className="text-lg sm:text-xl font-semibold tracking-wide">VOLTARIS</div>
+              <div className="text-xs sm:text-sm text-gray-500">İYTE Elektrikli Araç Takımı</div>
+            </div>
+            
+            <div className="flex space-x-4 mt-3">
+              <a href="https://instagram.com/Voltaris.official" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">
+                <Instagram size={18} className="sm:w-5 sm:h-5" />
+              </a>
+              <a href="https://www.linkedin.com/company/i̇yte-voltaris-teknofest-efficiency-challange/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">
+                <Linkedin size={18} className="sm:w-5 sm:h-5" />
+              </a>
+              <a href="mailto:unal.omer@proton.me" className="text-gray-400 hover:text-white transition-colors">
+                <Mail size={18} className="sm:w-5 sm:h-5" />
+              </a>
+              <a href="tel:+905531752708" className="text-gray-400 hover:text-white transition-colors">
+                <Phone size={18} className="sm:w-5 sm:h-5" />
+              </a>
+            </div>
+          </div>
+          
+          <div className="border-t border-gray-900 pt-6 flex flex-col items-center">
+            <div className="text-gray-500 text-xs sm:text-sm mb-3">
+              © 2025 Voltaris. Tüm hakları saklıdır.
+            </div>
+            
+            <div className="text-xs sm:text-sm mb-4 font-mono flex justify-center">
+              <span className="text-red-500">{'// '}</span>
+              <span className="text-green-500">{'DESIGNED'}</span>
+              <span className="text-yellow-500">{'_WITH_'}</span>
+              <span className="text-blue-500">{'PASSION_'}</span>
+              <span className="text-red-500">{'BY_'}</span>
+              <span className="text-green-500">{'VOLTARIS_'}</span>
+              <span className="text-yellow-500">{'TEAM'}</span>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
+  );
+}
+
+export default App;

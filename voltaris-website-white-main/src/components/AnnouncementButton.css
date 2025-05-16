@@ -1,0 +1,192 @@
+/* Animations for the Announcement Button */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 66, 84, 0.5); }
+  70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(255, 66, 84, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 66, 84, 0); }
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+  40% { transform: translateY(-5px); }
+  60% { transform: translateY(-2px); }
+}
+
+@keyframes glowEffect {
+  0%, 100% { box-shadow: 0 0 5px rgba(255, 66, 84, 0.5); }
+  50% { box-shadow: 0 0 15px rgba(255, 66, 84, 0.8); }
+}
+
+@keyframes fadeScale {
+  0% { opacity: 0; transform: scale(0.95); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes shiftGradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes scanLine {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+
+/* Original floating button styles */
+.announcement-button {
+  transition: all 0.3s ease;
+}
+
+.announcement-button:hover {
+  transform: translateY(-2px);
+}
+
+.announcement-button.initial-appear {
+  animation: bounce 2s ease infinite;
+}
+
+.announcement-content {
+  animation: fadeIn 0.4s ease-out;
+}
+
+.notification-dot {
+  animation: pulse 2s infinite;
+}
+
+/* Elegant hover effects */
+.announcement-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle at center, rgba(255, 66, 84, 0.15) 0%, transparent 70%);
+  transform: scale(0);
+  transition: transform 0.4s ease;
+}
+
+.announcement-button:hover::before {
+  transform: scale(1.5);
+}
+
+/* Add glass morphism effect */
+.announcement-panel {
+  backdrop-filter: blur(10px);
+  box-shadow: 
+    0 4px 6px -1px rgba(0, 0, 0, 0.1), 
+    0 2px 4px -1px rgba(0, 0, 0, 0.06),
+    0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+}
+
+/* Professional hover animations for buttons */
+.detail-button {
+  position: relative;
+  overflow: hidden;
+}
+
+.detail-button::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transform: translateX(-100%);
+}
+
+.detail-button:hover::after {
+  transform: translateX(100%);
+  transition: transform 0.6s ease;
+}
+
+/* Top Bar Announcement Button Styles */
+.announcement-topbar-wrapper {
+  position: relative;
+}
+
+.announcement-topbar-wrapper:hover .topbar-announcement-button {
+  border-color: #FF4254;
+  background: linear-gradient(45deg, rgba(255, 66, 84, 0.1), rgba(255, 66, 84, 0.05));
+}
+
+/* Make entire component work with hover */
+.announcement-topbar-wrapper:hover .announcement-dropdown {
+  display: block;
+}
+
+.topbar-announcement-button {
+  position: relative;
+  overflow: hidden;
+}
+
+.announcement-dropdown {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.announcement-preview {
+  position: relative;
+  animation: fadeScale 0.3s ease forwards;
+  transform-origin: top right;
+  overflow: hidden;
+}
+
+/* Simulate a scanning effect on hover */
+.announcement-preview::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(to right, transparent, rgba(255, 66, 84, 0.5), transparent);
+  animation: scanLine 2s ease-in-out infinite;
+  z-index: 1;
+}
+
+/* Add border glow effect on hover */
+.announcement-topbar-wrapper:hover .topbar-announcement-button {
+  animation: glowEffect 2s infinite;
+}
+
+/* Create an academic-style animated border */
+.announcement-preview {
+  position: relative;
+}
+
+.announcement-preview::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border: 1px solid transparent;
+  border-image: linear-gradient(45deg, 
+    rgba(255, 66, 84, 0.6), 
+    rgba(255, 66, 84, 0.2), 
+    rgba(255, 66, 84, 0.6), 
+    rgba(255, 66, 84, 0.2), 
+    rgba(255, 66, 84, 0.6)
+  ) 1;
+  background-size: 400% 400%;
+  animation: shiftGradient 3s ease infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Add geometric pattern for academic/professional look */
+.announcement-preview {
+  background-image: 
+    linear-gradient(45deg, rgba(255, 66, 84, 0.03) 25%, transparent 25%, transparent 75%, rgba(255, 66, 84, 0.03) 75%, rgba(255, 66, 84, 0.03)),
+    linear-gradient(45deg, rgba(255, 66, 84, 0.03) 25%, transparent 25%, transparent 75%, rgba(255, 66, 84, 0.03) 75%, rgba(255, 66, 84, 0.03));
+  background-size: 20px 20px;
+  background-position: 0 0, 10px 10px;
+}

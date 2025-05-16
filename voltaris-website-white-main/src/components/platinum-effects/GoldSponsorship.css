@@ -1,0 +1,241 @@
+.gold-sponsorship-container {
+  width: 100%;
+  padding: 2rem 1rem;
+  display: flex;
+  justify-content: center;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.gold-sponsorship-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  width: 100%;
+  position: relative;
+}
+
+@media (min-width: 992px) {
+  .gold-sponsorship-content {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+  
+  .gold-tier-component-wrapper {
+    flex: 0 0 400px;
+    position: sticky;
+    top: 100px;
+  }
+  
+  .gold-benefits-section {
+    flex: 1;
+    padding-left: 2rem;
+  }
+}
+
+.gold-benefits-title {
+  font-size: 1.75rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  background: linear-gradient(135deg, #FFD700, #FFC400);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  display: inline-block;
+}
+
+.gold-benefits-description {
+  color: #333;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+}
+
+.gold-advantages-grid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+@media (min-width: 640px) {
+  .gold-advantages-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.gold-advantage-card {
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(255, 215, 0, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.gold-advantage-card:hover {
+  box-shadow: 0 10px 20px rgba(255, 215, 0, 0.1);
+  transform: translateY(-5px);
+  border-color: rgba(255, 215, 0, 0.4);
+}
+
+.gold-advantage-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), transparent);
+  z-index: 0;
+}
+
+.gold-advantage-icon {
+  color: #FFD700;
+  margin-bottom: 1rem;
+  width: 2rem;
+  height: 2rem;
+  position: relative;
+  z-index: 1;
+}
+
+.gold-advantage-card h3 {
+  font-weight: bold;
+  font-size: 1.125rem;
+  margin-bottom: 0.75rem;
+  color: #333;
+  position: relative;
+  z-index: 1;
+}
+
+.gold-advantage-card p {
+  color: #555;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  position: relative;
+  z-index: 1;
+}
+
+.gold-details-toggle {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.gold-details-button {
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(255, 215, 0, 0.3));
+  border: 1px solid rgba(255, 215, 0, 0.3);
+  color: #333;
+  font-weight: 500;
+  font-size: 0.9rem;
+  padding: 0.5rem 1rem;
+  border-radius: 1.5rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.2s ease;
+}
+
+.gold-details-button:hover {
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(255, 215, 0, 0.4));
+  transform: translateY(-2px);
+}
+
+.gold-expanded-details {
+  background: rgba(255, 255, 255, 0.7);
+  padding: 1.5rem;
+  border-radius: 0.75rem;
+  margin-bottom: 2rem;
+  border: 1px solid rgba(255, 215, 0, 0.2);
+}
+
+.gold-expanded-details h3 {
+  font-weight: bold;
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+.gold-expanded-details p {
+  color: #444;
+  margin-bottom: 1rem;
+  line-height: 1.6;
+}
+
+.gold-expanded-details ul {
+  padding-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.gold-expanded-details li {
+  color: #444;
+  margin-bottom: 0.5rem;
+  position: relative;
+}
+
+.gold-expanded-details li::before {
+  content: "•";
+  color: #FFD700;
+  font-weight: bold;
+  display: inline-block;
+  width: 1rem;
+  margin-left: -1rem;
+  position: absolute;
+}
+
+.gold-contact-button {
+  background: linear-gradient(135deg, #FFD700, #FFC400);
+  color: #000;
+  font-weight: bold;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  max-width: 300px;
+  margin: 0 auto;
+  display: block;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+}
+
+.gold-contact-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(255, 215, 0, 0.4);
+}
+
+.gold-contact-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  transition: all 0.6s ease;
+}
+
+.gold-contact-button:hover::before {
+  left: 100%;
+}
+
+.animate-slideDown {
+  animation: slideDown 0.5s ease;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+} 

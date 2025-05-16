@@ -1,0 +1,1291 @@
+.pid-formula {
+  font-size: 1.25rem;
+  background-color: rgba(0, 0, 0, 0.4);
+  padding: 16px;
+  font-weight: 500;
+  letter-spacing: 0.8px;
+  border-radius: 8px;
+  box-shadow: inset 0 0 10px rgba(255, 66, 84, 0.1);
+}
+
+.pid-formula::before {
+  width: 4px;
+  background: linear-gradient(to bottom, #FF4254, #FF8F9A, #FF4254);
+  box-shadow: 0 0 10px rgba(255, 66, 84, 0.5);
+}@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Additional animations for the ADAS section */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideInUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes glow {
+  0% { filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.1)); }
+  50% { filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.5)); }
+  100% { filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.1)); }
+}
+
+/* Animation classes */
+.animate-fadeIn {
+  animation: fadeIn 0.6s ease-in-out forwards;
+}
+
+.animate-slideInUp {
+  animation: slideInUp 0.8s ease-out forwards;
+}
+
+.animate-glow {
+  animation: glow 3s infinite ease-in-out;
+}
+
+/* Latex-style equations styling */
+.latex-style-box {
+  transition: all 0.3s ease;
+}
+
+.latex-style-box:hover {
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+}
+
+.math-formula {
+  font-family: 'Times New Roman', serif;
+  background-color: rgba(0, 0, 0, 0.3);
+  padding: 12px;
+  border-radius: 5px;
+  margin: 10px 0;
+  line-height: 1.5;
+  font-size: 1.1rem;
+  letter-spacing: 0.5px;
+  position: relative;
+  overflow: hidden;
+}
+
+.math-formula::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 3px;
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.red-formula::before {
+  background: linear-gradient(to bottom, #FF4254, rgba(255, 66, 84, 0.3));
+}
+
+.blue-formula::before {
+  background: linear-gradient(to bottom, #4287f5, rgba(66, 135, 245, 0.3));
+}
+
+.math-formula sub, .math-formula sup {
+  font-size: 0.75em;
+}
+
+/* Add a subtle animation to SVG elements within diagrams */
+.collapsible-diagram-container:hover svg {
+  filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.2));
+}
+
+.collapsible-diagram-container svg path {
+  transition: all 0.4s ease;
+}
+
+.collapsible-diagram-container:hover svg path {
+  stroke-width: 1.1;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #F8F9FA;
+  color: #2D3748;
+  overflow-x: hidden;
+}
+
+/* Base animations */
+@keyframes loadingBar {
+  0% { width: 0; }
+  100% { width: 100%; }
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInDelay {
+  0%, 30% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInDelayLong {
+  0%, 60% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes horizontalSweep {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+@keyframes verticalSweep {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+
+@keyframes floatParticle {
+  0% { transform: translate(0, 0); }
+  25% { transform: translate(20px, 20px); }
+  50% { transform: translate(0, 40px); }
+  75% { transform: translate(-20px, 20px); }
+  100% { transform: translate(0, 0); }
+}
+
+@keyframes scanLine {
+  0% { transform: translateY(0); opacity: 0.2; }
+  50% { opacity: 0.5; }
+  100% { transform: translateY(100%); opacity: 0.2; }
+}
+
+@keyframes barGrow {
+  0% { opacity: 0; height: 0%; }
+  100% { opacity: 1; height: 100%; }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.7; }
+  50% { opacity: 1; }
+}
+
+@keyframes rotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes glowPulse {
+  0%, 100% { box-shadow: 0 0 10px rgba(255, 66, 84, 0.3); }
+  50% { box-shadow: 0 0 25px rgba(255, 66, 84, 0.6); }
+}
+
+@keyframes borderFlow {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes gradientBackground {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Animation classes */
+.animate-loadingBar {
+  animation: loadingBar 2.5s ease-in-out forwards;
+}
+
+.animate-fadeIn {
+  animation: fadeIn 1s ease-out forwards;
+}
+
+.animate-fadeInDelay {
+  animation: fadeInDelay 1.2s ease-out forwards;
+}
+
+.animate-fadeInDelayLong {
+  animation: fadeInDelayLong 1.5s ease-out forwards;
+}
+
+.animate-horizontalSweep {
+  animation: horizontalSweep 8s linear infinite;
+}
+
+.animate-verticalSweep {
+  animation: verticalSweep 8s linear infinite;
+}
+
+.animate-pulse-slow {
+  animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.animate-rotate {
+  animation: rotate 20s linear infinite;
+}
+
+.animate-scanLine {
+  animation: scanLine 3s linear infinite;
+}
+
+.animate-glowPulse {
+  animation: glowPulse 2s infinite;
+}
+
+.animate-borderFlow {
+  background: linear-gradient(90deg, transparent, rgba(255, 66, 84, 0.5), transparent);
+  background-size: 200% 200%;
+  animation: borderFlow 2s ease infinite;
+}
+
+.delay-300 {
+  animation-delay: 0.3s;
+}
+
+.delay-500 {
+  animation-delay: 0.5s;
+}
+
+.delay-700 {
+  animation-delay: 0.7s;
+}
+
+/* Utility classes */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Background patterns */
+.bg-circuit-pattern {
+  background-image: 
+    linear-gradient(to right, rgba(230, 57, 70, 0.1) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(69, 123, 157, 0.1) 1px, transparent 1px);
+  background-size: 20px 20px;
+  background-position: center;
+}
+
+.circuit-background {
+  position: relative;
+  overflow: hidden;
+}
+
+.circuit-background::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    radial-gradient(circle at 10% 20%, rgba(255, 66, 84, 0.05) 1px, transparent 1px),
+    radial-gradient(circle at 90% 80%, rgba(0, 68, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(to right, rgba(255, 66, 84, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 68, 255, 0.03) 1px, transparent 1px);
+  background-size: 40px 40px, 40px 40px, 20px 20px, 20px 20px;
+  z-index: -1;
+}
+
+.circuit-pattern {
+  background-image: 
+    linear-gradient(to right, rgba(230, 57, 70, 0.1) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(69, 123, 157, 0.1) 1px, transparent 1px);
+  background-size: 10px 10px;
+  position: relative;
+}
+
+.circuit-pattern::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    radial-gradient(circle at 30px 30px, rgba(230, 57, 70, 0.15) 2px, transparent 3px),
+    radial-gradient(circle at 70px 70px, rgba(69, 123, 157, 0.15) 2px, transparent 3px);
+  background-size: 100px 100px;
+  z-index: 1;
+}
+
+.bg-technical-grid {
+  background-size: 20px 20px;
+  background-position: center;
+  position: relative;
+}
+
+.bg-technical-grid::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.8) 0%, transparent 20%, transparent 80%, rgba(0,0,0,0.8) 100%);
+  pointer-events: none;
+}
+
+/* Animation elements */
+.scan-line {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(to right, transparent, rgba(255, 66, 84, 0.5), transparent);
+  z-index: 2;
+  animation: scanLine 3s linear infinite;
+}
+
+.terminal-text {
+  font-family: 'Courier New', monospace;
+  color: #00ff00;
+  white-space: nowrap;
+  overflow: hidden;
+  border-right: 2px solid #00ff00;
+  animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
+}
+
+/* Hover effects */
+.hover-glow:hover {
+  box-shadow: 0 0 15px rgba(255, 66, 84, 0.5);
+  transition: box-shadow 0.3s ease;
+}
+
+.hover-glow-blue:hover {
+  box-shadow: 0 0 15px rgba(0, 68, 255, 0.5);
+  transition: box-shadow 0.3s ease;
+}
+
+/* Circuit connection effect */
+.circuit-connect {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+
+/* ADAS Section Specific Styles */
+.adas-card-image-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, 
+    rgba(0,0,0,0.3) 0%,
+    rgba(0,0,0,0.1) 30%,
+    rgba(0,0,0,0.1) 70%,
+    rgba(0,0,0,0.7) 100%
+  );
+  z-index: 10;
+}
+
+.adas-function-select {
+  position: relative;
+  overflow: hidden;
+}
+
+.adas-function-select::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(to right, #ff4254, #0044ff);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+
+.adas-function-select:hover::after {
+  transform: scaleX(1);
+}
+
+.adas-function-active::after {
+  transform: scaleX(1);
+}
+
+/* Sponsor Section Professional Styling */
+.sponsor-section {
+  background-color: var(--hero-background);
+}
+
+.sponsor-heading {
+  color: var(--hero-heading) !important;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  position: relative;
+}
+
+.sponsor-subheading {
+  color: var(--hero-muted) !important;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+.sponsor-tier-title {
+  color: var(--hero-subheading) !important;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  font-size: 0.875rem;
+}
+
+.sponsor-tier-description {
+  color: var(--hero-body) !important;
+  font-weight: 400;
+}
+
+/* Enhance sponsor cards */
+.sponsor-card {
+  transition: all 0.25s ease;
+}
+
+.sponsor-card:hover {
+  transform: translateY(-3px);
+}
+
+.sponsor-card-title {
+  color: var(--hero-heading) !important;
+  font-weight: 600;
+}
+
+.sponsor-card-subtitle {
+  color: var(--hero-muted) !important;
+  font-weight: 500;
+}
+
+/* Sponsor showcase carousel text */
+.sponsor-carousel-container {
+  background-color: rgba(255, 255, 255, 0.7);
+}
+
+.sponsor-name {
+  color: var(--hero-subheading) !important;
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+.sponsor-type {
+  color: var(--hero-muted) !important;
+  font-weight: 400;
+  font-size: 0.75rem;
+}
+
+/* Sponsor tiers styling */
+.tier-platinum-text {
+  color: #9A9A9A !important;
+  font-weight: 600;
+}
+
+.tier-gold-text {
+  color: #D4AF37 !important;
+  font-weight: 600;
+}
+
+.tier-silver-text {
+  color: #A9A9A9 !important;
+  font-weight: 600;
+}
+
+.tier-bronze-text {
+  color: #CD7F32 !important;
+  font-weight: 600;
+}
+
+/* Enhanced sponsors bar typography */
+.sponsors-bar-title {
+  color: var(--hero-subheading) !important;
+  font-weight: 600;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.sponsors-bar-link {
+  color: var(--hero-muted) !important;
+  font-weight: 500;
+  font-size: 0.7rem;
+  transition: color 0.2s ease;
+}
+
+.sponsors-bar-link:hover {
+  color: var(--hero-accent) !important;
+}
+
+/* Text Gradient Effects */
+.text-gradient-red-blue {
+  background: linear-gradient(90deg, #ff4254 0%, #0044ff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.text-gradient-blue-red {
+  background: linear-gradient(90deg, #0044ff 0%, #ff4254 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+/* High-tech technical specs display */
+.tech-specs-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  background: rgba(0,0,0,0.8);
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+}
+
+.tech-specs-container:hover .tech-specs-overlay {
+  opacity: 1;
+}
+
+.tech-spec-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.tech-spec-label {
+  color: #ff4254;
+  font-family: monospace;
+  font-size: 0.75rem;
+  margin-right: 0.5rem;
+}
+
+.tech-spec-value {
+  color: white;
+  font-size: 0.75rem;
+}
+
+/* Tesla-like interface elements */
+.tesla-btn {
+  background-color: rgba(255, 255, 255, 0.15);
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 8px 20px;
+  font-weight: 500;
+  transition: background-color 0.3s;
+}
+
+.tesla-btn:hover {
+  background-color: rgba(255, 255, 255, 0.25);
+}
+
+.tesla-card {
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.tesla-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+/* Sponsor section specific */
+.sponsor-card {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.sponsor-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(to right, #ff4254, #0044ff);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.6s ease;
+}
+
+.sponsor-card:hover::before {
+  transform: scaleX(1);
+}
+
+/* Additional Animation for the ADAS section */
+@keyframes dataStream {
+  0% { 
+    background-position: 0% 0%; 
+    opacity: 0.2;
+  }
+  50% { 
+    opacity: 0.5; 
+  }
+  100% { 
+    background-position: 100% 100%; 
+    opacity: 0.2;
+  }
+}
+
+.animate-data-stream {
+  background: linear-gradient(45deg, 
+    transparent, 
+    rgba(0, 68, 255, 0.2), 
+    transparent, 
+    rgba(255, 66, 84, 0.2), 
+    transparent
+  );
+  background-size: 200% 200%;
+  animation: dataStream 5s linear infinite;
+}
+
+/* Liquid gradient animated backgrounds */
+.bg-liquid-gradient {
+  position: relative;
+  overflow: hidden;
+}
+
+.bg-liquid-gradient::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(60deg, 
+    rgba(255, 66, 84, 0.05), 
+    rgba(0, 68, 255, 0.05), 
+    rgba(255, 66, 84, 0.05)
+  );
+  background-size: 300% 300%;
+  animation: gradientBackground 15s ease infinite;
+  z-index: -1;
+}
+
+/* Light sections */
+.section-light {
+  color: #1a1a1a;
+  background: linear-gradient(to bottom, #f5f5f5, #ffffff, #f5f5f5);
+}
+
+.section-light h2 {
+  color: #1a1a1a;
+}
+
+.section-light .card {
+  background: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+/* Custom scrollbar for light theme */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f8fafc;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, rgba(212, 83, 102, 0.3), rgba(58, 110, 143, 0.3));
+  border-radius: 4px;
+  border: 2px solid #f8fafc;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(to bottom, rgba(212, 83, 102, 0.5), rgba(58, 110, 143, 0.5));
+}
+
+/* Firefox scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(212, 83, 102, 0.3) #f8fafc;
+}
+
+/* Global Font Color Refinements for Light Theme */
+:root {
+  --text-primary: #475569;     /* Softer primary text (was #334155) */
+  --text-secondary: #64748b;   /* Softer secondary text (was #475569) */
+  --text-tertiary: #94a3b8;    /* Subtle text */
+  --text-red: rgba(212, 83, 102, 0.9);    /* Softer red */
+  --text-blue: rgba(58, 110, 143, 0.9);   /* Softer blue */
+  --text-highlight: #334155;   /* For emphasis */
+  
+  /* New professional hero colors */
+  --hero-heading: #1e293b;       /* Darker, commanding heading color */
+  --hero-subheading: #334155;    /* Strong subheading color */
+  --hero-body: #475569;          /* Clear body text */
+  --hero-accent: #D45366;        /* Brand accent for highlights */
+  --hero-secondary: #3A6E8F;     /* Secondary brand accent */
+  --hero-muted: #64748b;         /* Subdued text for less important elements */
+  --hero-background: #ffffff;    /* Pure white background */
+}
+
+/* Base text styles */
+body {
+  color: var(--text-primary);
+}
+
+/* Typography overrides */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--text-highlight);
+}
+
+p, span, div {
+  color: var(--text-primary);
+}
+
+.text-voltaris-neutral-900 {
+  color: var(--text-highlight) !important;
+}
+
+.text-voltaris-neutral-800 {
+  color: var(--text-highlight) !important;
+}
+
+.text-voltaris-neutral-700 {
+  color: var(--text-primary) !important;
+}
+
+.text-voltaris-neutral-600 {
+  color: var(--text-secondary) !important;
+}
+
+.text-voltaris-neutral-500 {
+  color: var(--text-tertiary) !important;
+}
+
+/* Brand colors with softer appearance */
+.text-voltaris-red {
+  color: var(--text-red) !important;
+}
+
+.text-voltaris-blue {
+  color: var(--text-blue) !important;
+}
+
+.text-voltaris-text {
+  color: var(--text-primary) !important;
+}
+
+.text-voltaris-text-light {
+  color: var(--text-secondary) !important;
+}
+
+/* Hero typography refinements */
+.hero-section {
+  background-color: var(--hero-background);
+  color: var(--hero-body);
+}
+
+.hero-title {
+  color: var(--hero-heading) !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.hero-subtitle {
+  color: var(--hero-subheading) !important;
+  font-weight: 600 !important;
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+}
+
+.hero-description {
+  color: var(--hero-body) !important;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+.hero-accent {
+  color: var(--hero-accent) !important;
+}
+
+.hero-secondary {
+  color: var(--hero-secondary) !important;
+}
+
+.hero-muted {
+  color: var(--hero-muted) !important;
+  font-weight: 400;
+}
+
+/* Hero button text improvements */
+.hero-button {
+  color: white !important;
+  font-weight: 600 !important;
+}
+
+.hero-button-outline {
+  color: var(--hero-accent) !important;
+  font-weight: 600 !important;
+}
+
+.hero-stats {
+  color: var(--hero-heading) !important;
+  font-weight: 700 !important;
+}
+
+.hero-stats-label {
+  color: var(--hero-muted) !important;
+  font-weight: 400;
+}
+
+/* Hero highlight text */
+.hero-highlight {
+  color: var(--hero-accent) !important;
+  font-weight: inherit;
+  position: relative;
+  display: inline-block;
+}
+
+.hero-highlight::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: rgba(212, 83, 102, 0.2);
+  border-radius: 2px;
+}
+
+/* Hero section nav/menu links */
+.hero-nav-link {
+  color: var(--hero-subheading) !important;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.hero-nav-link:hover {
+  color: var(--hero-accent) !important;
+}
+
+.hero-nav-link.active {
+  color: var(--hero-accent) !important;
+  font-weight: 600;
+}
+
+/* Professional CTA banner text in hero */
+.hero-cta-banner {
+  color: var(--hero-body) !important;
+  font-weight: 500;
+}
+
+.hero-cta-banner strong {
+  color: var(--hero-heading) !important;
+  font-weight: 600;
+}
+
+/* Feature list text in hero */
+.hero-feature-item {
+  color: var(--hero-body) !important;
+}
+
+.hero-feature-title {
+  color: var(--hero-subheading) !important;
+  font-weight: 600;
+}
+
+/* Logo text refinements */
+.logo-text {
+  color: var(--hero-heading) !important;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+/* Team member showcase within hero */
+.team-member-name {
+  color: var(--hero-subheading) !important;
+  font-weight: 600;
+}
+
+.team-member-role {
+  color: var(--hero-muted) !important;
+  font-weight: 400;
+}
+
+/* Enhance statistics displayed in hero section */
+.stat-value {
+  color: var(--hero-heading) !important;
+  font-weight: 700;
+}
+
+.stat-label {
+  color: var(--hero-muted) !important;
+  font-size: 0.875rem;
+  font-weight: 400;
+}
+
+/* Menu and navigation text */
+.nav-link {
+  color: var(--text-primary) !important;
+}
+
+.nav-link:hover {
+  color: var(--text-highlight) !important;
+}
+
+/* Form elements and inputs */
+input, textarea, select {
+  color: var(--text-primary) !important;
+}
+
+label {
+  color: var(--text-secondary) !important;
+}
+
+::placeholder {
+  color: var(--text-tertiary) !important;
+  opacity: 0.8;
+}
+
+/* Footer text */
+footer p, footer a {
+  color: var(--text-secondary) !important;
+}
+
+/* Table text */
+table th {
+  color: var(--text-highlight) !important;
+}
+
+table td {
+  color: var(--text-primary) !important;
+}
+
+/* Code and technical text */
+code, pre {
+  color: var(--text-primary) !important;
+}
+
+/* KaTeX formula overrides */
+.katex {
+  color: var(--text-primary) !important;
+}
+
+/* Statistics and data numbers */
+.stat-value {
+  color: var(--hero-heading) !important;
+  font-weight: 700;
+}
+
+.stat-label {
+  color: var(--hero-muted) !important;
+  font-size: 0.875rem;
+  font-weight: 400;
+}
+
+/* Buttons and interactive elements */
+button, .btn {
+  color: var(--text-primary) !important;
+}
+
+button:hover, .btn:hover {
+  color: var(--text-highlight) !important;
+}
+
+/* Card content */
+.card-title {
+  color: var(--text-highlight) !important;
+}
+
+.card-content {
+  color: var(--text-primary) !important;
+}
+
+/* Team Charts and Data Visualization Professional Styling */
+.chart-container {
+  background-color: var(--hero-background);
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.chart-heading {
+  color: var(--hero-heading) !important;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.chart-subheading {
+  color: var(--hero-muted) !important;
+  font-weight: 500;
+}
+
+.chart-label {
+  color: var(--hero-body) !important;
+  font-weight: 500;
+  font-size: 0.75rem;
+}
+
+.chart-value {
+  color: var(--hero-heading) !important;
+  font-weight: 600;
+}
+
+.chart-axis-title {
+  color: var(--hero-subheading) !important;
+  font-weight: 600;
+  font-size: 0.75rem;
+}
+
+.chart-axis-tick {
+  color: var(--hero-muted) !important;
+  font-weight: 400;
+  font-size: 0.7rem;
+}
+
+.chart-legend-item {
+  color: var(--hero-body) !important;
+  font-weight: 500;
+  font-size: 0.8rem;
+}
+
+/* Data point labels */
+.data-point-label {
+  color: var(--hero-heading) !important;
+  font-weight: 600;
+  font-size: 0.7rem;
+}
+
+/* Team timeline styling */
+.timeline-event {
+  position: relative;
+}
+
+.timeline-date {
+  color: var(--hero-accent) !important;
+  font-weight: 700;
+  font-size: 0.8rem;
+  letter-spacing: 0.05em;
+}
+
+.timeline-title {
+  color: var(--hero-heading) !important;
+  font-weight: 600;
+}
+
+.timeline-description {
+  color: var(--hero-body) !important;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+/* Team statistics cards */
+.team-stat-card {
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.team-stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.team-stat-value {
+  color: var(--hero-heading) !important;
+  font-weight: 700;
+  font-size: 1.5rem;
+}
+
+.team-stat-label {
+  color: var(--hero-muted) !important;
+  font-weight: 500;
+  font-size: 0.75rem;
+  letter-spacing: 0.02em;
+}
+
+/* Progress bars */
+.progress-bar-container {
+  background-color: rgba(203, 213, 225, 0.3);
+  border-radius: 9999px;
+  height: 4px;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  border-radius: 9999px;
+}
+
+.progress-bar-label {
+  color: var(--hero-muted) !important;
+  font-weight: 500;
+  font-size: 0.7rem;
+}
+
+/* Team structure diagram */
+.team-structure-node {
+  color: var(--hero-heading) !important;
+  font-weight: 600;
+  font-size: 0.8rem;
+}
+
+.team-structure-connection {
+  stroke: var(--hero-muted) !important;
+  stroke-opacity: 0.6;
+}
+
+.team-structure-label {
+  color: var(--hero-muted) !important;
+  font-weight: 500;
+  font-size: 0.7rem;
+  font-style: italic;
+}
+
+@keyframes shimmerSlow {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.animate-shimmerSlow {
+  animation: shimmerSlow 5s infinite ease-in-out;
+}
+
+/* Animation for circuit pulse horizontal */
+@keyframes circuitPulseHorizontal {
+  0% { transform: translateX(-100%); opacity: 0; }
+  50% { opacity: 1; }
+  100% { transform: translateX(100vw); opacity: 0; }
+}
+
+.animate-circuitPulseHorizontal {
+  animation: circuitPulseHorizontal 8s linear infinite;
+}
+
+/* Animation for circuit pulse vertical */
+@keyframes circuitPulseVertical {
+  0% { transform: translateY(-100%); opacity: 0; }
+  50% { opacity: 1; }
+  100% { transform: translateY(100vh); opacity: 0; }
+}
+
+.animate-circuitPulseVertical {
+  animation: circuitPulseVertical 8s linear infinite;
+}
+
+/* Animation for data nodes */
+@keyframes dataNodePulse {
+  0% { transform: scale(0.5); opacity: 0.2; }
+  50% { transform: scale(1.5); opacity: 0.8; }
+  100% { transform: scale(0.5); opacity: 0.2; }
+}
+
+.animate-dataNodePulse {
+  animation: dataNodePulse 4s ease-in-out infinite;
+}
+
+/* Animation for floating blueprints */
+@keyframes floatingBlueprint {
+  0% { transform: translateY(0) rotate(0); opacity: 0.05; }
+  50% { transform: translateY(-15px) rotate(3deg); opacity: 0.15; }
+  100% { transform: translateY(0) rotate(0); opacity: 0.05; }
+}
+
+.animate-floatingBlueprint {
+  animation: floatingBlueprint 10s ease-in-out infinite;
+}
+
+/* Animation for energy particles */
+@keyframes energyParticle {
+  0% { transform: translate(0, 0); opacity: 0; }
+  50% { opacity: 0.8; }
+  100% { transform: translate(30px, 30px); opacity: 0; }
+}
+
+.animate-energyParticle {
+  animation: energyParticle 8s linear infinite;
+}
+
+/* Animation for diagonal scan */
+@keyframes diagonalScan {
+  0% { transform: translate(-100%, -100%) rotate(45deg); }
+  100% { transform: translate(100%, 100%) rotate(45deg); }
+}
+
+.animate-diagonalScan {
+  animation: diagonalScan 15s linear infinite;
+}
+
+/* Animation for diagonal scan in reverse */
+@keyframes diagonalScanReverse {
+  0% { transform: translate(-100%, 100%) rotate(-45deg); }
+  100% { transform: translate(100%, -100%) rotate(-45deg); }
+}
+
+.animate-diagonalScanReverse {
+  animation: diagonalScanReverse 15s linear infinite;
+}
+
+/* Text fill animation for the VOLTARIS text in loading screen */
+@keyframes textFill {
+  0% {
+    background-position: -100% 0;
+  }
+  100% {
+    background-position: 0 0;
+  }
+}
+
+.text-fill-animation {
+  background: linear-gradient(to right, #FF4254, #0044FF);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: textFill 2s ease-out forwards;
+}
+
+/* Typewriter animation for the passion tagline */
+@keyframes typewriter {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+@keyframes blinkCursor {
+  from { border-right-color: rgba(255, 66, 84, 0.75); }
+  to { border-right-color: transparent; }
+}
+
+.typewriter-text {
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  font-family: monospace;
+  margin: 0 auto;
+  width: 0;
+  border-right: 2px solid rgba(255, 66, 84, 0.75);
+  animation: 
+    typewriter 1.2s steps(40, end) 0.3s forwards,
+    blinkCursor 0.75s step-end infinite;
+}

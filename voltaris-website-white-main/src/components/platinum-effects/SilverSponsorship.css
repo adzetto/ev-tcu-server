@@ -1,0 +1,348 @@
+.silver-sponsorship-container {
+  margin: 2rem 0;
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.silver-sponsorship-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, #f8f9fa, #e2e8f0);
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+}
+
+@media (min-width: 768px) {
+  .silver-sponsorship-content {
+    flex-direction: row;
+    padding: 2rem;
+  }
+}
+
+/* Silver-specific accents */
+.silver-sponsorship-content::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #c0c0c0, #e5e5e5, #a9a9a9);
+  z-index: 2;
+}
+
+.silver-sponsorship-content::after {
+  content: '';
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(circle, rgba(192, 192, 192, 0.1) 0%, rgba(245, 245, 245, 0) 70%);
+  bottom: -100px;
+  right: -100px;
+  border-radius: 100%;
+  z-index: 0;
+}
+
+/* Tier card styles */
+.silver-tier-wrapper {
+  flex: 1;
+  max-width: 100%;
+}
+
+@media (min-width: 768px) {
+  .silver-tier-wrapper {
+    max-width: 300px;
+  }
+}
+
+.silver-tier-card {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  padding: 1.5rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid rgba(192, 192, 192, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.silver-tier-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(192, 192, 192, 0.1) 0%, rgba(192, 192, 192, 0) 50%);
+  z-index: 0;
+}
+
+.silver-tier-header {
+  margin-bottom: 1.5rem;
+  position: relative;
+}
+
+.silver-tier-badge {
+  display: inline-block;
+  background: linear-gradient(90deg, #a9a9a9, #d3d3d3);
+  color: white;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.25rem 0.75rem;
+  border-radius: 99px;
+  margin-bottom: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.silver-tier-price {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #4a5568;
+  margin: 0;
+}
+
+.silver-tier-benefits {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.5rem;
+  flex-grow: 1;
+}
+
+.silver-tier-benefit-item {
+  display: flex;
+  align-items: flex-start;
+  padding: 0.5rem 0;
+  font-size: 0.9rem;
+  color: #4a5568;
+  position: relative;
+}
+
+.silver-tier-check {
+  color: #a9a9a9;
+  margin-right: 0.5rem;
+  font-weight: bold;
+}
+
+.silver-tier-button {
+  background: linear-gradient(90deg, #a9a9a9, #c0c0c0);
+  border: none;
+  color: white;
+  font-weight: 600;
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+  width: 100%;
+  position: relative;
+  z-index: 1;
+}
+
+.silver-tier-button:hover {
+  box-shadow: 0 4px 12px rgba(169, 169, 169, 0.3);
+  background: linear-gradient(90deg, #a0a0a0, #b8b8b8);
+}
+
+/* Benefits section styles */
+.silver-benefits-section {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+}
+
+.silver-benefits-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #4a5568;
+  margin: 0 0 1rem;
+  position: relative;
+  padding-bottom: 0.75rem;
+}
+
+.silver-benefits-title::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(90deg, #a9a9a9, #c0c0c0);
+}
+
+.silver-benefits-description {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #718096;
+  margin-bottom: 1.5rem;
+}
+
+.silver-features-grid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+@media (min-width: 640px) {
+  .silver-features-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.silver-feature-card {
+  background: white;
+  padding: 1.25rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(192, 192, 192, 0.2);
+}
+
+.silver-feature-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.silver-feature-icon {
+  color: #a9a9a9;
+  margin-bottom: 0.75rem;
+  stroke-width: 1.5;
+}
+
+.silver-feature-card h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #4a5568;
+  margin: 0 0 0.5rem;
+}
+
+.silver-feature-card p {
+  font-size: 0.85rem;
+  color: #718096;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* Details toggle */
+.silver-details-toggle {
+  margin-bottom: 1.5rem;
+}
+
+.silver-details-button {
+  background: none;
+  border: none;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  color: #a9a9a9;
+  font-weight: 600;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.silver-details-button:hover {
+  color: #4a5568;
+}
+
+.silver-expanded-details {
+  background: rgba(245, 245, 245, 0.5);
+  border-radius: 8px;
+  padding: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.silver-expanded-details h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #4a5568;
+  margin: 0 0 0.75rem;
+}
+
+.silver-expanded-details p {
+  font-size: 0.9rem;
+  color: #718096;
+  margin: 0 0 1rem;
+  line-height: 1.6;
+}
+
+.silver-expanded-details ul {
+  padding-left: 1.5rem;
+  margin: 0 0 1.5rem;
+}
+
+.silver-expanded-details li {
+  font-size: 0.9rem;
+  color: #718096;
+  margin-bottom: 0.5rem;
+  line-height: 1.5;
+}
+
+.silver-impact-metrics {
+  display: flex;
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.silver-impact-item {
+  text-align: center;
+}
+
+.silver-impact-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #a9a9a9;
+  margin-bottom: 0.25rem;
+}
+
+.silver-impact-label {
+  font-size: 0.75rem;
+  color: #718096;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.silver-contact-button {
+  align-self: flex-start;
+  background: linear-gradient(90deg, #4a5568, #718096);
+  border: none;
+  color: white;
+  font-weight: 600;
+  padding: 0.75rem 2rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-top: auto;
+}
+
+.silver-contact-button:hover {
+  background: linear-gradient(90deg, #3d4657, #5d6b81);
+  box-shadow: 0 4px 12px rgba(74, 85, 104, 0.2);
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-slideDown {
+  animation: slideDown 0.3s ease forwards;
+} 

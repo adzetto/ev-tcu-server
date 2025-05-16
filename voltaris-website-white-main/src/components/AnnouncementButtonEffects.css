@@ -1,0 +1,106 @@
+/* Enhanced button animation effects */
+
+/* Button canvas for technical particle effects */
+.announcement-button-canvas {
+  border-radius: inherit;
+  z-index: 5;
+}
+
+/* Show canvas on hover */
+.announcement-topbar-wrapper:hover .announcement-button-canvas {
+  opacity: 1 !important;
+}
+
+/* Button highlight effects */
+.topbar-announcement-button {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Enhance the button's 3D effect on hover */
+.announcement-topbar-wrapper:hover .topbar-announcement-button {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(255, 66, 84, 0.2);
+}
+
+/* Active state animation */
+.topbar-announcement-button:active {
+  transform: translateY(1px) !important;
+  box-shadow: 0 2px 4px rgba(255, 66, 84, 0.1) !important;
+  transition: transform 0.1s, box-shadow 0.1s !important;
+}
+
+/* Advanced hover effect - light wave */
+@keyframes light-wave {
+  0% {
+    transform: translateX(-100%) skewX(-15deg);
+    opacity: 0;
+  }
+  30% {
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateX(100%) skewX(-15deg);
+    opacity: 0;
+  }
+}
+
+.topbar-announcement-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 80%;
+  height: 100%;
+  background: linear-gradient(to right, 
+    rgba(255, 255, 255, 0), 
+    rgba(255, 255, 255, 0.6), 
+    rgba(255, 255, 255, 0)
+  );
+  transform: translateX(-100%) skewX(-15deg);
+  opacity: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.announcement-topbar-wrapper:hover .topbar-announcement-button::before {
+  animation: light-wave 2s ease-in-out;
+}
+
+/* Professional text styling */
+.topbar-announcement-button .text {
+  position: relative;
+  z-index: 3;
+  letter-spacing: 0.03em;
+}
+
+/* Academic-style border highlight effect */
+@keyframes border-highlight {
+  0% {
+    opacity: 0;
+    transform: scaleX(0);
+  }
+  100% {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+}
+
+.topbar-announcement-button::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(to right, rgba(255, 66, 84, 0.2), rgba(255, 66, 84, 0.8), rgba(255, 66, 84, 0.2));
+  transform-origin: left;
+  transform: scaleX(0);
+  opacity: 0;
+  transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+}
+
+.announcement-topbar-wrapper:hover .topbar-announcement-button::after {
+  transform: scaleX(1);
+  opacity: 1;
+}

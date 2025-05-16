@@ -1,0 +1,35 @@
+.tech-particles-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.tech-particles-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Section-specific tech particles (colors and density) */
+section#home .tech-particles-container {
+  opacity: 0.2;
+}
+
+section#technical .tech-particles-container,
+section#adas .tech-particles-container {
+  opacity: 0.3;
+}
+
+section#about .tech-particles-container,
+section#vehicle .tech-particles-container,
+section#sponsors .tech-particles-container,
+section#contact .tech-particles-container {
+  opacity: 0.15;
+}

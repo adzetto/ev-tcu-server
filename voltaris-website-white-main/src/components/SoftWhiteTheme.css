@@ -1,0 +1,271 @@
+/* Soft White Theme - Advanced Design Rules
+ * This stylesheet applies a soft white theme that's easier on the eyes
+ * while maintaining a professional industrial design aesthetic.
+ */
+
+:root {
+  /* Soft background colors */
+  --soft-white-primary: #f8f9fa;
+  --soft-white-secondary: #f0f2f5;
+  --soft-white-tertiary: #e9ecef;
+  
+  /* Warm-tinted whites */
+  --warm-white-primary: #f9f8f6;
+  --warm-white-secondary: #f5f3f0;
+  
+  /* Soft blues */
+  --soft-blue-100: #e6f0fa;
+  --soft-blue-200: #d0e3f7;
+  --soft-blue-300: #a9cdec;
+  
+  /* Soft reds */
+  --soft-red-100: #fbeaec;
+  --soft-red-200: #f8d7db;
+  --soft-red-300: #f1b5bc;
+  
+  /* Text colors */
+  --text-primary: #2d3748;
+  --text-secondary: #4a5568;
+  --text-tertiary: #718096;
+  
+  /* Shadow colors */
+  --shadow-soft: rgba(0, 0, 0, 0.03);
+  --shadow-medium: rgba(0, 0, 0, 0.05);
+}
+
+/* Apply soft background to body */
+body {
+  background: linear-gradient(135deg, var(--warm-white-primary), var(--soft-white-primary)) !important;
+}
+
+/* Base container styling */
+.industrial-container, 
+.org-box, 
+.tech-card,
+.industrial-box,
+.industrial-stats-card,
+.industrial-feature-box {
+  background: linear-gradient(135deg, #ffffff, var(--soft-white-primary)) !important;
+  border-color: rgba(0, 0, 0, 0.06) !important;
+  box-shadow: 0 2px 6px var(--shadow-soft) !important;
+}
+
+/* Add subtle texture to containers */
+.industrial-container::after,
+.org-box::after,
+.tech-card::after,
+.industrial-box::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23f0f0f0' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  opacity: 0.07;
+  z-index: 0;
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+/* Section backgrounds */
+section {
+  background-color: var(--soft-white-primary) !important;
+}
+
+section:nth-child(even) {
+  background-color: var(--soft-white-secondary) !important;
+}
+
+/* Adjust grid backgrounds for less contrast */
+.industrial-grid-background::before {
+  opacity: 0.3 !important;
+  background-image: 
+    linear-gradient(to right, rgba(0, 68, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 66, 84, 0.03) 1px, transparent 1px) !important;
+}
+
+.org-chart::before {
+  opacity: 0.3 !important;
+}
+
+/* Softened borders and highlights */
+.industrial-box::before,
+.industrial-container::before,
+.industrial-feature-box::before,
+.org-box::before {
+  opacity: 0.6 !important;
+}
+
+.industrial-corners-box::before,
+.industrial-corners-box::after,
+.industrial-corners-box-bottom::before,
+.industrial-corners-box-bottom::after {
+  border-color: rgba(0, 68, 255, 0.4) !important;
+}
+
+/* Soft card styles */
+.bg-white, .bg-white\/90, .bg-white\/95, .bg-white\/80 {
+  background-color: var(--warm-white-primary) !important;
+}
+
+.bg-gray-50 {
+  background-color: var(--warm-white-secondary) !important;
+}
+
+/* Soft shadows */
+.shadow-sm {
+  box-shadow: 0 1px 2px var(--shadow-soft) !important;
+}
+
+.shadow-md, .shadow-lg {
+  box-shadow: 0 4px 6px var(--shadow-medium) !important;
+}
+
+/* Adjust text colors for better readability */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--text-primary) !important;
+}
+
+p, li, span {
+  color: var(--text-secondary) !important;
+}
+
+.text-voltaris-text {
+  color: var(--text-primary) !important;
+}
+
+.text-voltaris-secondary {
+  color: var(--text-secondary) !important;
+}
+
+/* Soften blue accents */
+.text-voltaris-blue, .text-blue-500, .text-blue-600 {
+  color: #3b82f6 !important;
+}
+
+.border-voltaris-blue, .border-blue-500 {
+  border-color: rgba(59, 130, 246, 0.3) !important;
+}
+
+.bg-voltaris-blue {
+  background-color: rgba(59, 130, 246, 0.8) !important;
+}
+
+/* Soften red accents */
+.text-voltaris-red, .text-red-500, .text-red-600 {
+  color: #ef4444 !important;
+}
+
+.border-voltaris-red, .border-red-500 {
+  border-color: rgba(239, 68, 68, 0.3) !important;
+}
+
+.bg-voltaris-red {
+  background-color: rgba(239, 68, 68, 0.8) !important;
+}
+
+/* Card hover effects */
+.industrial-container:hover,
+.industrial-feature-box:hover,
+.industrial-stats-card:hover,
+.org-box:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 6px 12px var(--shadow-medium) !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Soft gradients for backgrounds */
+.bg-gradient-to-b, .bg-gradient-to-r {
+  opacity: 0.9 !important;
+}
+
+/* Reduced opacity for hover states */
+.hover\:bg-voltaris-blue\/20:hover {
+  background-color: rgba(59, 130, 246, 0.15) !important;
+}
+
+.hover\:bg-voltaris-red\/20:hover {
+  background-color: rgba(239, 68, 68, 0.15) !important;
+}
+
+/* Box with red accent */
+.industrial-box-red {
+  border-left: 3px solid rgba(239, 68, 68, 0.5) !important;
+  background: linear-gradient(to right, rgba(255, 66, 84, 0.02), transparent) !important;
+}
+
+/* Box with blue accent */
+.industrial-box-blue {
+  border-left: 3px solid rgba(59, 130, 246, 0.5) !important;
+  background: linear-gradient(to right, rgba(0, 68, 255, 0.02), transparent) !important;
+}
+
+/* Team photos softer borders */
+.rounded-lg {
+  border-color: rgba(0, 0, 0, 0.04) !important;
+}
+
+/* Soften technical diagrams */
+.latex-style-box {
+  background-color: var(--soft-white-primary) !important;
+  border-color: rgba(0, 0, 0, 0.06) !important;
+}
+
+/* Improve contrast for diagrams */
+svg text {
+  fill: var(--text-primary) !important;
+}
+
+/* Subtle paper texture for sections */
+section::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4' viewBox='0 0 4 4'%3E%3Cpath fill='%23f0f0f0' fill-opacity='0.4' d='M1 3h1v1H1V3zm2-2h1v1H3V1z'%3E%3C/path%3E%3C/svg%3E");
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+/* Soften buttons */
+button {
+  opacity: 0.95 !important;
+}
+
+button:hover {
+  opacity: 1 !important;
+}
+
+/* Add slight warmth to images */
+img {
+  filter: contrast(0.97) brightness(1.02) !important;
+}
+
+/* Special treatment for dark backgrounds */
+.bg-black, .bg-black\/60, .bg-black\/70, .bg-black\/80, .bg-black\/90,
+.bg-gradient-to-r.from-red-900\/30,
+.bg-gradient-to-r.from-blue-900\/30,
+.bg-gradient-to-r.from-green-900\/30 {
+  background-color: #1a1a1a !important;
+}
+
+/* Subtle vignette effect for whole page */
+body::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(ellipse at center, transparent 80%, rgba(0, 0, 0, 0.07) 100%);
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* Smooth transitions for all elements */
+* {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, opacity 0.3s ease !important;
+}

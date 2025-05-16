@@ -1,0 +1,214 @@
+/* Advanced responsive styles with permanent tier indicators */
+
+/* Mobile menu button visibility */
+@media screen and (min-width: 768px) {
+  .mobile-menu-button {
+    display: none !important;
+  }
+}
+
+/* Mobile menu button only on home page for desktop */
+@media screen and (min-width: 768px) {
+  body:not([data-section="home"]) .mobile-menu-button {
+    display: none !important;
+  }
+}
+
+/* Add transition for smoother button hide/show */
+.mobile-menu-button {
+  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+/* Additional styles for better visual experience */
+.mobile-menu-button:hover {
+  box-shadow: 0 4px 15px rgba(255, 66, 84, 0.6);
+}
+
+/* When user has scrolled, adjust button appearance */
+body[data-scrolled="true"] .mobile-menu-button {
+  background: rgba(20, 20, 25, 0.95) !important;
+  backdrop-filter: blur(12px) !important;
+}
+
+/* Fix for mobile menu in all views */
+.fixed.inset-y-0.right-0.z-50.transform {
+  width: 85vw;
+  max-width: 300px;
+}
+
+@media screen and (min-width: 768px) {
+  /* On desktop, hide the mobile menu except on home page */
+  body:not([data-section="home"]) .fixed.inset-y-0.right-0.z-50.translate-x-0 {
+    transform: translateX(100%) !important;
+  }
+}
+
+/* Additional media queries for header height adjustments */
+@media screen and (max-height: 600px) {
+  header {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
+  
+  /* Always show mobile menu button on short screens */
+  .mobile-menu-button {
+    display: flex !important;
+  }
+}
+
+
+/* Base positioning adjustments */
+[id="home"] .absolute.bottom-0.left-0.right-0.z-10.px-4 {
+  transform: translateY(-30px) !important; /* Move the sponsorship bar up */
+  position: absolute !important;
+  bottom: 0 !important;
+  z-index: 10 !important;
+}
+
+/* High-performance rendering optimizations */
+.sponsor-logo,
+.tier-indicator,
+.tier-glow,
+.tier-dot {
+  transform: translateZ(0) !important; /* Hardware acceleration */
+  backface-visibility: hidden !important;
+  -webkit-backface-visibility: hidden !important;
+  perspective: 1000px !important;
+  will-change: transform, opacity, width !important;
+  contain: paint !important; /* Optimizes painting */
+}
+
+/* Ensure animations are running */
+.tier-dot, .tier-indicator, .tier-glow {
+  animation-play-state: running !important;
+}
+
+/* Enhance visual clarity of platinum tier sponsors */
+[href*="bias.com"] .sponsor-logo,
+[href*="cn.com"] .sponsor-logo {
+  filter: drop-shadow(0 0 3px rgba(250, 204, 21, 0.2)) brightness(1.15) contrast(1.08) !important;
+}
+
+/* Style gold tier sponsors */
+[href*="tekyaz.com"] .sponsor-logo,
+[href*="pilci.com"] .sponsor-logo {
+  filter: drop-shadow(0 0 2px rgba(245, 158, 11, 0.2)) brightness(1.12) contrast(1.05) !important;
+}
+
+/* Advanced logo-specific optimizations */
+img[alt="TekYazin"] {
+  height: 36px !important;
+}
+
+img[alt="CN Enerji"] {
+  height: 38px !important;
+}
+
+img[alt="Bias Mühendislik"] {
+  height: 40px !important;
+}
+
+img[alt="Pilci"] {
+  height: 38px !important;
+}
+
+/* Advanced tier indicator animations */
+@keyframes platinumShimmer {
+  0% {
+    background-position: -100% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes goldShimmer {
+  0% {
+    background-position: -100% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* Apply shimmer effects to each tier */
+[href*="bias.com"] .tier-indicator,
+[href*="cn.com"] .tier-indicator {
+  background: linear-gradient(90deg, 
+    rgba(250, 204, 21, 0.2), 
+    rgba(250, 204, 21, 0.6), 
+    rgba(250, 204, 21, 0.2)
+  ) !important;
+  background-size: 200% 100% !important;
+  animation: platinumShimmer 3s infinite linear !important;
+}
+
+[href*="tekyaz.com"] .tier-indicator,
+[href*="pilci.com"] .tier-indicator {
+  background: linear-gradient(90deg, 
+    rgba(245, 158, 11, 0.2), 
+    rgba(245, 158, 11, 0.5), 
+    rgba(245, 158, 11, 0.2)
+  ) !important;
+  background-size: 200% 100% !important;
+  animation: goldShimmer 4s infinite linear !important;
+}
+
+/* Enhance dot animations for each tier */
+[href*="bias.com"] .tier-dot,
+[href*="cn.com"] .tier-dot {
+  box-shadow: 0 0 6px rgba(250, 204, 21, 0.7), 0 0 10px rgba(250, 204, 21, 0.4) !important;
+}
+
+[href*="tekyaz.com"] .tier-dot,
+[href*="pilci.com"] .tier-dot {
+  box-shadow: 0 0 5px rgba(245, 158, 11, 0.7), 0 0 8px rgba(245, 158, 11, 0.4) !important;
+}
+
+/* Enhanced glow effects */
+.tier-glow {
+  filter: blur(3px) !important;
+  pointer-events: none !important;
+}
+
+/* Responsive adjustments */
+@media screen and (min-width: 1280px) {
+  [id="home"] .absolute.bottom-0.left-0.right-0.z-10.px-4 {
+    transform: translateY(-32px) !important;
+  }
+  
+  .tier-indicator {
+    height: 2px !important;
+    bottom: -10px !important;
+  }
+  
+  .tier-dot {
+    width: 5px !important;
+    height: 5px !important;
+    bottom: -9px !important;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  [id="home"] .absolute.bottom-0.left-0.right-0.z-10.px-4 {
+    transform: translateY(-26px) !important;
+  }
+  
+  .tier-indicator {
+    height: 1.5px !important;
+    bottom: -7px !important;
+  }
+  
+  .tier-dot {
+    width: 3px !important;
+    height: 3px !important;
+    bottom: -6px !important;
+  }
+}
+
+/* Print media query for documents */
+@media print {
+  .tier-indicator, .tier-glow, .tier-dot {
+    display: none !important;
+  }
+}

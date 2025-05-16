@@ -1,0 +1,300 @@
+/* Section Animations - Core styles */
+.section-animated {
+  position: relative;
+  opacity: 0;
+  transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+  z-index: 1;
+}
+
+/* Different animation types */
+.section-animated.anim-slide-up {
+  transform: translateY(30px);
+}
+
+.section-animated.anim-slide-down {
+  transform: translateY(-30px);
+}
+
+.section-animated.anim-slide-left {
+  transform: translateX(30px);
+}
+
+.section-animated.anim-slide-right {
+  transform: translateX(-30px);
+}
+
+.section-animated.anim-zoom {
+  transform: scale(0.95);
+}
+
+/* Active state when animation should play */
+.section-animated.active {
+  opacity: 1;
+  transform: translate(0) scale(1);
+}
+
+/* Technical decorative elements */
+.tech-border {
+  position: absolute;
+  z-index: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: all 0.8s ease-out;
+}
+
+.tech-border-top {
+  top: 0;
+  left: 10%;
+  width: 80%;
+  height: 1px;
+  background: linear-gradient(to right, 
+    transparent, 
+    rgba(255, 66, 84, 0.5), 
+    transparent
+  );
+  transform: translateY(-5px);
+}
+
+.tech-border-bottom {
+  bottom: 0;
+  left: 10%;
+  width: 80%;
+  height: 1px;
+  background: linear-gradient(to right, 
+    transparent, 
+    rgba(0, 68, 255, 0.5), 
+    transparent
+  );
+  transform: translateY(5px);
+}
+
+.tech-border-left {
+  top: 10%;
+  left: 0;
+  width: 1px;
+  height: 80%;
+  background: linear-gradient(to bottom, 
+    transparent, 
+    rgba(0, 68, 255, 0.5), 
+    transparent
+  );
+  transform: translateX(-5px);
+}
+
+.tech-border-right {
+  top: 10%;
+  right: 0;
+  width: 1px;
+  height: 80%;
+  background: linear-gradient(to bottom, 
+    transparent, 
+    rgba(255, 66, 84, 0.5), 
+    transparent
+  );
+  transform: translateX(5px);
+}
+
+/* Tech corner brackets */
+.tech-corner {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  opacity: 0;
+  transition: all 0.5s ease-out;
+}
+
+.tech-corner:before,
+.tech-corner:after {
+  content: '';
+  position: absolute;
+  background-color: rgba(255, 66, 84, 0.7);
+}
+
+.tech-corner-top-left {
+  top: 10px;
+  left: 10px;
+  transform: scale(0.7);
+}
+
+.tech-corner-top-left:before {
+  top: 0;
+  left: 0;
+  width: 2px;
+  height: 10px;
+}
+
+.tech-corner-top-left:after {
+  top: 0;
+  left: 0;
+  width: 10px;
+  height: 2px;
+}
+
+.tech-corner-top-right {
+  top: 10px;
+  right: 10px;
+  transform: scale(0.7);
+}
+
+.tech-corner-top-right:before {
+  top: 0;
+  right: 0;
+  width: 2px;
+  height: 10px;
+}
+
+.tech-corner-top-right:after {
+  top: 0;
+  right: 0;
+  width: 10px;
+  height: 2px;
+}
+
+.tech-corner-bottom-left {
+  bottom: 10px;
+  left: 10px;
+  transform: scale(0.7);
+}
+
+.tech-corner-bottom-left:before {
+  bottom: 0;
+  left: 0;
+  width: 2px;
+  height: 10px;
+}
+
+.tech-corner-bottom-left:after {
+  bottom: 0;
+  left: 0;
+  width: 10px;
+  height: 2px;
+}
+
+.tech-corner-bottom-right {
+  bottom: 10px;
+  right: 10px;
+  transform: scale(0.7);
+}
+
+.tech-corner-bottom-right:before {
+  bottom: 0;
+  right: 0;
+  width: 2px;
+  height: 10px;
+}
+
+.tech-corner-bottom-right:after {
+  bottom: 0;
+  right: 0;
+  width: 10px;
+  height: 2px;
+}
+
+/* When section is active, show tech elements */
+.section-animated.active .tech-border {
+  opacity: 0.7;
+  transform: translate(0);
+}
+
+.section-animated.active .tech-corner {
+  opacity: 0.7;
+  transform: scale(1);
+}
+
+/* Technical scan line animation */
+.tech-scan {
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(to right, 
+    transparent, 
+    rgba(255, 66, 84, 0.3), 
+    rgba(255, 66, 84, 0.6), 
+    rgba(0, 68, 255, 0.6), 
+    rgba(0, 68, 255, 0.3), 
+    transparent
+  );
+  top: -2px;
+  left: 0;
+  opacity: 0;
+  box-shadow: 0 0 10px rgba(255, 66, 84, 0.4);
+  z-index: 5;
+}
+
+.section-animated.active .tech-scan {
+  animation: scanLine 1.5s ease-out forwards;
+}
+
+@keyframes scanLine {
+  0% {
+    opacity: 0;
+    top: -2px;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    top: 100%;
+  }
+}
+
+/* Technical background grid pattern */
+.tech-grid {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    linear-gradient(rgba(255, 66, 84, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 68, 255, 0.05) 1px, transparent 1px);
+  background-size: 25px 25px;
+  opacity: 0;
+  transition: opacity 1s ease-out;
+  z-index: -1;
+}
+
+.section-animated.active .tech-grid {
+  opacity: 0.3;
+}
+
+/* Section-specific adjustments */
+#home.section-animated .tech-corner:before, 
+#home.section-animated .tech-corner:after {
+  background-color: rgba(255, 66, 84, 0.7);
+}
+
+#about.section-animated .tech-corner:before, 
+#about.section-animated .tech-corner:after {
+  background-color: rgba(0, 68, 255, 0.7);
+}
+
+#technical.section-animated .tech-corner:before, 
+#technical.section-animated .tech-corner:after {
+  background-color: rgba(255, 66, 84, 0.7);
+}
+
+#vehicle.section-animated .tech-corner:before, 
+#vehicle.section-animated .tech-corner:after {
+  background-color: rgba(0, 68, 255, 0.7);
+}
+
+#adas.section-animated .tech-corner:before, 
+#adas.section-animated .tech-corner:after {
+  background-color: rgba(255, 66, 84, 0.7);
+}
+
+#sponsors.section-animated .tech-corner:before, 
+#sponsors.section-animated .tech-corner:after {
+  background-color: rgba(0, 68, 255, 0.7);
+}
+
+#contact.section-animated .tech-corner:before, 
+#contact.section-animated .tech-corner:after {
+  background-color: rgba(255, 66, 84, 0.7);
+}

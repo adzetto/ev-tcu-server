@@ -1,0 +1,194 @@
+/* Platinum Sponsor Card Special Effects */
+
+/* Enhanced Platinum shimmer animations */
+@keyframes platinumShimmer {
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+@keyframes borderRotate {
+  0% {
+    border-image-source: linear-gradient(0deg, #f5f5f7, #dedfe0, #ffffff, #dedfe0, #f5f5f7);
+  }
+  25% {
+    border-image-source: linear-gradient(90deg, #f5f5f7, #dedfe0, #ffffff, #dedfe0, #f5f5f7);
+  }
+  50% {
+    border-image-source: linear-gradient(180deg, #f5f5f7, #dedfe0, #ffffff, #dedfe0, #f5f5f7);
+  }
+  75% {
+    border-image-source: linear-gradient(270deg, #f5f5f7, #dedfe0, #ffffff, #dedfe0, #f5f5f7);
+  }
+  100% {
+    border-image-source: linear-gradient(360deg, #f5f5f7, #dedfe0, #ffffff, #dedfe0, #f5f5f7);
+  }
+}
+
+@keyframes platinumGlow {
+  0% {
+    box-shadow: 0 0 5px 0 rgba(78, 144, 191, 0.2),
+                0 0 10px 0 rgba(78, 144, 191, 0.1),
+                0 0 15px 0 rgba(78, 144, 191, 0.05);
+  }
+  50% {
+    box-shadow: 0 0 15px 5px rgba(78, 144, 191, 0.3),
+                0 0 25px 10px rgba(78, 144, 191, 0.2),
+                0 0 35px 15px rgba(78, 144, 191, 0.1);
+  }
+  100% {
+    box-shadow: 0 0 5px 0 rgba(78, 144, 191, 0.2),
+                0 0 10px 0 rgba(78, 144, 191, 0.1),
+                0 0 15px 0 rgba(78, 144, 191, 0.05);
+  }
+}
+
+@keyframes floatAnimation {
+  0% {
+    transform: translateY(0) translateZ(0);
+  }
+  50% {
+    transform: translateY(-8px) translateZ(0);
+  }
+  100% {
+    transform: translateY(0) translateZ(0);
+  }
+}
+
+.platinum-sponsor-card {
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+  will-change: transform, opacity, box-shadow;
+  transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  border-image-slice: 1;
+  border-width: 2px;
+  border-image-source: linear-gradient(45deg, #f5f5f7, #dedfe0, #ffffff, #dedfe0, #f5f5f7);
+  animation: borderRotate 6s linear infinite, platinumGlow 4s ease-in-out infinite;
+  background-color: #FFFFFF;
+}
+
+.platinum-sponsor-card:hover {
+  transform: translateY(-12px) scale(1.03);
+  animation: borderRotate 3s linear infinite, platinumGlow 2s ease-in-out infinite, floatAnimation 3s ease-in-out infinite;
+}
+
+.platinum-shimmer {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(229, 228, 226, 0.3),
+    rgba(255, 255, 255, 0.6),
+    rgba(229, 228, 226, 0.3),
+    transparent
+  );
+  background-size: 200% 100%;
+  animation: platinumShimmer 2.5s ease-in-out infinite;
+}
+
+.platinum-text {
+  font-size: 1.7rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  background: linear-gradient(
+    90deg,
+    #4A90BF,
+    #83b3d5,
+    #ffffff,
+    #83b3d5,
+    #4A90BF
+  );
+  background-size: 200% auto;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: platinumShimmer 3s linear infinite;
+  text-shadow: 0 0 10px rgba(74, 144, 191, 0.3);
+}
+
+/* Add radial gradient support */
+.bg-gradient-radial {
+  background-image: radial-gradient(var(--tw-gradient-stops));
+}
+
+/* Enhanced effects for platinum card */
+.platinum-sponsor-card::before {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, rgba(74, 144, 191, 0.2), transparent, rgba(74, 144, 191, 0.2));
+  z-index: -1;
+  border-radius: 0.5rem;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.platinum-sponsor-card:hover::before {
+  opacity: 0.5;
+}
+
+/* Animated corners for platinum card */
+.platinum-sponsor-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: transparent;
+  border-radius: 0.5rem;
+  pointer-events: none;
+}
+
+/* Corner highlight effects */
+.platinum-corner-effect {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-color: #ffffff;
+  opacity: 0.5;
+  transition: all 0.3s ease;
+}
+
+.platinum-corner-tl {
+  top: -2px;
+  left: -2px;
+  border-top: 2px solid;
+  border-left: 2px solid;
+  border-top-left-radius: 4px;
+}
+
+.platinum-corner-tr {
+  top: -2px;
+  right: -2px;
+  border-top: 2px solid;
+  border-right: 2px solid;
+  border-top-right-radius: 4px;
+}
+
+.platinum-corner-bl {
+  bottom: -2px;
+  left: -2px;
+  border-bottom: 2px solid;
+  border-left: 2px solid;
+  border-bottom-left-radius: 4px;
+}
+
+.platinum-corner-br {
+  bottom: -2px;
+  right: -2px;
+  border-bottom: 2px solid;
+  border-right: 2px solid;
+  border-bottom-right-radius: 4px;
+}
+
+.platinum-sponsor-card:hover .platinum-corner-effect {
+  width: 30px;
+  height: 30px;
+  opacity: 0.8;
+  filter: drop-shadow(0 0 5px rgba(255,255,255,0.5));
+}

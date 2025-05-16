@@ -1,0 +1,120 @@
+/* Mobile-specific styles for the organization chart */
+
+/* Better spacing for the button container */
+.org-chart > div > .flex-wrap {
+  gap: 0.5rem !important; 
+  padding-left: 0.25rem !important;
+  padding-right: 0.25rem !important;
+}
+
+/* More space in buttons */
+.org-chart button.w-full {
+  padding-left: 0.5rem !important;
+  padding-right: 0.5rem !important;
+  height: auto !important;
+  min-height: 44px !important;
+}
+
+/* Ensure buttons wrap properly on small screens */
+@media (max-width: 640px) {
+  .org-chart button {
+    width: 100%;
+    margin-bottom: 8px;
+    font-size: 14px;
+  }
+  
+  .org-chart button span {
+    font-size: 14px;
+  }
+  
+  .org-chart .flex-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .org-chart .director-box {
+    width: 100% !important;
+    max-width: 90% !important;
+    margin: 0 auto;
+  }
+  
+  .org-chart .unit-info-box {
+    max-width: 100% !important;
+    width: 100% !important;
+  }
+  
+  /* Improve organization of expanded teams content */
+  .electronics-expanded,
+  .mechanical-expanded,
+  .sponsorship-expanded {
+    padding: 0 !important;
+  }
+  
+  .sub-box {
+    padding: 12px !important;
+  }
+  
+  /* Make team member cards smaller and more compact */
+  .org-chart .rounded-lg {
+    border-radius: 6px !important;
+  }
+  
+  /* Adjust text sizes for better readability */
+  .org-chart h3 {
+    font-size: 20px !important;
+  }
+  
+  .org-chart h4 {
+    font-size: 16px !important;
+  }
+  
+  .org-chart p, 
+  .org-chart .text-sm {
+    font-size: 13px !important;
+  }
+  
+  .org-chart .text-xs {
+    font-size: 11px !important;
+  }
+}
+
+/* Tablet-specific adjustments */
+@media (min-width: 641px) and (max-width: 1024px) {
+  .org-chart .director-box {
+    max-width: 180px !important;
+  }
+  
+  .org-chart .gap-8 {
+    gap: 1rem !important;
+  }
+  
+  .org-chart .mb-12 {
+    margin-bottom: 2rem !important;
+  }
+}
+
+/* Better team member layout */
+.org-chart .grid-cols-1 > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Mobile breakpoints optimizations */
+@media (max-width: 400px) {
+  .org-chart button svg {
+    width: 16px !important;
+    height: 16px !important;
+  }
+  
+  .org-chart .px-4 {
+    padding-left: 0.75rem !important;
+    padding-right: 0.75rem !important;
+  }
+  
+  .org-chart .py-2 {
+    padding-top: 0.5rem !important;
+    padding-bottom: 0.5rem !important;
+  }
+}

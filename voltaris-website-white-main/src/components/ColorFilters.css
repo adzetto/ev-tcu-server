@@ -1,0 +1,101 @@
+/* Advanced Color Filters for Eye Comfort */
+
+:root {
+  /* Define custom color filter properties */
+  --eye-comfort-filter: brightness(0.98) contrast(0.96) saturate(0.94);
+  --warm-filter: sepia(0.05) brightness(1.02);
+  --soft-shadow-filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.03));
+}
+
+/* Apply eye comfort filter to the entire body */
+body {
+  filter: var(--eye-comfort-filter);
+}
+
+/* Apply warm filter to images */
+img {
+  filter: var(--warm-filter);
+  transition: filter 0.3s ease;
+}
+
+img:hover {
+  filter: none; /* Remove filter on hover for full clarity when needed */
+}
+
+/* Reduce harshness of white backgrounds */
+.bg-white, 
+[class*="bg-white/"], 
+[class*="bg-gray-50"],
+[class*="bg-voltaris-light"],
+[class*="bg-voltaris-card"] {
+  background-color: #f9f7f5 !important; /* Very slight cream tint */
+}
+
+/* Soften dark backgrounds */
+.bg-black, 
+[class*="bg-black/"],
+[class*="bg-voltaris-dark"],
+[class*="bg-voltaris-neutral-800"] {
+  background-color: #1a1a1a !important; /* Not pure black */
+}
+
+/* Decrease contrast for text */
+.text-black, 
+.text-gray-900, 
+.text-voltaris-text {
+  color: #2d3748 !important; /* Dark gray instead of black */
+}
+
+/* Apply softer shadows */
+.shadow-sm, 
+.shadow, 
+.shadow-md, 
+.shadow-lg {
+  filter: var(--soft-shadow-filter) !important;
+  box-shadow: none !important; /* Remove default shadow to avoid combining with filter */
+}
+
+/* Add subtle highlight to create depth without harshness */
+.industrial-container,
+.industrial-box,
+.org-box,
+.tech-card,
+.bg-white {
+  border-top: 1px solid rgba(255, 255, 255, 0.8) !important;
+}
+
+/* Soften gradient colors */
+[class*="from-voltaris-blue"],
+[class*="from-blue-"] {
+  --tw-gradient-from: rgba(59, 130, 246, 0.7) !important;
+}
+
+[class*="from-voltaris-red"],
+[class*="from-red-"] {
+  --tw-gradient-from: rgba(239, 68, 68, 0.7) !important;
+}
+
+/* Add subtle animation for visual rest */
+@keyframes softPulse {
+  0%, 100% {
+    opacity: 0.97;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+section {
+  animation: softPulse 8s infinite;
+}
+
+/* Reduce animation speed for smoother interactions */
+.transition-all {
+  transition-duration: 400ms !important;
+}
+
+/* Anti eye-strain for text containers */
+p, li, span, h1, h2, h3, h4, h5, h6 {
+  text-shadow: 0 0 1px rgba(0, 0, 0, 0.01); /* Slightly smooths text edges */
+  letter-spacing: 0.01em; /* Slight increase for better readability */
+}

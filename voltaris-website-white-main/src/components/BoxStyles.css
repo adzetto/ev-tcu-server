@@ -1,0 +1,308 @@
+/* Industrial Box Designs for Main Content */
+
+.industrial-container {
+  background: linear-gradient(to bottom, #ffffff, #f9fafb);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 0.5rem;
+  box-shadow: 
+    0 1px 3px rgba(0, 0, 0, 0.05),
+    0 1px 2px rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.industrial-container:hover {
+  box-shadow: 
+    0 4px 6px rgba(0, 0, 0, 0.1),
+    0 2px 4px rgba(0, 0, 0, 0.06);
+  transform: translateY(-2px);
+}
+
+.industrial-container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(to right, #FF4254, #0044FF);
+  opacity: 0.7;
+}
+
+/* Dark version */
+.industrial-container.dark {
+  background: linear-gradient(to bottom, #1a1a1a, #121212);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Corner accents */
+.industrial-corners-box {
+  position: relative;
+}
+
+.industrial-corners-box::before,
+.industrial-corners-box::after,
+.industrial-corners-box-bottom::before,
+.industrial-corners-box-bottom::after {
+  content: "";
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-style: solid;
+  border-width: 0;
+  z-index: 1;
+}
+
+.industrial-corners-box::before {
+  top: 0;
+  left: 0;
+  border-top-width: 2px;
+  border-left-width: 2px;
+  border-color: #FF4254;
+}
+
+.industrial-corners-box::after {
+  top: 0;
+  right: 0;
+  border-top-width: 2px;
+  border-right-width: 2px;
+  border-color: #FF4254;
+}
+
+.industrial-corners-box-bottom::before {
+  bottom: 0;
+  left: 0;
+  border-bottom-width: 2px;
+  border-left-width: 2px;
+  border-color: #0044FF;
+}
+
+.industrial-corners-box-bottom::after {
+  bottom: 0;
+  right: 0;
+  border-bottom-width: 2px;
+  border-right-width: 2px;
+  border-color: #0044FF;
+}
+
+/* Red accent boxes */
+.industrial-box-red {
+  border-left: 3px solid #FF4254;
+  background: linear-gradient(to right, rgba(255, 66, 84, 0.03), transparent);
+}
+
+/* Blue accent boxes */
+.industrial-box-blue {
+  border-left: 3px solid #0044FF;
+  background: linear-gradient(to right, rgba(0, 68, 255, 0.03), transparent);
+}
+
+/* Technical grid backgrounds */
+.industrial-grid-background {
+  position: relative;
+}
+
+.industrial-grid-background::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    linear-gradient(to right, rgba(0, 68, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 66, 84, 0.05) 1px, transparent 1px);
+  background-size: 20px 20px;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Feature boxes with industrial design */
+.industrial-feature-box {
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 0.5rem;
+  overflow: hidden;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.industrial-feature-box:hover {
+  box-shadow: 
+    0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  transform: translateY(-2px);
+}
+
+.industrial-feature-box::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(to right, #FF4254, #0044FF);
+  opacity: 0.7;
+  transition: opacity 0.3s ease;
+}
+
+.industrial-feature-box:hover::before {
+  opacity: 1;
+}
+
+.industrial-feature-content {
+  position: relative;
+  z-index: 1;
+  padding: 1.5rem;
+}
+
+/* Header styling */
+.industrial-header {
+  display: flex;
+  align-items: center;
+  padding-bottom: 1rem;
+  position: relative;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  margin-bottom: 1rem;
+}
+
+.industrial-header::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 30%;
+  height: 2px;
+  background: linear-gradient(to right, #FF4254, transparent);
+}
+
+.industrial-header-icon {
+  width: 3rem;
+  height: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 68, 255, 0.1);
+  border-radius: 0.5rem;
+  margin-right: 1rem;
+  color: #0044FF;
+}
+
+.industrial-header h3 {
+  font-weight: 600;
+  margin: 0;
+  color: #111827;
+}
+
+/* Data displays */
+.industrial-data-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  padding: 1rem;
+  background: #f9fafb;
+  border-radius: 0.5rem;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.industrial-data-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.75rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.industrial-data-item:last-child {
+  border-bottom: none;
+}
+
+.industrial-data-label {
+  color: #6b7280;
+  font-size: 0.875rem;
+}
+
+.industrial-data-value {
+  font-weight: 600;
+  color: #111827;
+}
+
+/* Stat boxes with industrial design */
+.industrial-stat-box {
+  background: linear-gradient(135deg, #ffffff, #f9fafb);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: 0.5rem;
+  padding: 1.25rem;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.industrial-stat-box:hover {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  transform: translateY(-2px);
+}
+
+.industrial-stat-box::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(to right, #0044FF, rgba(0, 68, 255, 0.2));
+}
+
+.industrial-stat-value {
+  font-size: 1.875rem;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 0.25rem;
+}
+
+.industrial-stat-label {
+  font-size: 0.875rem;
+  color: #6b7280;
+}
+
+.industrial-stat-box::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    radial-gradient(circle at 10% 90%, rgba(0, 68, 255, 0.05) 0%, transparent 50%),
+    radial-gradient(circle at 90% 10%, rgba(255, 66, 84, 0.05) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .industrial-corners-box::before,
+  .industrial-corners-box::after,
+  .industrial-corners-box-bottom::before,
+  .industrial-corners-box-bottom::after {
+    width: 8px;
+    height: 8px;
+  }
+  
+  .industrial-header {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .industrial-header-icon {
+    margin-right: 0;
+    margin-bottom: 0.5rem;
+  }
+  
+  .industrial-stat-box {
+    padding: 1rem;
+  }
+  
+  .industrial-stat-value {
+    font-size: 1.5rem;
+  }
+}

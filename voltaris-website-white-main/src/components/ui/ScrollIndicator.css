@@ -1,0 +1,119 @@
+.scroll-indicator {
+  --indicator-size: 44px;
+  --border-width: 2px;
+  --indicator-color: #FF4254;
+  --background-color: rgba(255, 255, 255, 0.95);
+  
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: var(--indicator-size);
+  height: var(--indicator-size);
+  border-radius: 50%;
+  background-color: var(--background-color);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 99;
+  transition: transform 0.3s ease-in-out, opacity 0.3s, visibility 0.3s;
+  overflow: hidden;
+}
+
+.scroll-indicator:hover {
+  transform: scale(1.1);
+  cursor: pointer;
+}
+
+/* Animation when clicked */
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+  100% { transform: scale(1); }
+}
+
+.scroll-indicator.pulse-animation {
+  animation: pulse 0.7s ease-in-out;
+}
+
+.scroll-indicator.visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.scroll-indicator.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.scroll-indicator svg {
+  position: absolute;
+  transform: rotate(-90deg); /* Start from top */
+}
+
+.scroll-indicator__text {
+  font-size: 10px;
+  font-weight: 600;
+  color: #333;
+  font-family: monospace;
+  letter-spacing: -0.5px;
+  position: relative;
+}
+
+/* For dark sections of the page */
+.scroll-indicator.on-dark {
+  --indicator-color: #FF4254; /* Keep the indicator color the same */
+  --background-color: rgba(29, 53, 87, 0.9);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
+}
+
+.scroll-indicator.on-dark .scroll-indicator__text {
+  color: #fff;
+}
+
+/* For better visibility on mobile */
+/* Tooltip showing 'Back to top' on hover */
+.scroll-indicator::after {
+  content: 'Back to top';
+  position: absolute;
+  bottom: calc(100% + 8px);
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  font-size: 12px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s, visibility 0.2s;
+  font-family: 'Arial', sans-serif;
+  font-weight: normal;
+  pointer-events: none;
+}
+
+.scroll-indicator:hover::after {
+  opacity: 1;
+  visibility: visible;
+}
+
+@media (max-width: 768px) {
+  .scroll-indicator {
+    --indicator-size: 40px;
+    bottom: 16px;
+    right: 16px;
+  }
+}
+
+/* Screen reader only text */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}

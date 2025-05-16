@@ -1,0 +1,420 @@
+/* Technical Corporate Section Transitions
+-------------------------------------------------- */
+
+/* Base setup for all sections */
+section {
+  position: relative;
+  overflow: hidden;
+  opacity: 1;
+  transition: opacity 0.4s ease-out;
+}
+
+/* Technical decorative elements for sections */
+.section-tech-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 5;
+  opacity: 0;
+  transition: opacity 0.5s ease-out;
+}
+
+/* Section transition - initial state */
+.section-transition-ready {
+  opacity: 0;
+  /* Hardware acceleration */
+  transform: translateZ(0);
+  will-change: opacity, transform;
+}
+
+/* Entrance animations - different types */
+.section-transition-slide-up {
+  animation: sectionSlideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.section-transition-slide-right {
+  animation: sectionSlideRight 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.section-transition-slide-left {
+  animation: sectionSlideLeft 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.section-transition-reveal {
+  animation: sectionReveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Technical scan animation */
+.section-scan {
+  animation: sectionScan 1.2s ease-out forwards;
+}
+
+/* Technical grid appear animation */
+.tech-grid-appear {
+  animation: techGridAppear 1s ease-out forwards;
+}
+
+/* Decorator line animations */
+.decorator-line-h {
+  position: absolute;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--line-color, #FF4254), transparent);
+  width: 0;
+  opacity: 0;
+}
+
+.decorator-line-v {
+  position: absolute;
+  width: 1px;
+  background: linear-gradient(to bottom, transparent, var(--line-color, #0044FF), transparent);
+  height: 0;
+  opacity: 0;
+}
+
+.decorator-line-h.animate {
+  animation: lineExpandH 0.7s ease-out forwards;
+  animation-delay: var(--delay, 0s);
+}
+
+.decorator-line-v.animate {
+  animation: lineExpandV 0.7s ease-out forwards;
+  animation-delay: var(--delay, 0s);
+}
+
+/* Technical corner brackets */
+.corner-bracket {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  opacity: 0;
+}
+
+.corner-bracket:before,
+.corner-bracket:after {
+  content: '';
+  position: absolute;
+  background-color: var(--bracket-color, #FF4254);
+}
+
+.corner-bracket.top-left {
+  top: 0;
+  left: 0;
+}
+
+.corner-bracket.top-right {
+  top: 0;
+  right: 0;
+}
+
+.corner-bracket.bottom-left {
+  bottom: 0;
+  left: 0;
+}
+
+.corner-bracket.bottom-right {
+  bottom: 0;
+  right: 0;
+}
+
+.corner-bracket.top-left:before {
+  top: 0;
+  left: 0;
+  width: 2px;
+  height: 20px;
+}
+
+.corner-bracket.top-left:after {
+  top: 0;
+  left: 0;
+  width: 20px;
+  height: 2px;
+}
+
+.corner-bracket.top-right:before {
+  top: 0;
+  right: 0;
+  width: 2px;
+  height: 20px;
+}
+
+.corner-bracket.top-right:after {
+  top: 0;
+  right: 0;
+  width: 20px;
+  height: 2px;
+}
+
+.corner-bracket.bottom-left:before {
+  bottom: 0;
+  left: 0;
+  width: 2px;
+  height: 20px;
+}
+
+.corner-bracket.bottom-left:after {
+  bottom: 0;
+  left: 0;
+  width: 20px;
+  height: 2px;
+}
+
+.corner-bracket.bottom-right:before {
+  bottom: 0;
+  right: 0;
+  width: 2px;
+  height: 20px;
+}
+
+.corner-bracket.bottom-right:after {
+  bottom: 0;
+  right: 0;
+  width: 20px;
+  height: 2px;
+}
+
+.corner-bracket.animate {
+  animation: cornerAppear 0.5s ease-out forwards;
+  animation-delay: var(--delay, 0s);
+}
+
+/* Technical data display */
+.tech-data-display {
+  position: absolute;
+  font-family: monospace;
+  font-size: 10px;
+  color: var(--text-color, rgba(0, 68, 255, 0.7));
+  opacity: 0;
+}
+
+.tech-data-display.animate {
+  animation: dataDisplay 0.8s ease-out forwards;
+  animation-delay: var(--delay, 0s);
+}
+
+/* Scan line animation */
+.scan-line {
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(to right, 
+    transparent, 
+    rgba(255, 66, 84, 0.2), 
+    rgba(255, 66, 84, 0.5), 
+    rgba(0, 68, 255, 0.5), 
+    rgba(0, 68, 255, 0.2), 
+    transparent
+  );
+  top: -4px;
+  opacity: 0;
+  box-shadow: 0 0 10px rgba(255, 66, 84, 0.4);
+}
+
+.scan-line.animate {
+  animation: scanLineMove 2s ease-out forwards;
+}
+
+/* Animation Keyframes */
+@keyframes sectionSlideUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes sectionSlideRight {
+  0% {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes sectionSlideLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes sectionReveal {
+  0% {
+    opacity: 0;
+    clip-path: inset(100% 0 0 0);
+  }
+  100% {
+    opacity: 1;
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes sectionScan {
+  0% {
+    opacity: 0;
+    background-position: -100% 0;
+  }
+  20% {
+    opacity: 0.05;
+  }
+  80% {
+    opacity: 0.05;
+  }
+  100% {
+    opacity: 0;
+    background-position: 200% 0;
+  }
+}
+
+@keyframes techGridAppear {
+  0% {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  100% {
+    opacity: 0.05;
+    transform: scale(1);
+  }
+}
+
+@keyframes lineExpandH {
+  0% {
+    width: 0;
+    opacity: 0;
+  }
+  100% {
+    width: 100%;
+    opacity: 0.7;
+  }
+}
+
+@keyframes lineExpandV {
+  0% {
+    height: 0;
+    opacity: 0;
+  }
+  100% {
+    height: 100%;
+    opacity: 0.7;
+  }
+}
+
+@keyframes cornerAppear {
+  0% {
+    opacity: 0;
+    transform: scale(0.7);
+  }
+  100% {
+    opacity: 0.7;
+    transform: scale(1);
+  }
+}
+
+@keyframes dataDisplay {
+  0% {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+  100% {
+    opacity: 0.7;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scanLineMove {
+  0% {
+    opacity: 0;
+    top: -4px;
+  }
+  5% {
+    opacity: 1;
+  }
+  95% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    top: 100%;
+  }
+}
+
+/* Section-specific styles */
+#home .section-tech-overlay {
+  --bracket-color: #FF4254;
+  --line-color: #FF4254;
+  --text-color: rgba(255, 66, 84, 0.7);
+}
+
+#about .section-tech-overlay {
+  --bracket-color: #0044FF;
+  --line-color: #0044FF;
+  --text-color: rgba(0, 68, 255, 0.7);
+}
+
+#technical .section-tech-overlay {
+  --bracket-color: #FF4254;
+  --line-color: #FF4254;
+  --text-color: rgba(255, 66, 84, 0.7);
+}
+
+#vehicle .section-tech-overlay {
+  --bracket-color: #0044FF;
+  --line-color: #0044FF;
+  --text-color: rgba(0, 68, 255, 0.7);
+}
+
+#adas .section-tech-overlay {
+  --bracket-color: #FF4254;
+  --line-color: #FF4254;
+  --text-color: rgba(255, 66, 84, 0.7);
+}
+
+#sponsors .section-tech-overlay {
+  --bracket-color: #0044FF;
+  --line-color: #0044FF;
+  --text-color: rgba(0, 68, 255, 0.7);
+}
+
+#contact .section-tech-overlay {
+  --bracket-color: #FF4254;
+  --line-color: #FF4254;
+  --text-color: rgba(255, 66, 84, 0.7);
+}
+
+/* Tablet & Mobile adjustments */
+@media (max-width: 768px) {
+  .corner-bracket {
+    width: 15px;
+    height: 15px;
+  }
+  
+  .corner-bracket.top-left:before,
+  .corner-bracket.top-right:before,
+  .corner-bracket.bottom-left:before,
+  .corner-bracket.bottom-right:before {
+    height: 15px;
+  }
+  
+  .corner-bracket.top-left:after,
+  .corner-bracket.top-right:after,
+  .corner-bracket.bottom-left:after,
+  .corner-bracket.bottom-right:after {
+    width: 15px;
+  }
+  
+  .tech-data-display {
+    font-size: 8px;
+  }
+}

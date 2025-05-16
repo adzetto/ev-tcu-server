@@ -1,0 +1,67 @@
+{
+  "branch": "main",
+  "last_deployment": "2025-04-18 17:16:00",
+  "total_deployments": 11,
+  "backups": [
+    {
+      "id": "20250411-214112",
+      "date": "2025-04-11 21:41:15",
+      "path": "./voltaris-backups/20250411-214112",
+      "description": "Pre-deployment backup"
+    },
+    {
+      "id": "20250411-214457",
+      "date": "2025-04-11 21:44:59",
+      "path": "./voltaris-backups/20250411-214457",
+      "description": "Pre-deployment backup"
+    },
+    {
+      "id": "20250411-214624",
+      "date": "2025-04-11 21:46:27",
+      "path": "./voltaris-backups/20250411-214624",
+      "description": "Pre-deployment backup"
+    },
+    {
+      "id": "20250411-214748",
+      "date": "2025-04-11 21:47:50",
+      "path": "./voltaris-backups/20250411-214748",
+      "description": "Pre-deployment backup"
+    },
+    {
+      "id": "20250411-215347",
+      "date": "2025-04-11 21:53:49",
+      "path": "./voltaris-backups/20250411-215347",
+      "description": "Pre-deployment backup"
+    },
+    {
+      "id": "20250411-215622",
+      "date": "2025-04-11 21:56:24",
+      "path": "./voltaris-backups/20250411-215622",
+      "description": "Pre-deployment backup"
+    },
+    {
+      "id": "20250411-215923",
+      "date": "2025-04-11 21:59:25",
+      "path": "./voltaris-backups/20250411-215923",
+      "description": "Pre-deployment backup"
+    },
+    {
+      "id": "20250411-220426",
+      "date": "2025-04-11 22:04:28",
+      "path": "./voltaris-backups/20250411-220426",
+      "description": "Pre-deployment backup"
+    },
+    {
+      "id": "20250418-132611",
+      "date": "2025-04-18 13:26:14",
+      "path": "./voltaris-backups/20250418-132611",
+      "description": "Pre-deployment backup"
+    },
+    {
+      "id": "20250420-215044",
+      "date": "2025-04-20 21:50:46",
+      "path": "./voltaris-backups/20250420-215044",
+      "description": "Pre-deployment backup"
+    }
+  ]
+}

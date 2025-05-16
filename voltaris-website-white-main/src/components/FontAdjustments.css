@@ -1,0 +1,121 @@
+/* Font Adjustments for Better Readability and Visual Comfort */
+
+/* Set improved font rendering for all text */
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Base font settings */
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  letter-spacing: 0.01em;
+}
+
+/* Improve heading readability */
+h1, h2, h3, h4, h5, h6 {
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+  font-weight: 600;
+}
+
+/* Adjust font sizes for better visual hierarchy */
+h1 {
+  font-size: 2.25rem;
+}
+
+h2 {
+  font-size: 1.875rem;
+}
+
+h3 {
+  font-size: 1.5rem;
+}
+
+h4 {
+  font-size: 1.25rem;
+}
+
+/* Improve paragraph readability */
+p {
+  margin-bottom: 1rem;
+  line-height: 1.7;
+  font-size: 0.95rem;
+}
+
+/* Improve list readability */
+li {
+  line-height: 1.7;
+  margin-bottom: 0.5rem;
+}
+
+/* Adjust small text */
+.text-xs, .text-sm, small {
+  letter-spacing: 0.02em; /* Slightly increase letter spacing for small text */
+}
+
+/* Improve code readability */
+code, pre {
+  font-family: 'Menlo', 'Monaco', 'Consolas', 'Liberation Mono', 'Courier New', monospace;
+  font-size: 0.9em;
+  letter-spacing: 0;
+}
+
+/* Improve button text */
+button, .button {
+  letter-spacing: 0.02em;
+  font-weight: 500;
+}
+
+/* Font smoothing for SVG text */
+svg text {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Improve card title readability */
+.industrial-container h3,
+.industrial-box h3,
+.tech-card h3 {
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.4;
+}
+
+/* Set appropriate line width for better readability */
+p, li {
+  max-width: 70ch; /* Recommended readable line length */
+}
+
+/* Responsive font sizes */
+@media (max-width: 768px) {
+  body {
+    font-size: 15px;
+  }
+  
+  h1 {
+    font-size: 1.875rem;
+  }
+  
+  h2 {
+    font-size: 1.5rem;
+  }
+  
+  h3 {
+    font-size: 1.25rem;
+  }
+  
+  h4 {
+    font-size: 1.125rem;
+  }
+}
+
+/* Improve focus text contrast */
+:focus {
+  outline: 2px solid rgba(59, 130, 246, 0.5);
+  outline-offset: 2px;
+}

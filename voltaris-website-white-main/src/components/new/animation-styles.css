@@ -1,0 +1,249 @@
+/* Animation for side panel */
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.animate-slideInRight {
+  animation: slideInRight 0.3s forwards ease-out;
+}
+
+/* Data flow animation */
+.data-flow-line {
+  position: relative;
+  overflow: hidden;
+}
+
+.data-flow-line::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 10px;
+  background: linear-gradient(to bottom, rgba(255,255,255,0.5), transparent);
+  animation: dataFlow 3s infinite linear;
+}
+
+@keyframes dataFlow {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(1000%);
+  }
+}/* Animation styles for team hierarchy flowchart */
+@keyframes drawLine {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Enhanced scroll animation */
+@keyframes smoothScroll {
+  0% { transform: translateY(30px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+.smooth-scroll {
+  animation: smoothScroll 0.8s ease-out forwards;
+  position: relative;
+}
+
+/* Add a subtle highlight effect for the expanded section */
+.smooth-scroll::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 8px;
+  box-shadow: 0 0 15px rgba(59, 130, 246, 0.3);
+  opacity: 0;
+  animation: highlightPulse 1.5s ease-out forwards;
+}
+
+@keyframes highlightPulse {
+  0% { opacity: 0; }
+  50% { opacity: 0.7; }
+  100% { opacity: 0; }
+}
+
+/* Additional highlight pulse class for dynamic addition */
+.highlight-pulse {
+  position: relative;
+}
+
+.highlight-pulse::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 8px;
+  box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+  opacity: 0;
+  animation: highlightPulse 2s ease-out forwards;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.animate-slideDown {
+  animation: slideDown 0.3s forwards;
+}
+
+.pulse-dot {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(0.8);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0.8);
+    opacity: 0.8;
+  }
+}
+
+.node-ready {
+  opacity: 1;
+  transform: scale(1);
+  transition: all 0.3s ease-out;
+}
+
+.node-ready:hover {
+  transform: scale(1.05);
+  z-index: 10;
+}
+
+.circuit-line {
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+}
+
+.node-animate:hover .circuit-line {
+  animation: drawLine 1s forwards ease-out;
+}
+
+.node-animate {
+  opacity: 0;
+  transform: scale(1);
+  transition: all 0.3s ease-out;
+}
+
+.node-visible, .node-animate:hover {
+  opacity: 1 !important;
+  transform: scale(1) !important;
+}
+
+/* Flowing circuit effects for entry animation */
+.circuit-path {
+  stroke-dasharray: 10;
+  stroke-dashoffset: 10;
+  animation: dash 1.5s linear forwards;
+}
+
+@keyframes dash {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* Enhanced logo animation */
+.walking-logo {
+  transform-origin: center;
+}
+
+.circuit-path {
+  position: absolute;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #FF4254, transparent);
+  opacity: 0;
+  transform: translateX(-100%);
+  z-index: -1;
+}
+
+/* Typing animation for loading screen */
+.typing-animation {
+  overflow: hidden;
+  white-space: nowrap;
+  width: 0;
+  animation: typing 2s steps(20, end) forwards;
+}
+
+@keyframes typing {
+  from { width: 0 }
+  to { width: 100% }
+}
+
+/* Text scrolling for terminal output */
+@keyframes textScroll {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-100%); }
+}
+
+.animate-textScroll {
+  animation: textScroll 10s linear infinite;
+}
+
+/* Smooth scrolling for team hierarchy container */
+.team-hierarchy-container {
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(59, 130, 246, 0.3) rgba(0, 0, 0, 0.2);
+}
+
+.team-hierarchy-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.team-hierarchy-container::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+}
+
+.team-hierarchy-container::-webkit-scrollbar-thumb {
+  background-color: rgba(59, 130, 246, 0.3);
+  border-radius: 10px;
+  border: 2px solid rgba(0, 0, 0, 0.2);
+}
+
+.team-hierarchy-container::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(59, 130, 246, 0.5);
+}

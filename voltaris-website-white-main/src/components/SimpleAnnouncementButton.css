@@ -1,0 +1,99 @@
+/* Simple Announcement Button Styles */
+
+.simple-announcement-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+/* Button hover effect */
+.simple-announcement-wrapper button {
+  transition: all 0.3s ease;
+}
+
+.simple-announcement-wrapper button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(255, 66, 84, 0.2);
+}
+
+/* Preview dropdown animation */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.simple-announcement-wrapper .announcement-preview {
+  animation: fadeInUp 0.3s ease forwards;
+  box-shadow: 0 10px 25px -5px rgba(255, 66, 84, 0.1), 0 5px 10px -5px rgba(0, 0, 0, 0.05);
+}
+
+/* Delayed exit animation */
+@keyframes delayedFadeOut {
+  0%, 80% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+
+.announcement-preview-delay-exit {
+  animation: delayedFadeOut 3.5s forwards;
+  pointer-events: none;
+}
+
+/* Countdown bar animation */
+.announcement-preview-delay-exit::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(to right, rgba(255, 66, 84, 0.7), transparent);
+  animation: countdown 3.5s linear forwards;
+  z-index: 999;
+}
+
+@keyframes countdown {
+  0% {
+    width: 100%;
+  }
+  100% {
+    width: 0%;
+  }
+}
+
+/* Technical pulse effect */
+@keyframes pulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(255, 66, 84, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 0 5px rgba(255, 66, 84, 0);
+  }
+}
+
+.simple-announcement-wrapper button::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 6px;
+  animation: pulse 2s infinite;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.simple-announcement-wrapper:hover button::after {
+  opacity: 1;
+}

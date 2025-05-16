@@ -1,0 +1,555 @@
+/* AdvancedPlatinumTier.css */
+/* A high-end, technically advanced animation for the Platinum sponsorship tier */
+
+/* Main container with 3D transform capabilities */
+.advanced-platinum-tier {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 550px;
+  background: linear-gradient(135deg, #f0f0f0, #e5e5e5);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 
+    0 15px 35px rgba(74, 144, 191, 0.2),
+    0 5px 15px rgba(0, 0, 0, 0.05);
+  transform-style: preserve-3d;
+  transition: transform 0.3s ease-out;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  z-index: 10;
+  isolation: isolate;
+  will-change: transform;
+  transform: perspective(1000px);
+}
+
+/* Particle animation canvas */
+.platinum-particles-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  opacity: 0.7;
+}
+
+/* Rotating gradient border */
+.platinum-rotating-border {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 12px;
+  background: linear-gradient(0deg, #FFFFFF, #B0B0B1, #4A90B3, #B0B0B1, #FFFFFF);
+  background-size: 400% 400%;
+  z-index: 2;
+  opacity: 0.7;
+  transition: opacity 0.3s ease;
+}
+
+/* Dynamic glow effect on hover */
+.platinum-glow-effect {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 3;
+  pointer-events: none;
+  border-radius: 12px;
+  transition: background 0.2s ease;
+}
+
+/* Main content container */
+.platinum-content {
+  position: relative;
+  z-index: 5;
+  padding: 25px 20px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(5px);
+  border-radius: 10px;
+  margin: 3px;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5) inset;
+  transform-style: preserve-3d;
+}
+
+/* 3D floating badge with light effect */
+.platinum-badge {
+  position: absolute;
+  top: -10px;
+  right: 20px;
+  transform-style: preserve-3d;
+  transform: translateZ(20px);
+  transition: transform 0.3s ease;
+  filter: drop-shadow(0 5px 15px rgba(74, 144, 191, 0.4));
+}
+
+.platinum-badge-front {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(135deg, #e5e4e2, #b0b0b1, #e5e4e2);
+  color: #4A90B3;
+  font-weight: bold;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
+  transform: translateZ(2px);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  letter-spacing: 1px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  z-index: 2;
+}
+
+.platinum-badge-back {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 80px;
+  height: 80px;
+  background: rgba(74, 144, 191, 0.9);
+  clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
+  transform: translateZ(-2px);
+  z-index: 1;
+}
+
+.platinum-badge-side {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 80px;
+  height: 80px;
+  clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
+  background: linear-gradient(to bottom, #b0b0b1, #4A90B3);
+  transform: rotateX(90deg) translateZ(2px);
+  transform-origin: top;
+  z-index: 0;
+}
+
+/* Title and price styling */
+.platinum-title {
+  font-size: 28px;
+  font-weight: 700;
+  text-align: center;
+  margin: 20px 0 5px;
+  color: transparent;
+  background: linear-gradient(90deg, #4A90B3, #b0b0b1, #4A90B3);
+  background-size: 200% auto;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 3s linear infinite;
+  text-shadow: 0 0 10px rgba(74, 144, 191, 0.3);
+  letter-spacing: 2px;
+  transform: translateZ(15px);
+}
+
+.platinum-price {
+  font-size: 24px;
+  font-weight: 600;
+  color: #333;
+  text-align: center;
+  margin-bottom: 20px;
+  transform: translateZ(10px);
+}
+
+/* Technical circuit border effects */
+.platinum-tech-border {
+  position: absolute;
+  width: calc(100% - 40px);
+  height: calc(100% - 40px);
+  top: 20px;
+  left: 20px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.circuit-lines {
+  position: absolute;
+  background: linear-gradient(90deg, transparent, rgba(74, 144, 191, 0.6), transparent);
+  height: 1px;
+}
+
+.circuit-line-1 {
+  top: 20%;
+  left: 0;
+  width: 50%;
+  animation: pulseLine 3s ease-in-out infinite alternate;
+}
+
+.circuit-line-2 {
+  top: 80%;
+  right: 0;
+  width: 60%;
+  animation: pulseLine 3s ease-in-out 0.5s infinite alternate;
+}
+
+.circuit-line-3 {
+  width: 1px;
+  height: 40%;
+  top: 20%;
+  left: 20%;
+  background: linear-gradient(180deg, transparent, rgba(74, 144, 191, 0.6), transparent);
+  animation: pulseLine 3s ease-in-out 1s infinite alternate;
+}
+
+.circuit-line-4 {
+  width: 1px;
+  height: 40%;
+  top: 40%;
+  right: 30%;
+  background: linear-gradient(180deg, transparent, rgba(74, 144, 191, 0.6), transparent);
+  animation: pulseLine 3s ease-in-out 1.5s infinite alternate;
+}
+
+.circuit-dot {
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #4A90B3;
+  opacity: 0.7;
+  box-shadow: 0 0 5px rgba(74, 144, 191, 0.8);
+  animation: pulseDot 2s ease-in-out infinite alternate;
+}
+
+.circuit-dot-1 {
+  top: 20%;
+  left: 50%;
+  animation-delay: 0s;
+}
+
+.circuit-dot-2 {
+  bottom: 20%;
+  right: 60%;
+  animation-delay: 0.5s;
+}
+
+.circuit-dot-3 {
+  top: 60%;
+  left: 20%;
+  animation-delay: 1s;
+}
+
+.circuit-dot-4 {
+  top: 40%;
+  right: 30%;
+  animation-delay: 1.5s;
+}
+
+/* Benefits list styling */
+.platinum-benefits {
+  position: relative;
+  margin: 20px 0;
+  transform-style: preserve-3d;
+  transform: translateZ(5px);
+}
+
+.platinum-benefit-item {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 12px;
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: 6px;
+  padding: 8px 10px;
+  transition: transform 0.2s ease, background 0.2s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  backdrop-filter: blur(2px);
+}
+
+.platinum-benefit-item:hover {
+  transform: translateX(5px) translateZ(0);
+  background: rgba(74, 144, 191, 0.1);
+}
+
+.benefit-icon {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #4A90B3;
+  font-weight: bold;
+  margin-right: 8px;
+}
+
+.benefit-text {
+  font-size: 14px;
+  line-height: 1.4;
+  color: #333;
+}
+
+/* Technical data display at the bottom */
+.platinum-tech-data {
+  display: flex;
+  justify-content: space-between;
+  margin: 15px 0;
+  transform: translateZ(5px);
+}
+
+.tech-data-item {
+  font-family: monospace;
+  font-size: 10px;
+  color: #4A90B3;
+  opacity: 0.7;
+  letter-spacing: 0.5px;
+}
+
+/* Action button styling */
+.platinum-button {
+  position: relative;
+  width: 100%;
+  padding: 12px 0;
+  background: linear-gradient(135deg, #4A90B3, #70b0d3, #4A90B3);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: 1px;
+  cursor: pointer;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transform: translateZ(10px);
+  box-shadow: 
+    0 5px 15px rgba(74, 144, 191, 0.4),
+    0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.platinum-button:hover {
+  transform: translateY(-2px) translateZ(10px);
+  box-shadow: 
+    0 8px 20px rgba(74, 144, 191, 0.5),
+    0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.platinum-button:active {
+  transform: translateY(1px) translateZ(10px);
+}
+
+.button-text {
+  position: relative;
+  z-index: 2;
+}
+
+.button-glow {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 70%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.5),
+    transparent
+  );
+  transform: skewX(-15deg);
+  animation: buttonGlow 3s infinite;
+  z-index: 1;
+}
+
+/* Corner brackets */
+.platinum-corner {
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  border-color: #4A90B3;
+  z-index: 6;
+}
+
+.platinum-corner-tl {
+  top: 5px;
+  left: 5px;
+  border-top: 2px solid;
+  border-left: 2px solid;
+  animation: pulseBorder 3s ease-in-out infinite;
+}
+
+.platinum-corner-tr {
+  top: 5px;
+  right: 5px;
+  border-top: 2px solid;
+  border-right: 2px solid;
+  animation: pulseBorder 3s ease-in-out 0.5s infinite;
+}
+
+.platinum-corner-bl {
+  bottom: 5px;
+  left: 5px;
+  border-bottom: 2px solid;
+  border-left: 2px solid;
+  animation: pulseBorder 3s ease-in-out 1s infinite;
+}
+
+.platinum-corner-br {
+  bottom: 5px;
+  right: 5px;
+  border-bottom: 2px solid;
+  border-right: 2px solid;
+  animation: pulseBorder 3s ease-in-out 1.5s infinite;
+}
+
+/* Scan line animation */
+.platinum-scan-line {
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(to right, 
+    transparent,
+    rgba(74, 144, 191, 0.2),
+    rgba(74, 144, 191, 0.5),
+    rgba(74, 144, 191, 0.2),
+    transparent
+  );
+  top: -2px;
+  left: 0;
+  z-index: 7;
+  box-shadow: 0 0 4px rgba(74, 144, 191, 0.4);
+  animation: scanLine 4s linear infinite;
+}
+
+/* Edge highlight animations */
+.platinum-edge {
+  position: absolute;
+  background: rgba(74, 144, 191, 0.5);
+  z-index: 6;
+  opacity: 0;
+}
+
+.platinum-edge-top {
+  height: 1px;
+  width: 0;
+  top: 0;
+  left: 0;
+  animation: expandEdgeH 5s ease-in-out infinite;
+}
+
+.platinum-edge-right {
+  width: 1px;
+  height: 0;
+  top: 0;
+  right: 0;
+  animation: expandEdgeV 5s ease-in-out 1.25s infinite;
+}
+
+.platinum-edge-bottom {
+  height: 1px;
+  width: 0;
+  bottom: 0;
+  right: 0;
+  animation: expandEdgeH 5s ease-in-out 2.5s infinite;
+  transform: scaleX(-1);
+}
+
+.platinum-edge-left {
+  width: 1px;
+  height: 0;
+  bottom: 0;
+  left: 0;
+  animation: expandEdgeV 5s ease-in-out 3.75s infinite;
+  transform: scaleY(-1);
+}
+
+/* Animations */
+@keyframes shimmer {
+  0% { background-position: 0% center; }
+  100% { background-position: 200% center; }
+}
+
+@keyframes pulseLine {
+  0% { opacity: 0.3; }
+  100% { opacity: 0.8; }
+}
+
+@keyframes pulseDot {
+  0% { 
+    transform: scale(0.8);
+    opacity: 0.5;
+  }
+  100% { 
+    transform: scale(1.2);
+    opacity: 0.8;
+  }
+}
+
+@keyframes pulseBorder {
+  0% { opacity: 0.3; }
+  50% { opacity: 0.8; }
+  100% { opacity: 0.3; }
+}
+
+@keyframes scanLine {
+  0% {
+    top: -2px;
+    opacity: 0;
+  }
+  5% {
+    opacity: 1;
+  }
+  95% {
+    opacity: 1;
+  }
+  100% {
+    top: 100%;
+    opacity: 0;
+  }
+}
+
+@keyframes buttonGlow {
+  0% { left: -100%; }
+  20% { left: 100%; }
+  100% { left: 100%; }
+}
+
+@keyframes expandEdgeH {
+  0% { width: 0; opacity: 0; }
+  10% { opacity: 0.7; }
+  40% { width: 100%; opacity: 0.7; }
+  50% { width: 100%; opacity: 0; }
+  100% { width: 0; opacity: 0; }
+}
+
+@keyframes expandEdgeV {
+  0% { height: 0; opacity: 0; }
+  10% { opacity: 0.7; }
+  40% { height: 100%; opacity: 0.7; }
+  50% { height: 100%; opacity: 0; }
+  100% { height: 0; opacity: 0; }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .advanced-platinum-tier {
+    min-height: 450px;
+  }
+  
+  .platinum-title {
+    font-size: 24px;
+  }
+  
+  .platinum-price {
+    font-size: 20px;
+  }
+  
+  .platinum-badge-front,
+  .platinum-badge-back,
+  .platinum-badge-side {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .platinum-badge-front {
+    font-size: 10px;
+  }
+}

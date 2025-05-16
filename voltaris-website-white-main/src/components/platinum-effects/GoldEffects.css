@@ -1,0 +1,408 @@
+/* A high-end, technically advanced animation for the Gold sponsorship tier */
+
+.gold-card {
+  position: relative;
+  background-color: #0A0A0A;
+  border-radius: 1rem;
+  overflow: hidden;
+  width: 100%;
+  max-width: 400px;
+  height: auto;
+  min-height: 500px;
+  margin: 0 auto;
+  padding: 1.5rem;
+  box-shadow: 0 0 25px rgba(255, 215, 0, 0.1), 
+              0 0 10px rgba(255, 215, 0, 0.05), 
+              0 0 5px rgba(255, 215, 0, 0.05);
+  transform-style: preserve-3d;
+  perspective: 1000px;
+  isolation: isolate;
+  border: 1px solid rgba(255, 215, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+.gold-card:hover {
+  box-shadow: 0 0 30px rgba(255, 215, 0, 0.15), 
+              0 0 15px rgba(255, 215, 0, 0.1), 
+              0 0 5px rgba(255, 215, 0, 0.1);
+  border: 1px solid rgba(255, 215, 0, 0.3);
+}
+
+/* Background effects */
+.gold-background {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Particles */
+.gold-particles {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.gold-particle {
+  position: absolute;
+  border-radius: 50%;
+  background-color: rgba(255, 215, 0, 0.8);
+  filter: blur(1px);
+  z-index: 1;
+}
+
+/* Orbital effects */
+.gold-orbitals {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.gold-orbital {
+  position: absolute;
+  border: 1px dashed rgba(255, 215, 0, 0.15);
+  border-radius: 50%;
+  opacity: 0.25;
+}
+
+.gold-orbital-1 {
+  width: 120%;
+  height: 120%;
+}
+
+.gold-orbital-2 {
+  width: 80%;
+  height: 80%;
+}
+
+.gold-orbital-3 {
+  width: 150%;
+  height: 80%;
+  border-style: solid;
+  border-width: 1px;
+  opacity: 0.1;
+}
+
+/* Tech lines */
+.gold-tech-lines {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.gold-tech-line {
+  position: absolute;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.3), transparent);
+}
+
+.gold-tech-line-1 {
+  top: 20%;
+  left: 0;
+  width: 100%;
+}
+
+.gold-tech-line-2 {
+  top: 40%;
+  right: 0;
+  width: 70%;
+}
+
+.gold-tech-line-3 {
+  top: 60%;
+  left: 0;
+  width: 40%;
+}
+
+.gold-tech-line-4 {
+  top: 80%;
+  right: 0;
+  width: 90%;
+}
+
+.gold-tech-line-5 {
+  top: 90%;
+  left: 20%;
+  width: 60%;
+}
+
+/* Shine effect */
+.gold-shine {
+  position: absolute;
+  width: 150px;
+  height: 150px;
+  background: radial-gradient(circle, rgba(255, 215, 0, 0.15) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0;
+  mix-blend-mode: screen;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+}
+
+/* Card content */
+.gold-card-content {
+  position: relative;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  color: #FFF;
+}
+
+/* Header */
+.gold-card-header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transform-style: preserve-3d;
+}
+
+.gold-crown-icon {
+  color: #FFD700;
+  margin-bottom: 0.5rem;
+  filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.5));
+  transform: translateZ(10px);
+}
+
+.gold-title {
+  font-size: 1.75rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  background: linear-gradient(to right, #FFD700, #FFC400, #FFD700);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  transform: translateZ(5px);
+}
+
+.gold-price {
+  font-size: 1.5rem;
+  color: #F5F5F5;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  transform: translateZ(3px);
+}
+
+.gold-badge {
+  background: linear-gradient(135deg, #FFD700, #FFC400);
+  border-radius: 12px;
+  padding: 0 0.75rem;
+  height: 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0.5rem;
+  position: relative;
+  transform: translateZ(10px);
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+}
+
+.gold-badge-inner {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.gold-badge-icon {
+  color: #000;
+}
+
+.gold-badge span {
+  font-size: 0.7rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: #000;
+  letter-spacing: 0.5px;
+}
+
+/* Benefits */
+.gold-benefits {
+  margin-bottom: 1.5rem;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 0.75rem;
+  padding: 1rem;
+  border: 1px solid rgba(255, 215, 0, 0.1);
+}
+
+.gold-benefits ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.gold-benefit-item {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 0.75rem;
+  gap: 0.5rem;
+}
+
+.gold-benefit-item:last-child {
+  margin-bottom: 0;
+}
+
+.gold-benefit-icon {
+  color: #FFD700;
+  flex-shrink: 0;
+  margin-top: 0.1rem;
+}
+
+.gold-benefit-item span {
+  font-size: 0.875rem;
+  color: #E0E0E0;
+  line-height: 1.4;
+}
+
+/* Metrics */
+.gold-metrics {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.gold-metric {
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 0.75rem;
+  padding: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: 1px solid rgba(255, 215, 0, 0.1);
+}
+
+.gold-metric-icon {
+  color: #FFD700;
+  flex-shrink: 0;
+}
+
+.gold-metric-label {
+  display: flex;
+  flex-direction: column;
+}
+
+.gold-metric-value {
+  font-size: 1.125rem;
+  font-weight: bold;
+  color: #FFD700;
+}
+
+.gold-metric-name {
+  font-size: 0.7rem;
+  color: #A0A0A0;
+}
+
+/* Button */
+.gold-button {
+  background: linear-gradient(135deg, #FFD700, #FFC400);
+  border: none;
+  border-radius: 0.75rem;
+  padding: 0.75rem 1rem;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  color: #000;
+  text-align: center;
+  margin-top: auto;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.2);
+}
+
+.gold-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 20px rgba(255, 215, 0, 0.3);
+}
+
+.gold-button-shine {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+  transition: left 0.5s ease;
+}
+
+.gold-button:hover .gold-button-shine {
+  left: 100%;
+}
+
+/* Corner decorations */
+.gold-corners {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 3;
+}
+
+.gold-corner {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-color: #FFD700;
+}
+
+.gold-corner-tl {
+  top: 10px;
+  left: 10px;
+  border-top: 1px solid;
+  border-left: 1px solid;
+}
+
+.gold-corner-tr {
+  top: 10px;
+  right: 10px;
+  border-top: 1px solid;
+  border-right: 1px solid;
+}
+
+.gold-corner-bl {
+  bottom: 10px;
+  left: 10px;
+  border-bottom: 1px solid;
+  border-left: 1px solid;
+}
+
+.gold-corner-br {
+  bottom: 10px;
+  right: 10px;
+  border-bottom: 1px solid;
+  border-right: 1px solid;
+}
+
+/* Media queries for smaller screens */
+@media (max-width: 768px) {
+  .gold-card {
+    padding: 1rem;
+    min-height: 450px;
+  }
+  
+  .gold-title {
+    font-size: 1.5rem;
+  }
+  
+  .gold-price {
+    font-size: 1.25rem;
+  }
+  
+  .gold-benefit-item span {
+    font-size: 0.8rem;
+  }
+  
+  .gold-button {
+    padding: 0.6rem 0.75rem;
+    font-size: 0.9rem;
+  }
+} 
