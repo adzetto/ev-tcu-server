@@ -10,7 +10,7 @@ if (!packageJson.resolutions) {
 
 // Add security fixes
 packageJson.resolutions['nth-check'] = '^2.0.1';
-packageJson.resolutions['postcss'] = '^8.4.31';
+packageJson.resolutions['postcss'] = '8.4.31';
 packageJson.resolutions['svgo/css-select/nth-check'] = '^2.0.1';
 
 // Write back to package.json
