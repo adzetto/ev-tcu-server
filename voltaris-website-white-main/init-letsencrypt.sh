@@ -9,10 +9,10 @@ if ! [ -x "$(command -v docker-compose)" ]; then
 fi
 
 # Set the domains and email for Let's Encrypt
-domains=(yourdomain.com www.yourdomain.com)
+domains=(ev-tcu-server.iyte.edu.tr)
 rsa_key_size=4096
 data_path="./certbot"
-email="your-email@example.com" # Replace with your email
+email="admin@ev-tcu-server.iyte.edu.tr" # Replace with your email
 
 # Prompt for confirmation
 echo "Domains: ${domains[*]}"
