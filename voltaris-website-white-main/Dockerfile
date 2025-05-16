@@ -18,7 +18,7 @@ RUN npm run build
 FROM nginx:alpine
 
 # Copy custom nginx config for React SPA routing
-COPY nginx/nginx.conf /etc/nginx/conf.d/default.conf
+COPY nginx/default.conf /etc/nginx/conf.d/default.conf
 
 # Copy the built app from builder stage
 COPY --from=builder /app/build /usr/share/nginx/html
