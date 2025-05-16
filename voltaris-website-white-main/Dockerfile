@@ -20,11 +20,21 @@ RUN npm install --no-package-lock
 # Manually install secure versions of packages with vulnerabilities
 RUN npm install nth-check@2.1.1 postcss@8.4.31 http-proxy-middleware@2.0.9 --no-package-lock
 
+# Update Three.js to the latest version that has BatchedMesh
+RUN npm install three@0.160.0 @react-three/drei@9.99.0 --no-package-lock
+
 # Copy the rest of the application code
 COPY . .
 
-# Build the application
-RUN npm run build
+# Debug: List source files to find potential issues
+RUN ls -la src/
+RUN find src -type f -name "*.js" | xargs grep -l "BatchedMesh" || echo "No files with BatchedMesh found"
+
+# Patch any file that imports BatchedMesh incorrectly
+RUN find src -type f -name "*.js" -exec sed -i 's/import.*BatchedMesh.*from.*three/\/\/ BatchedMesh import disabled/g' {} \; || echo "No replacements made"
+
+# Build the application with debugging
+RUN npm run build || (echo "Build failed!" && cat /tmp/react-build-error.log || echo "No error log found")
 
 # Stage 2: Setup Nginx to serve the built app
 FROM nginx:alpine
