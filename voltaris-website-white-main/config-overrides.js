@@ -19,6 +19,17 @@ module.exports = function override(config, env) {
     ...devServerOptions
   };
   
+  // Ignore source map warnings for specific packages
+  // This fixes the warning about missing source maps for @mediapipe
+  config.ignoreWarnings = [
+    ...(config.ignoreWarnings || []),
+    // Ignore source map warnings for the @mediapipe package
+    {
+      module: /@mediapipe/,
+      message: /Failed to parse source map/
+    }
+  ];
+  
   // Performance optimizations for production builds
   if (env === 'production') {
     // Optimize chunk size
